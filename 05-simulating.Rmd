@@ -1,0 +1,17 @@
+# Simulation
+
+```{r echo = FALSE}
+sir = (flexmodel(
+  params = c(beta = 0.1, gamma = 0.01, N = 100),
+  state = c(S = 99, I = 1, R = 0),
+  start_date = "2020-03-11",
+  end_date = "2020-12-01",
+  do_make_state = FALSE
+)
+  %>% add_rate("S", "I", ~ (I) * (beta) * (1/N))
+  %>% add_rate("I", "R", ~ (gamma))
+  %>% add_outflow
+)
+```
+
+

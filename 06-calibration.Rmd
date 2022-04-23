@@ -1,0 +1,12 @@
+# Calibration
+
+## Loss Functions
+
+### Negative Binomial
+
+$$
+\frac{\Gamma(x+k)}{\Gamma(k) x!} \left(\frac{k}{k + \mu}\right)^k \left(\frac{\mu}{k + \mu}\right)^x
+$$
+$$
+\log\Gamma(x+k) - \log\Gamma(k) - \log(x!) + k \log\left(\frac{k}{k + \mu}\right) + x\log\left(\frac{\mu}{k + \mu}\right)
+$$

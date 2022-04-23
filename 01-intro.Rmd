@@ -1,0 +1,23 @@
+# Fast and Flexible Modelling with McMasterPandemic
+
+[McMasterPandemic](https://github.com/mac-theobio/McMasterPandemic) is a modelling tool that was rapidly developed to provide timely insights into the Covid-19 Pandemic in Canada. We are currently refactoring this tool so that it is faster and more general. This book describes how to use this refactored version of McMasterPandemic.
+
+The general model underlying McMasterPandmic's flexible engine and interface based on a discrete time compartmental model.
+
+## Generalized Model at a Glance
+
+$$
+s_{i,t+1} = s_{i,t} + \sum_j M_{ji,t} s_{j,t} - s_{i,t} \sum_j  M_{ij,t} \delta_{ij}
+$$
+where,
+
+* $s_{i,t}$ is the state of the $i$th compartment at time $t$
+* $M_{ij,t}$ is the per-capita rate of flow from compartment $i$ to compartment $j$ at time $t$
+* $\delta_{ij}$ indicates whether or not individuals should be removed from compartment $i$ after flowing to compartment $j$
+
+The per-capita rates, $M_{ij,t}$, can be any expression involving only sums and products of any of the following at time $t$:
+
+  * State of any compartment
+  * Model parameter -- either time-varying or not
+  * Complements of any of the above (i.e. $1-x$)
+  * Inverses of any of the above (i.e. $1/x$)

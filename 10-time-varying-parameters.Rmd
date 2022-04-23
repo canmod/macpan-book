@@ -1,0 +1,16 @@
+# Time Varying Parameters
+
+Any parameter in a `McMasterPandemic` model can be scheduled to vary in time. A time-variation schedule is a data frame with one row for each date on which each parameter changes its value. This data frame has four columns:
+
+* `Date` -- Date on which a particular parameter changes its value
+* `Symbol` -- String giving the symbol representing the changing parameter
+* `Value` -- The numeric value used to change the value of the parameter, the effect of which depends on the value of the `Type` column
+* `Type` -- One of the following strings:
+  * `"abs"` -- The `Value` column is the new value for the parameter on `Date`
+  * `"rel_orig"` -- The `Value` column is multiplied by the original value of the changing parameter at the beginning of the simulation, to generate a new value for the parameter on `Date`
+  * `"rel_prev"` -- The `Value` column is multiplied by the previous value of the changing parameter, to generate a new value for the parameter on `Date`
+
+Entries in the `Value` column can be `NA`, indicating that these should be calibrated.
+
+## Example Time-Variation Schedules
+
