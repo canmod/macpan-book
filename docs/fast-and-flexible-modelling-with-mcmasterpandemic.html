@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 2 Fast and Flexible Modelling with McMasterPandemic | Generlized McMasterPandemic</title>
+  <title>Chapter 2 Fast and Flexible Modelling with McMasterPandemic | Generalized McMasterPandemic</title>
   <meta name="description" content="McMasterPandemic is a modelling tool that was rapidly developed to provide timely insights into the Covid-19 Pandemic in Canada. We are currently refactoring this tool so that it is faster and more general. This book describes how to use this refactored version of McMasterPandemic." />
   <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 2 Fast and Flexible Modelling with McMasterPandemic | Generlized McMasterPandemic" />
+  <meta property="og:title" content="Chapter 2 Fast and Flexible Modelling with McMasterPandemic | Generalized McMasterPandemic" />
   <meta property="og:type" content="book" />
   
   <meta property="og:image" content="/path to the social sharing image like images/seird.jpg" />
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="canmod/macpan-book" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 2 Fast and Flexible Modelling with McMasterPandemic | Generlized McMasterPandemic" />
+  <meta name="twitter:title" content="Chapter 2 Fast and Flexible Modelling with McMasterPandemic | Generalized McMasterPandemic" />
   
   <meta name="twitter:description" content="McMasterPandemic is a modelling tool that was rapidly developed to provide timely insights into the Covid-19 Pandemic in Canada. We are currently refactoring this tool so that it is faster and more general. This book describes how to use this refactored version of McMasterPandemic." />
   <meta name="twitter:image" content="/path to the social sharing image like images/seird.jpg" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Steve Walker" />
 
 
-<meta name="date" content="2022-04-22" />
+<meta name="date" content="2022-04-25" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -161,12 +161,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.4" data-path="flow-between-states.html"><a href="flow-between-states.html#rate-matrix-dependence-on-state-variables-and-parameters"><i class="fa fa-check"></i><b>4.4</b> Rate Matrix Dependence on State Variables and Parameters</a></li>
 <li class="chapter" data-level="4.5" data-path="flow-between-states.html"><a href="flow-between-states.html#next-steps-1"><i class="fa fa-check"></i><b>4.5</b> Next Steps</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="outflows.html"><a href="outflows.html"><i class="fa fa-check"></i><b>5</b> Outflows</a>
+<li class="chapter" data-level="5" data-path="simulation.html"><a href="simulation.html"><i class="fa fa-check"></i><b>5</b> Simulation</a></li>
+<li class="chapter" data-level="6" data-path="outflows.html"><a href="outflows.html"><i class="fa fa-check"></i><b>6</b> Outflows</a>
 <ul>
-<li class="chapter" data-level="5.1" data-path="outflows.html"><a href="outflows.html#standard-inflow-outflow-balance"><i class="fa fa-check"></i><b>5.1</b> Standard Inflow-Outflow Balance</a></li>
-<li class="chapter" data-level="5.2" data-path="outflows.html"><a href="outflows.html#accumulators"><i class="fa fa-check"></i><b>5.2</b> Accumulators</a></li>
+<li class="chapter" data-level="6.1" data-path="outflows.html"><a href="outflows.html#standard-inflow-outflow-balance"><i class="fa fa-check"></i><b>6.1</b> Standard Inflow-Outflow Balance</a></li>
+<li class="chapter" data-level="6.2" data-path="outflows.html"><a href="outflows.html#accumulators"><i class="fa fa-check"></i><b>6.2</b> Accumulators</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="simulation.html"><a href="simulation.html"><i class="fa fa-check"></i><b>6</b> Simulation</a></li>
 <li class="chapter" data-level="7" data-path="calibration.html"><a href="calibration.html"><i class="fa fa-check"></i><b>7</b> Calibration</a>
 <ul>
 <li class="chapter" data-level="7.1" data-path="calibration.html"><a href="calibration.html#loss-functions"><i class="fa fa-check"></i><b>7.1</b> Loss Functions</a>
@@ -215,7 +215,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Generlized McMasterPandemic</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Generalized McMasterPandemic</a>
           </h1>
         </div>
 
@@ -227,6 +227,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1><span class="header-section-number">Chapter 2</span> Fast and Flexible Modelling with McMasterPandemic</h1>
 <p><a href="https://github.com/mac-theobio/McMasterPandemic">McMasterPandemic</a> is a modelling tool that was rapidly developed to provide timely insights into the Covid-19 Pandemic in Canada. We are currently refactoring this tool so that it is faster and more general. This book describes how to use this refactored version of McMasterPandemic.</p>
 <p>The general model underlying McMasterPandmic’s flexible engine and interface based on a discrete time compartmental model.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="fast-and-flexible-modelling-with-mcmasterpandemic.html#cb1-1" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">&quot;mac-theobio/McMasterPandemic@tmb-condense&quot;</span>)</span></code></pre></div>
 <div id="generalized-model-at-a-glance" class="section level2" number="2.1">
 <h2><span class="header-section-number">2.1</span> Generalized Model at a Glance</h2>
 <p><span class="math display">\[

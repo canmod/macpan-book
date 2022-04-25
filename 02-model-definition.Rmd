@@ -4,6 +4,7 @@
 suppressPackageStartupMessages(library(ggplot2))
 suppressPackageStartupMessages(library(McMasterPandemic))
 suppressPackageStartupMessages(library(dplyr))
+suppressPackageStartupMessages(library(tidyr))
 suppressPackageStartupMessages(library(lubridate)) # shouldn't need this -- only here due to experimental changes to macpan
 ```
 
@@ -26,6 +27,12 @@ sir = flexmodel(
 )
 ```
 
+::: {.infobox .caution data-latex="{caution}"}
+To learn more about these options, please keep reading this chapter.
+
+To continue building this simple SIR model, please move on the the next chapter, where you can define [Flow Between States].
+:::
+
 ## Initial Parameter Vector
 
 The parameter vector contains the following kinds of information.
@@ -43,7 +50,7 @@ sir$params
 McMasterPandemic also has a special `params_pansim` object class for representing parameters. These objects come with descriptions of the meaning of each parameter. An example of this `params_pansim` format can be explored with the following command.
 
 ```{r ICU1_params}
-knitr::kable(describe_params(read_params('ICU1.csv')))
+rmarkdown::paged_table(describe_params(read_params('ICU1.csv')))
 ```
 
 See the McMasterPandemic [getting started vignette](https://mac-theobio.github.io/McMasterPandemic/articles/getting_started.html) for more info on `params_pansim` objects.

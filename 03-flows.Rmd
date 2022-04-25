@@ -5,7 +5,7 @@ Here we describe the definition of the basic model of flows among states. Later 
 The per-capita rate of flow between any two states can be defined using the `add_rate` function.
 
 ```{r echo = FALSE}
-sir = init_model(
+sir = flexmodel(
   params = c(beta = 0.1, gamma = 0.01, N = 100),
   state = c(S = 99, I = 1, R = 0),
   start_date = "2020-03-11",
@@ -21,7 +21,34 @@ sir = (sir
 )
 ```
 
-The remainder of this chapter describes the theory of behind these rates, and clarifies what they mean.
+The first `add_rate` function says that on each simulated day, individuals flow from the `S` box to the `I` box at a rate equal to the product of `I`, `beta`, and `1/N`. This rate is a per-capita rate, and so the flow of individuals from `S` to `I` is `S` times the rate. Similarly, the second `add_rate` function says that `I` times `gamma` individuals flow from `I` to `R` every simulated day.
+
+Here are the rules of these rate formulas (although these can be relaxed to some degree using techniques covered in later chapters).
+
+* both state variables and parameters can be referred to by name as variables in the formulas
+* variables must be encapsulated with parentheses
+* variables can be converted to their inverse `(1/x)` or complement `(1-x)`
+* varaibles, their inverses, and their complements can be combined using `+` and `*` operators
+
+Examples of valid rate formulas for this model include:
+
+* `(1-gamma) * (S) + (gamma)`
+* `(1/I)`
+* `(beta) * (gamma) + (beta) * (1/N) * (1-gamma)`
+
+Examples of invalid rate formulas include:
+
+* `1-gamma` -- no parentheses around this complement
+* `beta * gamma` -- no parentheses around variables (but this can be addressed using `struc` objects -- TODO: link to these)
+* `((S) + (R)) * (beta)` -- general grouping parentheses and common factors are not allowed (but this can be addressed using `struc` objects or intermediate computations -- TODO: link to these)
+* `(E) * (beta)` -- the variable `E` is in neither the parameter nor state variable
+
+
+::: {.infobox .caution data-latex="{caution}"}
+The remainder of this chapter describes the theory behind these rates, and clarifies what they mean.
+
+To start using this simple SIR model, please move on the the next chapter where you will learn how to do [Simulation] and explore epidemic trajectories.
+:::
 
 ## State Flows
 

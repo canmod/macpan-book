@@ -12,3 +12,10 @@ pre {
 pre code {
   white-space: inherit;
 }
+.infobox {
+  padding: 1em 1em 1em 4em;
+  margin-bottom: 10px;
+  border: 8px solid grey;
+  border-radius: 10px;
+  background: #ffffff url("images/fork.png") 7px 10px/3em no-repeat;
+}

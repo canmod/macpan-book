@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 5 Outflows | Generlized McMasterPandemic</title>
+  <title>Chapter 5 Outflows | Generalized McMasterPandemic</title>
   <meta name="description" content="McMasterPandemic is a modelling tool that was rapidly developed to provide timely insights into the Covid-19 Pandemic in Canada. We are currently refactoring this tool so that it is faster and more general. This book describes how to use this refactored version of McMasterPandemic." />
   <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 5 Outflows | Generlized McMasterPandemic" />
+  <meta property="og:title" content="Chapter 5 Outflows | Generalized McMasterPandemic" />
   <meta property="og:type" content="book" />
   
   <meta property="og:image" content="/path to the social sharing image like images/seird.jpg" />
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="canmod/macpan-book" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 5 Outflows | Generlized McMasterPandemic" />
+  <meta name="twitter:title" content="Chapter 5 Outflows | Generalized McMasterPandemic" />
   
   <meta name="twitter:description" content="McMasterPandemic is a modelling tool that was rapidly developed to provide timely insights into the Covid-19 Pandemic in Canada. We are currently refactoring this tool so that it is faster and more general. This book describes how to use this refactored version of McMasterPandemic." />
   <meta name="twitter:image" content="/path to the social sharing image like images/seird.jpg" />
@@ -24,15 +24,15 @@
 <meta name="author" content="Steve Walker" />
 
 
-<meta name="date" content="2022-04-22" />
+<meta name="date" content="2022-04-25" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="flow-between-states.html"/>
-<link rel="next" href="simulation.html"/>
+<link rel="prev" href="simulation.html"/>
+<link rel="next" href="calibration.html"/>
 <script src="libs/header-attrs-2.9/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
@@ -53,6 +53,8 @@
 
 <link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
+<script src="libs/pagedtable-1.1/js/pagedtable.js"></script>
 <script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
 <script src="libs/viz-1.8.2/viz.js"></script>
 <link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
@@ -141,66 +143,65 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="./">McMasterPandemic</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Generalized McMasterPandemic</a></li>
-<li class="chapter" data-level="2" data-path="fast-and-flexible-modelling-with-mcmasterpandemic.html"><a href="fast-and-flexible-modelling-with-mcmasterpandemic.html"><i class="fa fa-check"></i><b>2</b> Fast and Flexible Modelling with McMasterPandemic</a>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Fast and Flexible Modelling with McMasterPandemic</a>
 <ul>
-<li class="chapter" data-level="2.1" data-path="fast-and-flexible-modelling-with-mcmasterpandemic.html"><a href="fast-and-flexible-modelling-with-mcmasterpandemic.html#generalized-model-at-a-glance"><i class="fa fa-check"></i><b>2.1</b> Generalized Model at a Glance</a></li>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#generalized-model-at-a-glance"><i class="fa fa-check"></i><b>1.1</b> Generalized Model at a Glance</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="simple-model-initializtion.html"><a href="simple-model-initializtion.html"><i class="fa fa-check"></i><b>3</b> Simple Model Initializtion</a>
+<li class="chapter" data-level="2" data-path="simple-model-initializtion.html"><a href="simple-model-initializtion.html"><i class="fa fa-check"></i><b>2</b> Simple Model Initializtion</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="simple-model-initializtion.html"><a href="simple-model-initializtion.html#initial-parameter-vector"><i class="fa fa-check"></i><b>3.1</b> Initial Parameter Vector</a></li>
-<li class="chapter" data-level="3.2" data-path="simple-model-initializtion.html"><a href="simple-model-initializtion.html#initial-state-vector"><i class="fa fa-check"></i><b>3.2</b> Initial State Vector</a></li>
-<li class="chapter" data-level="3.3" data-path="simple-model-initializtion.html"><a href="simple-model-initializtion.html#start-and-end-date"><i class="fa fa-check"></i><b>3.3</b> Start and End Date</a></li>
-<li class="chapter" data-level="3.4" data-path="simple-model-initializtion.html"><a href="simple-model-initializtion.html#next-steps"><i class="fa fa-check"></i><b>3.4</b> Next Steps</a></li>
+<li class="chapter" data-level="2.1" data-path="simple-model-initializtion.html"><a href="simple-model-initializtion.html#initial-parameter-vector"><i class="fa fa-check"></i><b>2.1</b> Initial Parameter Vector</a></li>
+<li class="chapter" data-level="2.2" data-path="simple-model-initializtion.html"><a href="simple-model-initializtion.html#initial-state-vector"><i class="fa fa-check"></i><b>2.2</b> Initial State Vector</a></li>
+<li class="chapter" data-level="2.3" data-path="simple-model-initializtion.html"><a href="simple-model-initializtion.html#start-and-end-date"><i class="fa fa-check"></i><b>2.3</b> Start and End Date</a></li>
+<li class="chapter" data-level="2.4" data-path="simple-model-initializtion.html"><a href="simple-model-initializtion.html#next-steps"><i class="fa fa-check"></i><b>2.4</b> Next Steps</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="flow-between-states.html"><a href="flow-between-states.html"><i class="fa fa-check"></i><b>4</b> Flow Between States</a>
+<li class="chapter" data-level="3" data-path="flow-between-states.html"><a href="flow-between-states.html"><i class="fa fa-check"></i><b>3</b> Flow Between States</a>
 <ul>
-<li class="chapter" data-level="4.1" data-path="flow-between-states.html"><a href="flow-between-states.html#state-flows"><i class="fa fa-check"></i><b>4.1</b> State Flows</a></li>
-<li class="chapter" data-level="4.2" data-path="flow-between-states.html"><a href="flow-between-states.html#flow-matrix"><i class="fa fa-check"></i><b>4.2</b> Flow Matrix</a></li>
-<li class="chapter" data-level="4.3" data-path="flow-between-states.html"><a href="flow-between-states.html#rate-matrix"><i class="fa fa-check"></i><b>4.3</b> Rate Matrix</a></li>
-<li class="chapter" data-level="4.4" data-path="flow-between-states.html"><a href="flow-between-states.html#rate-matrix-dependence-on-state-variables-and-parameters"><i class="fa fa-check"></i><b>4.4</b> Rate Matrix Dependence on State Variables and Parameters</a></li>
-<li class="chapter" data-level="4.5" data-path="flow-between-states.html"><a href="flow-between-states.html#next-steps-1"><i class="fa fa-check"></i><b>4.5</b> Next Steps</a></li>
+<li class="chapter" data-level="3.1" data-path="flow-between-states.html"><a href="flow-between-states.html#state-flows"><i class="fa fa-check"></i><b>3.1</b> State Flows</a></li>
+<li class="chapter" data-level="3.2" data-path="flow-between-states.html"><a href="flow-between-states.html#flow-matrix"><i class="fa fa-check"></i><b>3.2</b> Flow Matrix</a></li>
+<li class="chapter" data-level="3.3" data-path="flow-between-states.html"><a href="flow-between-states.html#rate-matrix"><i class="fa fa-check"></i><b>3.3</b> Rate Matrix</a></li>
+<li class="chapter" data-level="3.4" data-path="flow-between-states.html"><a href="flow-between-states.html#rate-matrix-dependence-on-state-variables-and-parameters"><i class="fa fa-check"></i><b>3.4</b> Rate Matrix Dependence on State Variables and Parameters</a></li>
+<li class="chapter" data-level="3.5" data-path="flow-between-states.html"><a href="flow-between-states.html#next-steps-1"><i class="fa fa-check"></i><b>3.5</b> Next Steps</a></li>
 </ul></li>
+<li class="chapter" data-level="4" data-path="simulation.html"><a href="simulation.html"><i class="fa fa-check"></i><b>4</b> Simulation</a></li>
 <li class="chapter" data-level="5" data-path="outflows.html"><a href="outflows.html"><i class="fa fa-check"></i><b>5</b> Outflows</a>
 <ul>
 <li class="chapter" data-level="5.1" data-path="outflows.html"><a href="outflows.html#standard-inflow-outflow-balance"><i class="fa fa-check"></i><b>5.1</b> Standard Inflow-Outflow Balance</a></li>
 <li class="chapter" data-level="5.2" data-path="outflows.html"><a href="outflows.html#accumulators"><i class="fa fa-check"></i><b>5.2</b> Accumulators</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="simulation.html"><a href="simulation.html"><i class="fa fa-check"></i><b>6</b> Simulation</a></li>
-<li class="chapter" data-level="7" data-path="calibration.html"><a href="calibration.html"><i class="fa fa-check"></i><b>7</b> Calibration</a>
+<li class="chapter" data-level="6" data-path="calibration.html"><a href="calibration.html"><i class="fa fa-check"></i><b>6</b> Calibration</a>
 <ul>
-<li class="chapter" data-level="7.1" data-path="calibration.html"><a href="calibration.html#loss-functions"><i class="fa fa-check"></i><b>7.1</b> Loss Functions</a>
+<li class="chapter" data-level="6.1" data-path="calibration.html"><a href="calibration.html#loss-functions"><i class="fa fa-check"></i><b>6.1</b> Loss Functions</a>
 <ul>
-<li class="chapter" data-level="7.1.1" data-path="calibration.html"><a href="calibration.html#negative-binomial"><i class="fa fa-check"></i><b>7.1.1</b> Negative Binomial</a></li>
+<li class="chapter" data-level="6.1.1" data-path="calibration.html"><a href="calibration.html#negative-binomial"><i class="fa fa-check"></i><b>6.1.1</b> Negative Binomial</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="hazard-smoothing.html"><a href="hazard-smoothing.html"><i class="fa fa-check"></i><b>8</b> Hazard Smoothing</a></li>
-<li class="chapter" data-level="9" data-path="state-initialization.html"><a href="state-initialization.html"><i class="fa fa-check"></i><b>9</b> State Initialization</a></li>
-<li class="chapter" data-level="10" data-path="vector-rates.html"><a href="vector-rates.html"><i class="fa fa-check"></i><b>10</b> Vector Rates</a></li>
-<li class="chapter" data-level="11" data-path="time-varying-parameters.html"><a href="time-varying-parameters.html"><i class="fa fa-check"></i><b>11</b> Time Varying Parameters</a>
+<li class="chapter" data-level="7" data-path="hazard-smoothing.html"><a href="hazard-smoothing.html"><i class="fa fa-check"></i><b>7</b> Hazard Smoothing</a></li>
+<li class="chapter" data-level="8" data-path="state-initialization.html"><a href="state-initialization.html"><i class="fa fa-check"></i><b>8</b> State Initialization</a></li>
+<li class="chapter" data-level="9" data-path="vector-rates.html"><a href="vector-rates.html"><i class="fa fa-check"></i><b>9</b> Vector Rates</a></li>
+<li class="chapter" data-level="10" data-path="time-varying-parameters.html"><a href="time-varying-parameters.html"><i class="fa fa-check"></i><b>10</b> Time Varying Parameters</a>
 <ul>
-<li class="chapter" data-level="11.1" data-path="time-varying-parameters.html"><a href="time-varying-parameters.html#example-time-variation-schedules"><i class="fa fa-check"></i><b>11.1</b> Example Time-Variation Schedules</a></li>
+<li class="chapter" data-level="10.1" data-path="time-varying-parameters.html"><a href="time-varying-parameters.html#example-time-variation-schedules"><i class="fa fa-check"></i><b>10.1</b> Example Time-Variation Schedules</a></li>
 </ul></li>
-<li class="chapter" data-level="12" data-path="examples.html"><a href="examples.html"><i class="fa fa-check"></i><b>12</b> Examples</a>
+<li class="chapter" data-level="11" data-path="examples.html"><a href="examples.html"><i class="fa fa-check"></i><b>11</b> Examples</a>
 <ul>
-<li class="chapter" data-level="12.1" data-path="examples.html"><a href="examples.html#hello-world-simulating-an-sir-model"><i class="fa fa-check"></i><b>12.1</b> Hello World: Simulating an SIR Model</a></li>
-<li class="chapter" data-level="12.2" data-path="examples.html"><a href="examples.html#seir"><i class="fa fa-check"></i><b>12.2</b> SEIR</a></li>
-<li class="chapter" data-level="12.3" data-path="examples.html"><a href="examples.html#structure-two-strain-sir"><i class="fa fa-check"></i><b>12.3</b> Structure: Two-Strain SIR</a></li>
-<li class="chapter" data-level="12.4" data-path="examples.html"><a href="examples.html#erlang-seir"><i class="fa fa-check"></i><b>12.4</b> Erlang SEIR</a></li>
-<li class="chapter" data-level="12.5" data-path="examples.html"><a href="examples.html#the-sirv-model"><i class="fa fa-check"></i><b>12.5</b> The SIRV model</a></li>
-<li class="chapter" data-level="12.6" data-path="examples.html"><a href="examples.html#variolation-model"><i class="fa fa-check"></i><b>12.6</b> Variolation model</a></li>
-<li class="chapter" data-level="12.7" data-path="examples.html"><a href="examples.html#seird-model"><i class="fa fa-check"></i><b>12.7</b> SEIRD Model</a></li>
-<li class="chapter" data-level="12.8" data-path="examples.html"><a href="examples.html#covid-seir"><i class="fa fa-check"></i><b>12.8</b> Covid SEIR</a></li>
-<li class="chapter" data-level="12.9" data-path="examples.html"><a href="examples.html#bc-covid-omicron"><i class="fa fa-check"></i><b>12.9</b> BC Covid Omicron</a></li>
-<li class="chapter" data-level="12.10" data-path="examples.html"><a href="examples.html#classic-mcmasterpandemic"><i class="fa fa-check"></i><b>12.10</b> Classic McMasterPandemic</a></li>
+<li class="chapter" data-level="11.1" data-path="examples.html"><a href="examples.html#hello-world-simulating-an-sir-model"><i class="fa fa-check"></i><b>11.1</b> Hello World: Simulating an SIR Model</a></li>
+<li class="chapter" data-level="11.2" data-path="examples.html"><a href="examples.html#seir"><i class="fa fa-check"></i><b>11.2</b> SEIR</a></li>
+<li class="chapter" data-level="11.3" data-path="examples.html"><a href="examples.html#structure-two-strain-sir"><i class="fa fa-check"></i><b>11.3</b> Structure: Two-Strain SIR</a></li>
+<li class="chapter" data-level="11.4" data-path="examples.html"><a href="examples.html#erlang-seir"><i class="fa fa-check"></i><b>11.4</b> Erlang SEIR</a></li>
+<li class="chapter" data-level="11.5" data-path="examples.html"><a href="examples.html#the-sirv-model"><i class="fa fa-check"></i><b>11.5</b> The SIRV model</a></li>
+<li class="chapter" data-level="11.6" data-path="examples.html"><a href="examples.html#variolation-model"><i class="fa fa-check"></i><b>11.6</b> Variolation model</a></li>
+<li class="chapter" data-level="11.7" data-path="examples.html"><a href="examples.html#seird-model"><i class="fa fa-check"></i><b>11.7</b> SEIRD Model</a></li>
+<li class="chapter" data-level="11.8" data-path="examples.html"><a href="examples.html#covid-seir"><i class="fa fa-check"></i><b>11.8</b> Covid SEIR</a></li>
+<li class="chapter" data-level="11.9" data-path="examples.html"><a href="examples.html#bc-covid-omicron"><i class="fa fa-check"></i><b>11.9</b> BC Covid Omicron</a></li>
+<li class="chapter" data-level="11.10" data-path="examples.html"><a href="examples.html#classic-mcmasterpandemic"><i class="fa fa-check"></i><b>11.10</b> Classic McMasterPandemic</a></li>
 </ul></li>
-<li class="chapter" data-level="13" data-path="troubleshooting.html"><a href="troubleshooting.html"><i class="fa fa-check"></i><b>13</b> Troubleshooting</a>
+<li class="chapter" data-level="12" data-path="troubleshooting.html"><a href="troubleshooting.html"><i class="fa fa-check"></i><b>12</b> Troubleshooting</a>
 <ul>
-<li class="chapter" data-level="13.1" data-path="troubleshooting.html"><a href="troubleshooting.html#nan-valued-objective-function"><i class="fa fa-check"></i><b>13.1</b> NaN-Valued Objective Function</a>
+<li class="chapter" data-level="12.1" data-path="troubleshooting.html"><a href="troubleshooting.html#nan-valued-objective-function"><i class="fa fa-check"></i><b>12.1</b> NaN-Valued Objective Function</a>
 <ul>
-<li class="chapter" data-level="13.1.1" data-path="troubleshooting.html"><a href="troubleshooting.html#simulated-time-series-close-to-zero"><i class="fa fa-check"></i><b>13.1.1</b> Simulated time-series close to zero</a></li>
-<li class="chapter" data-level="13.1.2" data-path="troubleshooting.html"><a href="troubleshooting.html#negative-rate-matrix-elements"><i class="fa fa-check"></i><b>13.1.2</b> Negative rate matrix elements</a></li>
-<li class="chapter" data-level="13.1.3" data-path="troubleshooting.html"><a href="troubleshooting.html#optimizer-tries-very-large-dispersion-parameters"><i class="fa fa-check"></i><b>13.1.3</b> Optimizer tries very large dispersion parameters</a></li>
+<li class="chapter" data-level="12.1.1" data-path="troubleshooting.html"><a href="troubleshooting.html#simulated-time-series-close-to-zero"><i class="fa fa-check"></i><b>12.1.1</b> Simulated time-series close to zero</a></li>
+<li class="chapter" data-level="12.1.2" data-path="troubleshooting.html"><a href="troubleshooting.html#negative-rate-matrix-elements"><i class="fa fa-check"></i><b>12.1.2</b> Negative rate matrix elements</a></li>
+<li class="chapter" data-level="12.1.3" data-path="troubleshooting.html"><a href="troubleshooting.html#optimizer-tries-very-large-dispersion-parameters"><i class="fa fa-check"></i><b>12.1.3</b> Optimizer tries very large dispersion parameters</a></li>
 </ul></li>
 </ul></li>
 <li class="divider"></li>
@@ -215,7 +216,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Generlized McMasterPandemic</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Generalized McMasterPandemic</a>
           </h1>
         </div>
 
@@ -226,21 +227,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="outflows" class="section level1" number="5">
 <h1><span class="header-section-number">Chapter 5</span> Outflows</h1>
 <p>In compartmental modelling we typically want to balance each flow out of a boxes with an equal flow into another box. This is because individuals are simply changing their epidemiological status as they move between boxes, and the total number of individuals across the boxes remains constant.</p>
-<div id="htmlwidget-5e340f17a318fe7f27ee" style="width:200px;height:100px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-5e340f17a318fe7f27ee">{"x":{"diagram":"digraph {\n  graph [layout = dot, rankdir = LR]\n  \n  node [shape = rectangle]        \n  S [label = \"S\"]\n  I [label = \"I\"]\n  \n  # edge definitions with the node IDs\n  S -> I\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-6f59054ec16587200cc5" style="width:200px;height:100px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-6f59054ec16587200cc5">{"x":{"diagram":"digraph {\n  graph [layout = dot, rankdir = LR]\n  \n  node [shape = rectangle]        \n  S [label = \"S\"]\n  I [label = \"I\"]\n  \n  # edge definitions with the node IDs\n  S -> I\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 <div id="standard-inflow-outflow-balance" class="section level2" number="5.1">
 <h2><span class="header-section-number">5.1</span> Standard Inflow-Outflow Balance</h2>
 <p>McMasterPandemic makes it very easy to declare this standard balance between inflows and outflows to any model by simply adding <code>add_outflow</code> to your model definition pipeline.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="outflows.html#cb9-1" aria-hidden="true" tabindex="-1"></a>sir <span class="ot">=</span> (<span class="fu">init_model</span>(</span>
-<span id="cb9-2"><a href="outflows.html#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">params =</span> <span class="fu">c</span>(<span class="at">beta =</span> <span class="fl">0.1</span>, <span class="at">gamma =</span> <span class="fl">0.01</span>, <span class="at">N =</span> <span class="dv">100</span>),</span>
-<span id="cb9-3"><a href="outflows.html#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">state =</span> <span class="fu">c</span>(<span class="at">S =</span> <span class="dv">99</span>, <span class="at">I =</span> <span class="dv">1</span>, <span class="at">R =</span> <span class="dv">0</span>),</span>
-<span id="cb9-4"><a href="outflows.html#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">start_date =</span> <span class="st">&quot;2020-03-11&quot;</span>,</span>
-<span id="cb9-5"><a href="outflows.html#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">end_date =</span> <span class="st">&quot;2020-12-01&quot;</span></span>
-<span id="cb9-6"><a href="outflows.html#cb9-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb9-7"><a href="outflows.html#cb9-7" aria-hidden="true" tabindex="-1"></a> <span class="sc">%&gt;%</span> <span class="fu">add_rate</span>(<span class="st">&quot;S&quot;</span>, <span class="st">&quot;I&quot;</span>, <span class="sc">~</span> (I) <span class="sc">*</span> (beta) <span class="sc">*</span> (<span class="dv">1</span><span class="sc">/</span>N))</span>
-<span id="cb9-8"><a href="outflows.html#cb9-8" aria-hidden="true" tabindex="-1"></a> <span class="sc">%&gt;%</span> <span class="fu">add_rate</span>(<span class="st">&quot;I&quot;</span>, <span class="st">&quot;R&quot;</span>, <span class="sc">~</span> (gamma))</span>
-<span id="cb9-9"><a href="outflows.html#cb9-9" aria-hidden="true" tabindex="-1"></a> <span class="sc">%&gt;%</span> add_outflow</span>
-<span id="cb9-10"><a href="outflows.html#cb9-10" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="outflows.html#cb13-1" aria-hidden="true" tabindex="-1"></a>sir <span class="ot">=</span> (<span class="fu">init_model</span>(</span>
+<span id="cb13-2"><a href="outflows.html#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">params =</span> <span class="fu">c</span>(<span class="at">beta =</span> <span class="fl">0.1</span>, <span class="at">gamma =</span> <span class="fl">0.01</span>, <span class="at">N =</span> <span class="dv">100</span>),</span>
+<span id="cb13-3"><a href="outflows.html#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">state =</span> <span class="fu">c</span>(<span class="at">S =</span> <span class="dv">99</span>, <span class="at">I =</span> <span class="dv">1</span>, <span class="at">R =</span> <span class="dv">0</span>),</span>
+<span id="cb13-4"><a href="outflows.html#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">start_date =</span> <span class="st">&quot;2020-03-11&quot;</span>,</span>
+<span id="cb13-5"><a href="outflows.html#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">end_date =</span> <span class="st">&quot;2020-12-01&quot;</span></span>
+<span id="cb13-6"><a href="outflows.html#cb13-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb13-7"><a href="outflows.html#cb13-7" aria-hidden="true" tabindex="-1"></a> <span class="sc">%&gt;%</span> <span class="fu">add_rate</span>(<span class="st">&quot;S&quot;</span>, <span class="st">&quot;I&quot;</span>, <span class="sc">~</span> (I) <span class="sc">*</span> (beta) <span class="sc">*</span> (<span class="dv">1</span><span class="sc">/</span>N))</span>
+<span id="cb13-8"><a href="outflows.html#cb13-8" aria-hidden="true" tabindex="-1"></a> <span class="sc">%&gt;%</span> <span class="fu">add_rate</span>(<span class="st">&quot;I&quot;</span>, <span class="st">&quot;R&quot;</span>, <span class="sc">~</span> (gamma))</span>
+<span id="cb13-9"><a href="outflows.html#cb13-9" aria-hidden="true" tabindex="-1"></a> <span class="sc">%&gt;%</span> add_outflow</span>
+<span id="cb13-10"><a href="outflows.html#cb13-10" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>## Warning in init_model(params = c(beta = 0.1, gamma = 0.01, N = 100), state = c(S = 99, : 
 ## init_model is deprecated.
 ## please use flexmodel.
@@ -259,8 +260,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-<a href="flow-between-states.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="simulation.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="simulation.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="calibration.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -291,7 +292,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/USERNAME/REPO/edit/BRANCH/04-outflows.Rmd",
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/05-outflows.Rmd",
 "text": "Edit"
 },
 "history": {
