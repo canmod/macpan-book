@@ -1,0 +1,71 @@
+# Calibration
+
+```{r echo = FALSE}
+sir = (flexmodel(
+  params = c(beta = 0.1, gamma = 0.01, N = 100),
+  state = c(S = 99, I = 1, R = 0),
+  start_date = "2020-03-11",
+  end_date = "2020-12-01"
+)
+  %>% add_rate("S", "I", ~ (I) * (beta) * (1/N))
+  %>% add_rate("I", "R", ~ (gamma))
+)
+```
+
+In the last chapter we showed how to simulate from a simple SIR model. Here we simulate and then manipulate the resulting data into the form that could be used to fit the model to data. This will demonstrate the model calibration capabilities of McMasterPandemic, which can be used to fit any number of model parameters to any number of observed time-series of the population sizes in the compartments of the model. For example, here we generate a time-series of infected individuals.
+```{r}
+synthetic_data = (sir
+  %>% simulation_history
+  %>% select(Date, I)
+  %>% pivot_longer(-Date, names_to = "var", values_to = "value")
+  %>% rename(date = Date)
+  %>% filter(date > as.Date("2020-03-11"))
+)
+```
+```{r echo = TRUE}
+rmarkdown::paged_table(synthetic_data)
+```
+
+When fitting data to a model a specific format must be used. In particular there must be exactly these three columns.
+
+* `date` -- gives the date associated with each observation
+* `var` -- gives the name of the state variable to compare
+* `value` -- gives the observed value to compare with the simulated state variable
+
+In this particular case there is only a single state variable used, but this need not be the case.
+
+We next construct a model that contains two new ingredients that we have not yet seen: (1) observed time-series data and (2) information on what parameters to fit and how to fit them.
+```{r}
+sir_to_calibrate = (flexmodel(
+  params = c(beta = 0.1, gamma = 0.01, N = 100),
+  state = c(S = 99, I = 1, R = 0),
+  start_date = "2020-03-11",
+  end_date = "2020-12-01",
+  data = synthetic_data
+)
+  %>% add_rate("S", "I", ~ (I) * (beta) * (1/N))
+  %>% add_rate("I", "R", ~ (gamma))
+  %>% update_opt_params(log_beta ~ log_flat(0))
+)
+```
+
+```{r}
+opt = nlminb_flexmodel(sir_to_calibrate)
+```
+
+```{r}
+opt$opt_obj
+opt$opt_par
+```
+
+
+## Loss Functions
+
+### Negative Binomial
+
+$$
+\frac{\Gamma(x+k)}{\Gamma(k) x!} \left(\frac{k}{k + \mu}\right)^k \left(\frac{\mu}{k + \mu}\right)^x
+$$
+$$
+\log\Gamma(x+k) - \log\Gamma(k) - \log(x!) + k \log\left(\frac{k}{k + \mu}\right) + x\log\left(\frac{\mu}{k + \mu}\right)
+$$

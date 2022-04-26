@@ -24,7 +24,7 @@
 <meta name="author" content="Steve Walker" />
 
 
-<meta name="date" content="2022-04-25" />
+<meta name="date" content="2022-04-26" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -32,7 +32,7 @@
   
   
 <link rel="prev" href="flow-between-states.html"/>
-<link rel="next" href="outflows.html"/>
+<link rel="next" href="calibration.html"/>
 <script src="libs/header-attrs-2.9/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
@@ -163,17 +163,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.5" data-path="flow-between-states.html"><a href="flow-between-states.html#next-steps-1"><i class="fa fa-check"></i><b>3.5</b> Next Steps</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="simulation.html"><a href="simulation.html"><i class="fa fa-check"></i><b>4</b> Simulation</a></li>
-<li class="chapter" data-level="5" data-path="outflows.html"><a href="outflows.html"><i class="fa fa-check"></i><b>5</b> Outflows</a>
+<li class="chapter" data-level="5" data-path="calibration.html"><a href="calibration.html"><i class="fa fa-check"></i><b>5</b> Calibration</a>
 <ul>
-<li class="chapter" data-level="5.1" data-path="outflows.html"><a href="outflows.html#standard-inflow-outflow-balance"><i class="fa fa-check"></i><b>5.1</b> Standard Inflow-Outflow Balance</a></li>
-<li class="chapter" data-level="5.2" data-path="outflows.html"><a href="outflows.html#accumulators"><i class="fa fa-check"></i><b>5.2</b> Accumulators</a></li>
+<li class="chapter" data-level="5.1" data-path="calibration.html"><a href="calibration.html#loss-functions"><i class="fa fa-check"></i><b>5.1</b> Loss Functions</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="calibration.html"><a href="calibration.html#negative-binomial"><i class="fa fa-check"></i><b>5.1.1</b> Negative Binomial</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="calibration.html"><a href="calibration.html"><i class="fa fa-check"></i><b>6</b> Calibration</a>
-<ul>
-<li class="chapter" data-level="6.1" data-path="calibration.html"><a href="calibration.html#loss-functions"><i class="fa fa-check"></i><b>6.1</b> Loss Functions</a>
-<ul>
-<li class="chapter" data-level="6.1.1" data-path="calibration.html"><a href="calibration.html#negative-binomial"><i class="fa fa-check"></i><b>6.1.1</b> Negative Binomial</a></li>
 </ul></li>
+<li class="chapter" data-level="6" data-path="outflows.html"><a href="outflows.html"><i class="fa fa-check"></i><b>6</b> Outflows</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="outflows.html"><a href="outflows.html#standard-inflow-outflow-balance"><i class="fa fa-check"></i><b>6.1</b> Standard Inflow-Outflow Balance</a></li>
+<li class="chapter" data-level="6.2" data-path="outflows.html"><a href="outflows.html#accumulators"><i class="fa fa-check"></i><b>6.2</b> Accumulators</a></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="hazard-smoothing.html"><a href="hazard-smoothing.html"><i class="fa fa-check"></i><b>7</b> Hazard Smoothing</a></li>
 <li class="chapter" data-level="8" data-path="state-initialization.html"><a href="state-initialization.html"><i class="fa fa-check"></i><b>8</b> State Initialization</a></li>
@@ -243,7 +243,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## S_to_I    S  I (I) * (beta) * (1/N)
 ## I_to_R    I  R              (gamma)</code></pre>
 <p>We see here that <code>S_to_I</code> does indeed depend on <code>I</code> in its formula, whereas <code>I_to_R</code> depends only on a parameter, <code>gamma</code>.</p>
-<p>Note that the above command uses the tidyverse-style pipe, <code>%&gt;%</code>, operator and another tidyverse function, <code>select</code>. This illustrates a general philosophy of McMasterPandemic, which is that we try to make the outputs of plug into other existing and popular tools rather than reinvent similar functionality. For example, the <code>rate_summary</code> function simply returns a data frame that can be manipulated by other data frame manipulation tools, in order to minimize the number of new coding techniques that are required to learn.</p>
+<p>Note that the above command uses the tidyverse-style pipe, <code>%&gt;%</code>, operator and another tidyverse function, <code>select</code>. This illustrates a general philosophy of McMasterPandemic, which is that we try to make the outputs plug into other existing and popular tools rather than reinvent existing functionality for a narrower purpose. For example, the <code>rate_summary</code> function returns a data frame that can be manipulated by other data frame manipulation tools.</p>
 <p>We can plug into other existing and popular tools to make a plot of the simulated epidemic trajectory.</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="simulation.html#cb12-1" aria-hidden="true" tabindex="-1"></a>(sir</span>
 <span id="cb12-2"><a href="simulation.html#cb12-2" aria-hidden="true" tabindex="-1"></a> <span class="sc">%&gt;%</span> simulation_history</span>
@@ -262,7 +262,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
         </div>
       </div>
 <a href="flow-between-states.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="outflows.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="calibration.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

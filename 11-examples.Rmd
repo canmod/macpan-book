@@ -18,7 +18,7 @@ library(lubridate)
 ```{r hello_world, fig.height=8, fig.width=8}
 state = c(S = 20000, I = 100, R = 0)
 sir_model = (
-  init_model(
+  flexmodel(
     params = c(
       gamma = 0.06,
       beta = 0.15,
@@ -27,13 +27,10 @@ sir_model = (
     state = state,
     start_date = "2000-01-01",
     end_date = "2000-05-01",
-    do_hazard = TRUE,
-    do_make_state = FALSE
+    do_hazard = TRUE
   )
   %>% add_rate("S", "I", ~ (1/N) * (beta) * (I))
   %>% add_rate("I", "R", ~ (gamma))
-  %>% add_outflow()
-  %>% update_tmb_indices
 )
 sir_model
 ```
@@ -41,14 +38,14 @@ sir_model
 ```{r echo=FALSE,eval=FALSE}
 library(visNetwork)
 
-state_nms = names(sir$state)
+state_nms = names(sir_model$state)
 nn = visNetwork(
   nodes = data.frame(
     id = state_nms,
     label = state_nms,
     title = state_nms,
     physics = FALSE),
-  edges = select(rate_summary(sir), from, to) %>% mutate(arrows = "to")
+  edges = select(rate_summary(sir_model), from, to) %>% mutate(arrows = "to")
 ) %>%
   visLegend() %>%
   visPhysics(stabilization = FALSE) %>% 
@@ -58,7 +55,6 @@ nn = visNetwork(
     zoomView = FALSE
   )
 nn
-
 ```
 
 ```{r print_sir}
@@ -85,7 +81,7 @@ nn
 ```{r seir}
 state = c(S = 20000, E = 0, I = 100, R = 0)
 seir_model = (
-  init_model(
+  flexmodel(
     params = c(
       alpha = 0.05,
       gamma = 0.06,
@@ -96,13 +92,10 @@ seir_model = (
     start_date = "2000-01-01",
     end_date = "2000-05-01",
     do_hazard = TRUE,
-    do_make_state = FALSE
   )
   %>% add_rate("S", "E", ~ (1/N) * (beta) * (I))
   %>% add_rate("E", "I", ~ (alpha))
   %>% add_rate("I", "R", ~ (gamma))
-  %>% add_outflow()
-  %>% update_tmb_indices
 )
 seir_model
 ```
@@ -118,7 +111,7 @@ state = c(
   R_wild = 0,   R_variant = 0
 )
 two_strain_model = (
-  init_model(
+  flexmodel(
     params = c(
       gamma = 0.06,       
       beta_wild = 0.15,   
@@ -128,8 +121,7 @@ two_strain_model = (
     state = state,
     start_date = "2000-01-01",
     end_date = "2000-05-01",
-    do_hazard = TRUE,
-    do_make_state = FALSE
+    do_hazard = TRUE
   )
   %>% vec_rate(
     "S",
@@ -137,8 +129,6 @@ two_strain_model = (
      vec("beta" %_% strains) * struc("1/N") * vec("I" %_% strains)
   )
   %>% rep_rate("I", "R", ~ (gamma))
-  %>% add_outflow()
-  %>% update_tmb_indices
 )
 ```
 
@@ -173,7 +163,7 @@ David, Jonathan, and David describe the [Erlang SEIR model](https://epubs.siam.o
 ```{r erlang}
 n = 4 # number of I states
 m = 6 # number of E states
-erlang_seir = (init_model(
+erlang_seir = (flexmodel(
   # FIXME: only working for no demography (so mu = 0 for now)
   params = c(mu = 0, beta = 1.5, m = m, n = n,
              gamma = 1.2, sigma = 0.1),
@@ -187,7 +177,6 @@ erlang_seir = (init_model(
     . = 1),
   start_date = "2000-01-01",
   end_date = "2000-04-01",
-  do_make_state = FALSE,
   do_hazard = TRUE
 )
   %>% add_state_param_sum("I", "^I_[0-9]+")
@@ -227,7 +216,6 @@ erlang_seir = (init_model(
   # nothing flows out of . because it is a dummy
   # state used to generate flows that are not per-capita
   %>% add_outflow("[^.]")
-  %>% update_tmb_indices
 )
 
 (erlang_seir
@@ -273,20 +261,17 @@ params_timevar = data.frame(
   Type = c("abs", "abs"))
 
 sirv_model = (
-  init_model(
+  flexmodel(
     params = params,
     state = state,
     params_timevar = params_timevar,
     start_date = "2020-01-01",
     end_date = "2020-05-01",
-    do_hazard = TRUE,
-    do_make_state = FALSE
+    do_hazard = TRUE
   )
   %>% add_rate("S", "I", ~ (beta) * (1/N) * (I))
   %>% add_rate("I", "R", ~ (gamma))
   %>% add_rate("S", "V", ~  (v))
-  %>% add_outflow()
-  %>% update_tmb_indices
 )
 
 (sirv_model
@@ -328,13 +313,11 @@ I_vec = vec("I" %_% severity)
 foi = kronecker(vec("m", "1-m"), sum(beta_vec * I_vec * struc("1/N")))
 
 variolation_model <- (
-  init_model(
+  flexmodel(
     params = params,
     state = state,
     start_date = "2020-01-01",
-    end_date = "2020-04-01",
-    do_hazard = FALSE,
-    do_make_state = FALSE
+    end_date = "2020-04-01"
   )
   %>% add_state_param_sum("N", any_var(state))
   
@@ -366,9 +349,6 @@ variolation_model <- (
     "R" %_% severity,
     vec("gamma" %_% severity)
   )
-  
-  %>% add_outflow()
-  %>% update_tmb_indices
 )
 
 (variolation_model
@@ -401,13 +381,12 @@ params = c(
   f = 0.5
 )
 seird_model = (
-  init_model(
+  flexmodel(
     params = params, 
     state = state,
     start_date = "2000-01-01",
     end_date = "2000-03-01",
-    do_hazard = TRUE,
-    do_make_state = FALSE
+    do_hazard = TRUE
   )
   %>% add_state_param_sum("N", any_var(state))
   %>% add_rate("S", "E", ~ (beta_I) * (1/N) * (I) + (beta_D) * (1/N) * (D))
@@ -415,8 +394,6 @@ seird_model = (
   %>% add_rate("I", "R", ~ (1/T_I) * (1 - f))
   %>% add_rate("I", "D", ~ (1/T_I) * (f))
   %>% add_rate("D", "Null", ~ (1/T_D))
-  %>% add_outflow()
-  %>% update_tmb_indices
 )
 (seird_model
     %>% simulate_state_vector(add_dates = TRUE)
@@ -479,12 +456,11 @@ params_timevar = data.frame(
   Type = rep("abs", length(ramp_period))
 )
 model = (
-  init_model(
+  flexmodel(
     params = params,
     state = state,
     start_date = "2021-02-01",
     end_date = "2021-06-01",
-    do_make_state = FALSE,
     do_hazard = TRUE,
     params_timevar = params_timevar
   )
@@ -521,12 +497,6 @@ model = (
     expand_names(c("R", "R"), strats, ""),
     ~ (1/D)
   )
-  
-  # add outflow for all inflows
-  %>% add_outflow()
-  
-  # compute indices to be passed to the tmb engine
-  %>% update_tmb_indices()
 )
 (model
   %>% simulate_state_vector(add_dates = TRUE)
@@ -635,7 +605,6 @@ two_strain_bc = (flexmodel(
     state = state,
     start_date = "2022-01-01",
     end_date = "2022-05-01",
-    do_make_state = FALSE,
     do_hazard = TRUE
   )
 
@@ -709,9 +678,6 @@ two_strain_bc = (flexmodel(
   # vaccination
   %>% add_rate(from = "S_unvax",   to = "S_onedose", ~ (nu) * (ve))
   %>% add_rate(from = "S_onedose", to = "S_boost",   ~ (b)  * (ve))
-
-  %>% add_outflow
-  %>% update_tmb_indices
 )
 
 category_pattern = "^(S|E|I|R)(_omicron|_delta)?_(unvax|onedose|boost)$"
@@ -733,7 +699,7 @@ category_pattern = "^(S|E|I|R)(_omicron|_delta)?_(unvax|onedose|boost)$"
 
 ```{r classic-macpan}
 params = read_params("ICU1.csv")
-model = (init_model(
+model = (flexmodel(
     params = params,
     state = make_state(params = params),
     start_date = "2020-03-10",
@@ -765,7 +731,6 @@ model = (init_model(
       (Im) * (beta0) * (1 / N) * (Cm) * (1 - iso_m) +
       (Is) * (beta0) * (1 / N) * (Cs) * (1 - iso_s))
   %>% add_outflow(".+", "^(S|E|I|H|ICU|D|R)")
-  %>% update_tmb_indices
 )
 (model
   %>% simulate_state_vector(add_dates = TRUE)

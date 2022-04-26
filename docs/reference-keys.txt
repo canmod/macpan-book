@@ -12,12 +12,12 @@ rate-matrix
 rate-matrix-dependence-on-state-variables-and-parameters
 next-steps-1
 simulation
-outflows
-standard-inflow-outflow-balance
-accumulators
 calibration
 loss-functions
 negative-binomial
+outflows
+standard-inflow-outflow-balance
+accumulators
 hazard-smoothing
 state-initialization
 vector-rates
