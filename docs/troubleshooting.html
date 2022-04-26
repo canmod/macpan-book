@@ -242,7 +242,7 @@ x + \epsilon \exp\left(-\frac{x}{\epsilon}\right)
 </div>
 <div id="optimizer-tries-very-large-dispersion-parameters" class="section level3" number="12.1.3">
 <h3><span class="header-section-number">12.1.3</span> Optimizer tries very large dispersion parameters</h3>
-<p>For some reason the TMB <code>dnbinom2</code> function cannot handle large dispersion parameters, even though the standard R <code>dnbinom</code> function seems fine with them. Nevertheless, this entire issue can be avoided by setting priors on the dispersion parameters. In the future we might try to exploit the fact that the limit of the log negative binomial density as the dispersion parameter gets large tends to <span class="math inline">\(-\log(x!)\)</span>, where <span class="math inline">\(x\)</span> is the observed count. Such an improvement is not entirely trivial due to the need for maintaining differentiability.</p>
+<p>For some reason the TMB <code>dnbinom2</code> function cannot handle large dispersion parameters, even though the standard R <code>dnbinom</code> function seems fine with them. Nevertheless, this entire issue can be avoided by setting priors on the dispersion parameters. In the future we might try to exploit the fact that the limit of the log negative binomial density as the dispersion parameter gets large tends to the log poisson density. Such an improvement is not entirely trivial due to the need for maintaining differentiability.</p>
 
 </div>
 </div>

@@ -227,21 +227,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="outflows" class="section level1" number="6">
 <h1><span class="header-section-number">Chapter 6</span> Outflows</h1>
 <p>In compartmental modelling we typically want to balance each flow out of a boxes with an equal flow into another box. This is because individuals are simply changing their epidemiological status as they move between boxes, and the total number of individuals across the boxes remains constant.</p>
-<div id="htmlwidget-46182750c40f5ac795f1" style="width:200px;height:100px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-46182750c40f5ac795f1">{"x":{"diagram":"digraph {\n  graph [layout = dot, rankdir = LR]\n  \n  node [shape = rectangle]        \n  S [label = \"S\"]\n  I [label = \"I\"]\n  \n  # edge definitions with the node IDs\n  S -> I\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-07973b3309f59cfa92de" style="width:200px;height:100px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-07973b3309f59cfa92de">{"x":{"diagram":"digraph {\n  graph [layout = dot, rankdir = LR]\n  \n  node [shape = rectangle]        \n  S [label = \"S\"]\n  I [label = \"I\"]\n  \n  # edge definitions with the node IDs\n  S -> I\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 <div id="standard-inflow-outflow-balance" class="section level2" number="6.1">
 <h2><span class="header-section-number">6.1</span> Standard Inflow-Outflow Balance</h2>
 <p>McMasterPandemic makes it very easy to declare this standard balance between inflows and outflows to any model by simply adding <code>add_outflow</code> to your model definition pipeline.</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="outflows.html#cb22-1" aria-hidden="true" tabindex="-1"></a>sir <span class="ot">=</span> (<span class="fu">init_model</span>(</span>
-<span id="cb22-2"><a href="outflows.html#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">params =</span> <span class="fu">c</span>(<span class="at">beta =</span> <span class="fl">0.1</span>, <span class="at">gamma =</span> <span class="fl">0.01</span>, <span class="at">N =</span> <span class="dv">100</span>),</span>
-<span id="cb22-3"><a href="outflows.html#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">state =</span> <span class="fu">c</span>(<span class="at">S =</span> <span class="dv">99</span>, <span class="at">I =</span> <span class="dv">1</span>, <span class="at">R =</span> <span class="dv">0</span>),</span>
-<span id="cb22-4"><a href="outflows.html#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">start_date =</span> <span class="st">&quot;2020-03-11&quot;</span>,</span>
-<span id="cb22-5"><a href="outflows.html#cb22-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">end_date =</span> <span class="st">&quot;2020-12-01&quot;</span></span>
-<span id="cb22-6"><a href="outflows.html#cb22-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb22-7"><a href="outflows.html#cb22-7" aria-hidden="true" tabindex="-1"></a> <span class="sc">%&gt;%</span> <span class="fu">add_rate</span>(<span class="st">&quot;S&quot;</span>, <span class="st">&quot;I&quot;</span>, <span class="sc">~</span> (I) <span class="sc">*</span> (beta) <span class="sc">*</span> (<span class="dv">1</span><span class="sc">/</span>N))</span>
-<span id="cb22-8"><a href="outflows.html#cb22-8" aria-hidden="true" tabindex="-1"></a> <span class="sc">%&gt;%</span> <span class="fu">add_rate</span>(<span class="st">&quot;I&quot;</span>, <span class="st">&quot;R&quot;</span>, <span class="sc">~</span> (gamma))</span>
-<span id="cb22-9"><a href="outflows.html#cb22-9" aria-hidden="true" tabindex="-1"></a> <span class="sc">%&gt;%</span> add_outflow</span>
-<span id="cb22-10"><a href="outflows.html#cb22-10" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="outflows.html#cb23-1" aria-hidden="true" tabindex="-1"></a>sir <span class="ot">=</span> (<span class="fu">init_model</span>(</span>
+<span id="cb23-2"><a href="outflows.html#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">params =</span> <span class="fu">c</span>(<span class="at">beta =</span> <span class="fl">0.1</span>, <span class="at">gamma =</span> <span class="fl">0.01</span>, <span class="at">N =</span> <span class="dv">100</span>),</span>
+<span id="cb23-3"><a href="outflows.html#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">state =</span> <span class="fu">c</span>(<span class="at">S =</span> <span class="dv">99</span>, <span class="at">I =</span> <span class="dv">1</span>, <span class="at">R =</span> <span class="dv">0</span>),</span>
+<span id="cb23-4"><a href="outflows.html#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">start_date =</span> <span class="st">&quot;2020-03-11&quot;</span>,</span>
+<span id="cb23-5"><a href="outflows.html#cb23-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">end_date =</span> <span class="st">&quot;2020-12-01&quot;</span></span>
+<span id="cb23-6"><a href="outflows.html#cb23-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb23-7"><a href="outflows.html#cb23-7" aria-hidden="true" tabindex="-1"></a> <span class="sc">%&gt;%</span> <span class="fu">add_rate</span>(<span class="st">&quot;S&quot;</span>, <span class="st">&quot;I&quot;</span>, <span class="sc">~</span> (I) <span class="sc">*</span> (beta) <span class="sc">*</span> (<span class="dv">1</span><span class="sc">/</span>N))</span>
+<span id="cb23-8"><a href="outflows.html#cb23-8" aria-hidden="true" tabindex="-1"></a> <span class="sc">%&gt;%</span> <span class="fu">add_rate</span>(<span class="st">&quot;I&quot;</span>, <span class="st">&quot;R&quot;</span>, <span class="sc">~</span> (gamma))</span>
+<span id="cb23-9"><a href="outflows.html#cb23-9" aria-hidden="true" tabindex="-1"></a> <span class="sc">%&gt;%</span> add_outflow</span>
+<span id="cb23-10"><a href="outflows.html#cb23-10" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>## Warning in init_model(params = c(beta = 0.1, gamma = 0.01, N = 100), state = c(S = 99, : 
 ## init_model is deprecated.
 ## please use flexmodel.
