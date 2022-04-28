@@ -24,7 +24,7 @@
 <meta name="author" content="Steve Walker" />
 
 
-<meta name="date" content="2022-04-26" />
+<meta name="date" content="2022-04-27" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -232,9 +232,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3><span class="header-section-number">12.1.1</span> Simulated time-series close to zero</h3>
 <p>When the simulated values that are being compared with data are close to zero (e.g. less than 1e-12), the negative binomial loss function often returns NaN. This can be fixed by setting <code>do_sim_constraint = TRUE</code> as an argument to <code>flexmodel</code> or whatever model constructor is being used (e.g. <code>make_vaccination_model</code>). This flag causes the simulated values to pass through the following soft-thresholding function to keep the simulations, <span class="math inline">\(x\)</span>, from falling below a tolerance, <span class="math inline">\(\epsilon\)</span>.</p>
 <p><span class="math display">\[
-x + \epsilon \exp\left(-\frac{x}{\epsilon}\right)
+x + \frac{\epsilon}{1-(x-\epsilon)/\epsilon + (x-\epsilon)^2/\epsilon^2}
 \]</span></p>
-<p>This tolerance can be adjusted by setting the <code>sim_lower_bound = 1e-12</code>. Note that both <code>do_sim_constraint</code> and <code>sim_lower_bound</code> get be set using the global options <code>MP_default_do_sim_constraint</code> and <code>MP_default_sim_lower_bound</code>.</p>
+<p>This tolerance can be adjusted by setting the <code>sim_lower_bound = 1e-12</code>. Note that both <code>do_sim_constraint</code> and <code>sim_lower_bound</code> can be set using the global options <code>MP_default_do_sim_constraint</code> and <code>MP_default_sim_lower_bound</code>.</p>
 </div>
 <div id="negative-rate-matrix-elements" class="section level3" number="12.1.2">
 <h3><span class="header-section-number">12.1.2</span> Negative rate matrix elements</h3>

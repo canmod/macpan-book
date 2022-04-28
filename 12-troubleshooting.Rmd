@@ -7,10 +7,10 @@
 When the simulated values that are being compared with data are close to zero (e.g. less than 1e-12), the negative binomial loss function often returns NaN.  This can be fixed by setting `do_sim_constraint = TRUE` as an argument to `flexmodel` or whatever model constructor is being used (e.g. `make_vaccination_model`). This flag causes the simulated values to pass through the following soft-thresholding function to keep the simulations, $x$, from falling below a tolerance, $\epsilon$.
 
 $$
-x + \epsilon \exp\left(-\frac{x}{\epsilon}\right)
+x + \frac{\epsilon}{1-(x-\epsilon)/\epsilon + (x-\epsilon)^2/\epsilon^2}
 $$
 
-This tolerance can be adjusted by setting the `sim_lower_bound = 1e-12`. Note that both `do_sim_constraint` and `sim_lower_bound` get be set using the global options `MP_default_do_sim_constraint` and `MP_default_sim_lower_bound`.
+This tolerance can be adjusted by setting the `sim_lower_bound = 1e-12`. Note that both `do_sim_constraint` and `sim_lower_bound` can be set using the global options `MP_default_do_sim_constraint` and `MP_default_sim_lower_bound`.
 
 
 ### Negative rate matrix elements

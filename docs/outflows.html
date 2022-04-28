@@ -24,7 +24,7 @@
 <meta name="author" content="Steve Walker" />
 
 
-<meta name="date" content="2022-04-26" />
+<meta name="date" content="2022-04-27" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -227,8 +227,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="outflows" class="section level1" number="6">
 <h1><span class="header-section-number">Chapter 6</span> Outflows</h1>
 <p>In compartmental modelling we typically want to balance each flow out of a boxes with an equal flow into another box. This is because individuals are simply changing their epidemiological status as they move between boxes, and the total number of individuals across the boxes remains constant.</p>
-<div id="htmlwidget-07973b3309f59cfa92de" style="width:200px;height:100px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-07973b3309f59cfa92de">{"x":{"diagram":"digraph {\n  graph [layout = dot, rankdir = LR]\n  \n  node [shape = rectangle]        \n  S [label = \"S\"]\n  I [label = \"I\"]\n  \n  # edge definitions with the node IDs\n  S -> I\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-856f6ad87dc0f934791f" style="width:200px;height:100px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-856f6ad87dc0f934791f">{"x":{"diagram":"digraph {\n  graph [layout = dot, rankdir = LR]\n  \n  node [shape = rectangle]        \n  S [label = \"S\"]\n  I [label = \"I\"]\n  \n  # edge definitions with the node IDs\n  S -> I\n  }","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 <div id="standard-inflow-outflow-balance" class="section level2" number="6.1">
 <h2><span class="header-section-number">6.1</span> Standard Inflow-Outflow Balance</h2>
 <p>McMasterPandemic makes it very easy to declare this standard balance between inflows and outflows to any model by simply adding <code>add_outflow</code> to your model definition pipeline.</p>
