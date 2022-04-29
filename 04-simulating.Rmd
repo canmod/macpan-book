@@ -50,3 +50,10 @@ We can plug into other existing and popular tools to make a plot of the simulate
  + geom_line(aes(Date, Population, colour = State))
 )
 ```
+
+::: {.infobox .caution data-latex="{caution}"}
+There are a few places you can go from here:
+
+1. Learn how to fit a model to observed data through [Calibration]
+2. Learn how to modify the values of parameters in simulation time using [Time Varying Parameters]
+:::

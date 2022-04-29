@@ -24,7 +24,7 @@
 <meta name="author" content="Steve Walker" />
 
 
-<meta name="date" content="2022-04-27" />
+<meta name="date" content="2022-04-29" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -32,7 +32,7 @@
   
   
 <link rel="prev" href="simulation.html"/>
-<link rel="next" href="outflows.html"/>
+<link rel="next" href="time-varying-parameters.html"/>
 <script src="libs/header-attrs-2.9/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
@@ -145,7 +145,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="divider"></li>
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Fast and Flexible Modelling with McMasterPandemic</a>
 <ul>
-<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#generalized-model-at-a-glance"><i class="fa fa-check"></i><b>1.1</b> Generalized Model at a Glance</a></li>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#installation"><i class="fa fa-check"></i><b>1.1</b> Installation</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#generalized-model-at-a-glance"><i class="fa fa-check"></i><b>1.2</b> Generalized Model at a Glance</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="simple-model-initializtion.html"><a href="simple-model-initializtion.html"><i class="fa fa-check"></i><b>2</b> Simple Model Initializtion</a>
 <ul>
@@ -170,30 +171,32 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.1.1" data-path="calibration.html"><a href="calibration.html#negative-binomial"><i class="fa fa-check"></i><b>5.1.1</b> Negative Binomial</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="outflows.html"><a href="outflows.html"><i class="fa fa-check"></i><b>6</b> Outflows</a>
+<li class="chapter" data-level="6" data-path="time-varying-parameters.html"><a href="time-varying-parameters.html"><i class="fa fa-check"></i><b>6</b> Time Varying Parameters</a>
 <ul>
-<li class="chapter" data-level="6.1" data-path="outflows.html"><a href="outflows.html#standard-inflow-outflow-balance"><i class="fa fa-check"></i><b>6.1</b> Standard Inflow-Outflow Balance</a></li>
-<li class="chapter" data-level="6.2" data-path="outflows.html"><a href="outflows.html#accumulators"><i class="fa fa-check"></i><b>6.2</b> Accumulators</a></li>
+<li class="chapter" data-level="6.1" data-path="time-varying-parameters.html"><a href="time-varying-parameters.html#example-of-time-variation"><i class="fa fa-check"></i><b>6.1</b> Example of Time-Variation</a></li>
+<li class="chapter" data-level="6.2" data-path="time-varying-parameters.html"><a href="time-varying-parameters.html#calibrating-time-variation-schedules"><i class="fa fa-check"></i><b>6.2</b> Calibrating Time-Variation Schedules</a></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="hazard-smoothing.html"><a href="hazard-smoothing.html"><i class="fa fa-check"></i><b>7</b> Hazard Smoothing</a></li>
 <li class="chapter" data-level="8" data-path="state-initialization.html"><a href="state-initialization.html"><i class="fa fa-check"></i><b>8</b> State Initialization</a></li>
 <li class="chapter" data-level="9" data-path="vector-rates.html"><a href="vector-rates.html"><i class="fa fa-check"></i><b>9</b> Vector Rates</a></li>
-<li class="chapter" data-level="10" data-path="time-varying-parameters.html"><a href="time-varying-parameters.html"><i class="fa fa-check"></i><b>10</b> Time Varying Parameters</a>
+<li class="chapter" data-level="10" data-path="outflows.html"><a href="outflows.html"><i class="fa fa-check"></i><b>10</b> Outflows</a>
 <ul>
-<li class="chapter" data-level="10.1" data-path="time-varying-parameters.html"><a href="time-varying-parameters.html#example-time-variation-schedules"><i class="fa fa-check"></i><b>10.1</b> Example Time-Variation Schedules</a></li>
+<li class="chapter" data-level="10.1" data-path="outflows.html"><a href="outflows.html#standard-inflow-outflow-balance"><i class="fa fa-check"></i><b>10.1</b> Standard Inflow-Outflow Balance</a></li>
+<li class="chapter" data-level="10.2" data-path="outflows.html"><a href="outflows.html#accumulators"><i class="fa fa-check"></i><b>10.2</b> Accumulators</a></li>
 </ul></li>
 <li class="chapter" data-level="11" data-path="examples.html"><a href="examples.html"><i class="fa fa-check"></i><b>11</b> Examples</a>
 <ul>
 <li class="chapter" data-level="11.1" data-path="examples.html"><a href="examples.html#hello-world-simulating-an-sir-model"><i class="fa fa-check"></i><b>11.1</b> Hello World: Simulating an SIR Model</a></li>
-<li class="chapter" data-level="11.2" data-path="examples.html"><a href="examples.html#seir"><i class="fa fa-check"></i><b>11.2</b> SEIR</a></li>
-<li class="chapter" data-level="11.3" data-path="examples.html"><a href="examples.html#structure-two-strain-sir"><i class="fa fa-check"></i><b>11.3</b> Structure: Two-Strain SIR</a></li>
-<li class="chapter" data-level="11.4" data-path="examples.html"><a href="examples.html#erlang-seir"><i class="fa fa-check"></i><b>11.4</b> Erlang SEIR</a></li>
-<li class="chapter" data-level="11.5" data-path="examples.html"><a href="examples.html#the-sirv-model"><i class="fa fa-check"></i><b>11.5</b> The SIRV model</a></li>
-<li class="chapter" data-level="11.6" data-path="examples.html"><a href="examples.html#variolation-model"><i class="fa fa-check"></i><b>11.6</b> Variolation model</a></li>
-<li class="chapter" data-level="11.7" data-path="examples.html"><a href="examples.html#seird-model"><i class="fa fa-check"></i><b>11.7</b> SEIRD Model</a></li>
-<li class="chapter" data-level="11.8" data-path="examples.html"><a href="examples.html#covid-seir"><i class="fa fa-check"></i><b>11.8</b> Covid SEIR</a></li>
-<li class="chapter" data-level="11.9" data-path="examples.html"><a href="examples.html#bc-covid-omicron"><i class="fa fa-check"></i><b>11.9</b> BC Covid Omicron</a></li>
-<li class="chapter" data-level="11.10" data-path="examples.html"><a href="examples.html#classic-mcmasterpandemic"><i class="fa fa-check"></i><b>11.10</b> Classic McMasterPandemic</a></li>
+<li class="chapter" data-level="11.2" data-path="examples.html"><a href="examples.html#si"><i class="fa fa-check"></i><b>11.2</b> SI</a></li>
+<li class="chapter" data-level="11.3" data-path="examples.html"><a href="examples.html#seir"><i class="fa fa-check"></i><b>11.3</b> SEIR</a></li>
+<li class="chapter" data-level="11.4" data-path="examples.html"><a href="examples.html#structure-two-strain-sir"><i class="fa fa-check"></i><b>11.4</b> Structure: Two-Strain SIR</a></li>
+<li class="chapter" data-level="11.5" data-path="examples.html"><a href="examples.html#erlang-seir"><i class="fa fa-check"></i><b>11.5</b> Erlang SEIR</a></li>
+<li class="chapter" data-level="11.6" data-path="examples.html"><a href="examples.html#the-sirv-model"><i class="fa fa-check"></i><b>11.6</b> The SIRV model</a></li>
+<li class="chapter" data-level="11.7" data-path="examples.html"><a href="examples.html#variolation-model"><i class="fa fa-check"></i><b>11.7</b> Variolation model</a></li>
+<li class="chapter" data-level="11.8" data-path="examples.html"><a href="examples.html#seird-model"><i class="fa fa-check"></i><b>11.8</b> SEIRD Model</a></li>
+<li class="chapter" data-level="11.9" data-path="examples.html"><a href="examples.html#covid-seir"><i class="fa fa-check"></i><b>11.9</b> Covid SEIR</a></li>
+<li class="chapter" data-level="11.10" data-path="examples.html"><a href="examples.html#bc-covid-omicron"><i class="fa fa-check"></i><b>11.10</b> BC Covid Omicron</a></li>
+<li class="chapter" data-level="11.11" data-path="examples.html"><a href="examples.html#classic-mcmasterpandemic"><i class="fa fa-check"></i><b>11.11</b> Classic McMasterPandemic</a></li>
 </ul></li>
 <li class="chapter" data-level="12" data-path="troubleshooting.html"><a href="troubleshooting.html"><i class="fa fa-check"></i><b>12</b> Troubleshooting</a>
 <ul>
@@ -226,8 +229,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="calibration" class="section level1" number="5">
 <h1><span class="header-section-number">Chapter 5</span> Calibration</h1>
-<p>Sometimes observed time-series data are available from an epidemic that one is modelling. It is natural to want to use such data to refine parameter values. This process of refinement is called calibration, for which McMasterPandemic provides functionality.</p>
-<p>To illustrate this functionality, we are going to calibrate to a synthetic dataset generated by the model we are calibrating. In the last chapter we showed how to simulate from a simple SIR model. Here we simulate from this model and then manipulate the resulting data into a form that could be used for calibration. Although this functionality can be used to fit any number of model parameters to any number of observed time-series, here we generate a single time-series of the numbers of infected individuals.</p>
+<p>Sometimes it is possible to obtain observed time-series data from an epidemic that one is modelling. It is natural to want to use such data to refine parameter values. This process of refinement is called calibration.</p>
+<p>To illustrate McMasterPandemic calibration functionality, we are going to calibrate to a synthetic dataset generated by the model we are calibrating. In the last chapter we showed how to simulate from a simple SIR model. Here we simulate from this model and then manipulate the resulting data into a form that could be used for calibration. Although this functionality can be used to fit any number of model parameters to any number of observed time-series, here we generate a single time-series of the numbers of infected individuals.</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="calibration.html#cb13-1" aria-hidden="true" tabindex="-1"></a>synthetic_data <span class="ot">=</span> (sir</span>
 <span id="cb13-2"><a href="calibration.html#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">%&gt;%</span> <span class="fu">simulation_history</span>(<span class="at">include_initial_date =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb13-3"><a href="calibration.html#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="sc">%&gt;%</span> <span class="fu">select</span>(Date, I)</span>
@@ -246,26 +249,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><code>value</code> – observed value to compare with the simulated state variable</li>
 </ul>
 <p>In this particular case there is only a single state variable used, but this need not be the case.</p>
-<p>We next construct a model object that contains two new ingredients that we have not yet seen: (1) observed time-series data and (2) information on what parameters to fit and how to fit them.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="calibration.html#cb14-1" aria-hidden="true" tabindex="-1"></a>sir_to_calibrate <span class="ot">=</span> (<span class="fu">flexmodel</span>(</span>
-<span id="cb14-2"><a href="calibration.html#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">params =</span> <span class="fu">c</span>(<span class="at">beta =</span> <span class="fl">0.1</span>, <span class="at">gamma =</span> <span class="fl">0.01</span>, <span class="at">N =</span> <span class="dv">100</span>),</span>
-<span id="cb14-3"><a href="calibration.html#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">state =</span> <span class="fu">c</span>(<span class="at">S =</span> <span class="dv">99</span>, <span class="at">I =</span> <span class="dv">1</span>, <span class="at">R =</span> <span class="dv">0</span>),</span>
-<span id="cb14-4"><a href="calibration.html#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">start_date =</span> <span class="st">&quot;2020-03-11&quot;</span>,</span>
-<span id="cb14-5"><a href="calibration.html#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">end_date =</span> <span class="st">&quot;2020-12-01&quot;</span>,</span>
-<span id="cb14-6"><a href="calibration.html#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> synthetic_data</span>
-<span id="cb14-7"><a href="calibration.html#cb14-7" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb14-8"><a href="calibration.html#cb14-8" aria-hidden="true" tabindex="-1"></a>  <span class="sc">%&gt;%</span> <span class="fu">add_rate</span>(<span class="st">&quot;S&quot;</span>, <span class="st">&quot;I&quot;</span>, <span class="sc">~</span> (I) <span class="sc">*</span> (beta) <span class="sc">*</span> (<span class="dv">1</span><span class="sc">/</span>N))</span>
-<span id="cb14-9"><a href="calibration.html#cb14-9" aria-hidden="true" tabindex="-1"></a>  <span class="sc">%&gt;%</span> <span class="fu">add_rate</span>(<span class="st">&quot;I&quot;</span>, <span class="st">&quot;R&quot;</span>, <span class="sc">~</span> (gamma))</span>
-<span id="cb14-10"><a href="calibration.html#cb14-10" aria-hidden="true" tabindex="-1"></a>  <span class="sc">%&gt;%</span> <span class="fu">update_opt_params</span>(log_beta <span class="sc">~</span> <span class="fu">log_flat</span>(<span class="dv">0</span>)</span>
-<span id="cb14-11"><a href="calibration.html#cb14-11" aria-hidden="true" tabindex="-1"></a>    , log_nb_disp_I <span class="sc">~</span> <span class="fu">log_normal</span>(<span class="dv">0</span>, <span class="dv">5</span>)</span>
-<span id="cb14-12"><a href="calibration.html#cb14-12" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb14-13"><a href="calibration.html#cb14-13" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
-<p>The observed time-series data are simply added via the <code>data</code> argument of <code>flexmodel</code>. The information of what parameters to fit is in this line.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="calibration.html#cb15-1" aria-hidden="true" tabindex="-1"></a>  <span class="sc">%&gt;%</span> <span class="fu">update_opt_params</span>(log_beta <span class="sc">~</span> <span class="fu">log_flat</span>(<span class="dv">0</span>))</span></code></pre></div>
-<p>The information is provided using a two-sided formula for each parameter to be optimized. The information on what parameter to optimize appears on the left-hand-side of the formula (i.e. to the left of the tilde). Here we optimize the parameter <code>beta</code>, because the numbers of infected individuals in our time-series will be most informative about this parameter. The prefix <code>log_</code> is used to indicate that the parameter should get passed to the objective function on the log scale. This transformation is useful because it keeps the transmission rate positive. If no transformation is desired, then simply <code>beta</code> should appear on the left-hand-side. The following additional transformations are available: <code>logit_</code>, <code>log10</code>, <code>cloglog_</code>, <code>inverse_</code>.</p>
+<p>We next update the model object so that it contains two new ingredients: (1) the observed time-series data and (2) information on what parameters to fit and how to fit them.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="calibration.html#cb14-1" aria-hidden="true" tabindex="-1"></a>sir_to_calibrate <span class="ot">=</span> (sir</span>
+<span id="cb14-2"><a href="calibration.html#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">%&gt;%</span> <span class="fu">update_observed</span>(synthetic_data)</span>
+<span id="cb14-3"><a href="calibration.html#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="sc">%&gt;%</span> <span class="fu">update_opt_params</span>(</span>
+<span id="cb14-4"><a href="calibration.html#cb14-4" aria-hidden="true" tabindex="-1"></a>    log_beta <span class="sc">~</span> <span class="fu">log_flat</span>(<span class="dv">0</span>),</span>
+<span id="cb14-5"><a href="calibration.html#cb14-5" aria-hidden="true" tabindex="-1"></a>    log_nb_disp_I <span class="sc">~</span> <span class="fu">log_normal</span>(<span class="dv">0</span>, <span class="dv">5</span>)</span>
+<span id="cb14-6"><a href="calibration.html#cb14-6" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb14-7"><a href="calibration.html#cb14-7" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<p>The observed time-series data are simply added via the <code>update_observed</code> function. The information of what parameters to fit gets passed to <code>update_opt_params</code>. This information is provided using two-sided formulas for each parameter to be optimized. The information on what parameter to optimize appears on the left-hand-side of the formula (i.e. to the left of the tilde). Here we optimize the transmission rate parameter, <code>beta</code>, because the numbers of infected individuals in our time-series will be most informative about this parameter. The prefix <code>log_</code> is used to indicate that the parameter should get passed to the objective function on the log scale. This transformation is useful because it keeps the transmission rate positive. If no transformation is desired, then simply <code>beta</code> should appear on the left-hand-side. The following additional transformations are available: <code>logit_</code>, <code>log10</code>, <code>cloglog_</code>, <code>inverse_</code>.</p>
 <p>The information on what prior distribution (or regularization function) to use, as well as initial values for the optimizer, are provided on the right-hand-side of the formula. Currently, the transformation (i.e. <code>log_</code> in this case) must match the left-hand-side, although we plan to remove this restriction so that the scale on which the prior density is evaluated can be different from the scale on which the parameter is passed to the objective function. There are only two prior distributions available currently: <code>flat</code> and <code>normal</code>. The <code>flat</code> prior is an improper flat distribution, providing no regularization. The only hyperparameter to the <code>flat</code> prior is the initial value for the optimizer on the transformed scale. The <code>normal</code> prior is the normal distribution with two hyperparameters, mean and standard deviation. The mean is also taken as the starting value.</p>
+<p>Note that there is another parameter that we need to describe that we did not include in our original definition of the model: <code>nb_disp_I</code>. This is the dispersion parameter of the negative binomial distribution used to model errors in the fit of the data to the simulated trajectories. We have used a <code>log_normal</code> prior here instead of a <code>log_flat</code> prior, because negative binomial dispersion parameters have a tendency to get very large in synthetic data cases like this where there is very little error – large dispersion parameters indicate consistency with Poisson error. This negative binomial parameter has been added automatically to the <code>params</code> element of the model when the observed data are added.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="calibration.html#cb15-1" aria-hidden="true" tabindex="-1"></a>sir_to_calibrate<span class="sc">$</span>params</span></code></pre></div>
+<pre><code>##      beta     gamma         N nb_disp_I 
+##     1e-01     1e-02     1e+02     1e+00</code></pre>
+<p>But note how the parameters in the original model did not contain this parameter.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="calibration.html#cb17-1" aria-hidden="true" tabindex="-1"></a>sir<span class="sc">$</span>params</span></code></pre></div>
+<pre><code>##  beta gamma     N 
+## 1e-01 1e-02 1e+02</code></pre>
 <p>The <code>sir_to_calibrate</code> object can be calibrated using one of the optimizers in R that have been wrapped for use with <code>flexmodel</code>s. There are currently two options: <code>nlminb_flexmodel</code> and <code>optim_flexmodel</code>. The difference between the two is that the former uses second-derivative information whereas the latter does not; they both use first-derivative information.</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="calibration.html#cb16-1" aria-hidden="true" tabindex="-1"></a>sir_calibrated <span class="ot">=</span> <span class="fu">nlminb_flexmodel</span>(sir_to_calibrate)</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="calibration.html#cb19-1" aria-hidden="true" tabindex="-1"></a>sir_calibrated <span class="ot">=</span> <span class="fu">nlminb_flexmodel</span>(sir_to_calibrate)</span></code></pre></div>
 <pre><code>## Constructing atomic D_lgamma
 ## outer mgc:  64.34046 
 ## Constructing atomic D_lgamma
@@ -283,7 +286,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## outer mgc:  0.0003485235 
 ## outer mgc:  1.31046e-07</code></pre>
 <p>The result of these optimization functions is another model object, containing the following additional element.</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="calibration.html#cb18-1" aria-hidden="true" tabindex="-1"></a>sir_calibrated<span class="sc">$</span>opt_obj</span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="calibration.html#cb21-1" aria-hidden="true" tabindex="-1"></a>sir_calibrated<span class="sc">$</span>opt_obj</span></code></pre></div>
 <pre><code>## $par
 ##      log_beta log_nb_disp_I 
 ##     -2.302585      9.366319 
@@ -303,20 +306,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 
 ## $message
 ## [1] &quot;relative convergence (4)&quot;</code></pre>
-<p>This element is the object returned by the wrapped optimizer (<code>nlminb</code> in this case).</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="calibration.html#cb20-1" aria-hidden="true" tabindex="-1"></a>sir_calibrated<span class="sc">$</span>params</span></code></pre></div>
+<p>This element is the object returned by the wrapped optimizer (<code>nlminb</code> in this case) – it can provide useful information about how well the optimization worked. In this case we see convergence, but this need not be true. Refer to documentation for <code>nlminb</code> and <code>optim</code> for help on interpreting these outputs.</p>
+<p>We can now look at the parameter vector, which has been updated to reflect the calibration.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="calibration.html#cb23-1" aria-hidden="true" tabindex="-1"></a>sir_calibrated<span class="sc">$</span>params</span></code></pre></div>
 <pre><code>##      beta     gamma         N nb_disp_I 
 ##      0.10      0.01    100.00  11688.01 
 ## attr(,&quot;tv_param_indices&quot;)
 ## named integer(0)</code></pre>
-<p>And as expected the fit is exact.</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="calibration.html#cb22-1" aria-hidden="true" tabindex="-1"></a>(sir_calibrated</span>
-<span id="cb22-2"><a href="calibration.html#cb22-2" aria-hidden="true" tabindex="-1"></a> <span class="sc">%&gt;%</span> fitted</span>
-<span id="cb22-3"><a href="calibration.html#cb22-3" aria-hidden="true" tabindex="-1"></a> <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>()</span>
-<span id="cb22-4"><a href="calibration.html#cb22-4" aria-hidden="true" tabindex="-1"></a> <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="fu">aes</span>(date, value))</span>
-<span id="cb22-5"><a href="calibration.html#cb22-5" aria-hidden="true" tabindex="-1"></a> <span class="sc">+</span> <span class="fu">geom_line</span>(<span class="fu">aes</span>(date, value_fitted), <span class="at">colour =</span> <span class="st">&#39;red&#39;</span>)</span>
-<span id="cb22-6"><a href="calibration.html#cb22-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<p>Fitted <code>flexmodel</code> objects have a <code>fitted</code> method that can be used to compare the fits with the observed values.</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="calibration.html#cb25-1" aria-hidden="true" tabindex="-1"></a>(sir_calibrated</span>
+<span id="cb25-2"><a href="calibration.html#cb25-2" aria-hidden="true" tabindex="-1"></a> <span class="sc">%&gt;%</span> fitted</span>
+<span id="cb25-3"><a href="calibration.html#cb25-3" aria-hidden="true" tabindex="-1"></a> <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>()</span>
+<span id="cb25-4"><a href="calibration.html#cb25-4" aria-hidden="true" tabindex="-1"></a> <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="fu">aes</span>(date, value))</span>
+<span id="cb25-5"><a href="calibration.html#cb25-5" aria-hidden="true" tabindex="-1"></a> <span class="sc">+</span> <span class="fu">geom_line</span>(<span class="fu">aes</span>(date, value_fitted), <span class="at">colour =</span> <span class="st">&#39;red&#39;</span>)</span>
+<span id="cb25-6"><a href="calibration.html#cb25-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/calibrated_fits-1.png" width="672" /></p>
+<p>As expected, the fit is exact because the model that was fitted was also used to simulate the data.</p>
 <div id="loss-functions" class="section level2" number="5.1">
 <h2><span class="header-section-number">5.1</span> Loss Functions</h2>
 <p>Let <span class="math inline">\(l_{\psi_i}\left(x_i(\theta); y_i\right)\)</span> be a loss function where <span class="math inline">\(x_i(\theta)\)</span> is a simulated element of the history matrix, <span class="math inline">\(y_i\)</span> is an associated observed data point, and <span class="math inline">\(\psi_i\)</span> is a vector of loss function parameters. Note that we write the simulation values as functions of <span class="math inline">\(\theta\)</span> to indicate their dependence on parameters. Every element <span class="math inline">\(i\)</span> that belongs to the same column of the history matrix has the same value for <span class="math inline">\(\psi_i\)</span>, but to simplify notation <span class="math inline">\(\psi\)</span> is sub-scripted by <span class="math inline">\(i\)</span>. Let <span class="math inline">\(r_{\phi_j}(\theta_j)\)</span> be an optional regularization function for each parameter <span class="math inline">\(\theta_j\)</span> being optimized, where <span class="math inline">\(\phi_j\)</span> is a vector of regularization function parameters associated with parameter <span class="math inline">\(j\)</span>. The objective function is then given by the following.</p>
@@ -351,7 +356,7 @@ Currently the only objective function that is offered is the negative log negati
         </div>
       </div>
 <a href="simulation.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="outflows.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="time-varying-parameters.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

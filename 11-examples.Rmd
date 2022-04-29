@@ -76,6 +76,31 @@ nn
   )
 ```
 
+## SI
+
+```{r si}
+si = (flexmodel(
+    params = c(beta = 0.15, gamma = 0.06, N = 100),
+    state = c(S = 99, I = 1),
+    start_date = "2000-01-01", end_date = "2000-06-01"
+  )
+  %>% add_rate("S", "I", ~ (I) * (beta) * (1/N))
+  %>% add_rate("I", "S", ~ (gamma))
+  %>% add_factr("ratio", ~ (gamma) * (1/beta))
+  %>% add_factr("S_hat", ~ (N) * (ratio))
+  %>% add_factr("I_hat", ~ (N) * (1 - ratio))
+)
+(si
+  %>% simulation_history
+  %>% select(-S_to_I, -ratio)
+  %>% pivot_longer(-Date, names_to = "State", values_to = "Population")
+  %>% separate(State, c("State", "Equilibrium"), "_")
+  %>% mutate(Equilibrium = ifelse(is.na(Equilibrium), 'no', 'yes'))
+  %>% ggplot
+  + geom_line(aes(Date, Population, colour = State, linetype = Equilibrium))
+)
+```
+
 ## SEIR
 
 ```{r seir}

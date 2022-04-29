@@ -19,6 +19,10 @@ github-repo: canmod/macpan-book
 
 The general model underlying McMasterPandmic's flexible engine and interface based on a discrete time compartmental model.
 
+## Installation
+
+This generalized McMasterPandemic framework is still in an experimental phase. Therefore you will need to install the experimental `tmb-condense` branch that contains the experimental implementation directly from github. A convenient way to do this is using the `remotes` package as follows.
+
 ```{r eval = FALSE}
 remotes::install_github("mac-theobio/McMasterPandemic@tmb-condense")
 ```
