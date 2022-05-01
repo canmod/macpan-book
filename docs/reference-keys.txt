@@ -27,9 +27,10 @@ additional-variables-in-the-simulation-history
 simulation-history-expressions
 lagged-differencing
 convolutions
+ensemble-forecasts
 vectors
-state-initialization
 hazard-smoothing
+state-initialization
 outflows
 accumulators
 examples

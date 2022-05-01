@@ -26,6 +26,7 @@ sir = (flexmodel(
 
 The first argument to the `add_state_param_sum` is just a name for the sum. Note that this name is used in the `add_rate` function that defines the flows from `S` to `I`. The second argument to the `add_state_param_sum` is a regular expression that is matched agains all parameter names and state variable names. Here we match any state variable with `"S|I|R"`, which tells McMasterPandemic to add up all state variables and save the result in the variable called `"N"`.
 
+See the [Erlang SEIR] example that uses a sum to save the total number of infected individuals across all `I` compartments in an Erlang-chain. See the [BC Covid Omicron] example that uses a sum to save the total number of individuals infected with different COVID strains.
 
 ### Factrs
 
@@ -48,6 +49,8 @@ sir = (flexmodel(
 )
 ```
 
+See also the [SI] model example for a use of `factr`s that computes the equilibrium populations in each compartment.
+
 ## Additional Variables in the Simulation History
 
 The `simulation_history` function returns a data frame containing many of the variables in the model, with each row giving each time step in the simulation. This `simulation_history` function is introduced in the chapter on [Simulation]. This simulation history table is used for two purposes: (1) to return to the user as simulation output and (2) to compare with observed time series in in the process of [Calibration].
@@ -66,12 +69,12 @@ Items 5-7 consitute the additional variables in the simulation history. In the n
 
 ### Simulation History Expressions
 
-TODO
+TODO: describe `add_sim_report_expr` function
 
 ### Lagged Differencing
 
-TODO
+TODO: describe `add_lag_diff` function
 
 ### Convolutions
 
-TODO
+TODO: describe `add_conv` function
