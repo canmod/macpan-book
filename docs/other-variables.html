@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 9 State Initialization | Generalized McMasterPandemic</title>
+  <title>Chapter 7 Other Variables | Generalized McMasterPandemic</title>
   <meta name="description" content="McMasterPandemic is a modelling tool that was rapidly developed to provide timely insights into the Covid-19 Pandemic in Canada. We are currently refactoring this tool so that it is faster and more general. This book describes how to use this refactored version of McMasterPandemic." />
   <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 9 State Initialization | Generalized McMasterPandemic" />
+  <meta property="og:title" content="Chapter 7 Other Variables | Generalized McMasterPandemic" />
   <meta property="og:type" content="book" />
   
   <meta property="og:image" content="/path to the social sharing image like images/seird.jpg" />
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="canmod/macpan-book" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 9 State Initialization | Generalized McMasterPandemic" />
+  <meta name="twitter:title" content="Chapter 7 Other Variables | Generalized McMasterPandemic" />
   
   <meta name="twitter:description" content="McMasterPandemic is a modelling tool that was rapidly developed to provide timely insights into the Covid-19 Pandemic in Canada. We are currently refactoring this tool so that it is faster and more general. This book describes how to use this refactored version of McMasterPandemic." />
   <meta name="twitter:image" content="/path to the social sharing image like images/seird.jpg" />
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="vectors.html"/>
-<link rel="next" href="hazard-smoothing.html"/>
+<link rel="prev" href="time-varying-parameters.html"/>
+<link rel="next" href="vectors.html"/>
 <script src="libs/header-attrs-2.9/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
@@ -236,17 +236,82 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="state-initialization" class="section level1" number="9">
-<h1><span class="header-section-number">Chapter 9</span> State Initialization</h1>
+<div id="other-variables" class="section level1" number="7">
+<h1><span class="header-section-number">Chapter 7</span> Other Variables</h1>
+<p>So far the only types of variables that we have discussed are parameters and state variables. In this chapter we cover all of the other kinds of variables.</p>
+<p>There are two basic kinds of other variables: (1) <a href="other-variables.html#intermediate-results">Intermediate Results</a> and (2) <a href="other-variables.html#additional-variables-in-the-simulation-history">Additional Variables in the Simulation History</a>. The main difference between the two types is that the former can be used for more purposes than the latter. In particular, intermediate results can be used in expressions that define rate matrices whereas additional variables in the simulation history cannot. Conversely, all intermediate results get added to the simulation history.</p>
+<div id="intermediate-results" class="section level2" number="7.1">
+<h2><span class="header-section-number">7.1</span> Intermediate Results</h2>
+<p>Sometimes the expression giving the rate of flow between two compartments is quite complex, or even just impossible to express in terms of just parameters and state variables given the restrictions described in the chapter on [Flows Between States]. In these cases, it is often convenient or even necessary to store intermediate combinations of parameters and state variables and then use these combinations in subsequent expressions for flow rates. There are two basic kinds of intermediate results: (1) sums of state variables and parameters and (2) more general expressions, called <code>factr</code>s, that combine state variables, parameters, and their sums.</p>
+<div id="sums-of-state-variables-and-parameters" class="section level3" number="7.1.1">
+<h3><span class="header-section-number">7.1.1</span> Sums of State Variables and Parameters</h3>
+<p>One may save any sum of state variables and/or parameters to the model. In our SIR model for example, we specified the total population size in the parameter vector as <code>N</code>. However, we could compute this population size using the <code>add_state_param_sum</code> function.</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="other-variables.html#cb37-1" aria-hidden="true" tabindex="-1"></a>sir <span class="ot">=</span> (<span class="fu">flexmodel</span>(</span>
+<span id="cb37-2"><a href="other-variables.html#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">params =</span> <span class="fu">c</span>(<span class="at">beta =</span> <span class="fl">0.1</span>, <span class="at">gamma =</span> <span class="fl">0.01</span>),</span>
+<span id="cb37-3"><a href="other-variables.html#cb37-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">state =</span> <span class="fu">c</span>(<span class="at">S =</span> <span class="dv">99</span>, <span class="at">I =</span> <span class="dv">1</span>, <span class="at">R =</span> <span class="dv">0</span>),</span>
+<span id="cb37-4"><a href="other-variables.html#cb37-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">start_date =</span> <span class="st">&quot;2020-03-11&quot;</span>,</span>
+<span id="cb37-5"><a href="other-variables.html#cb37-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">end_date =</span> <span class="st">&quot;2020-12-01&quot;</span></span>
+<span id="cb37-6"><a href="other-variables.html#cb37-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb37-7"><a href="other-variables.html#cb37-7" aria-hidden="true" tabindex="-1"></a>  <span class="sc">%&gt;%</span> <span class="fu">add_state_param_sum</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;S|I|R&quot;</span>)</span>
+<span id="cb37-8"><a href="other-variables.html#cb37-8" aria-hidden="true" tabindex="-1"></a>  <span class="sc">%&gt;%</span> <span class="fu">add_rate</span>(<span class="st">&quot;S&quot;</span>, <span class="st">&quot;I&quot;</span>, <span class="sc">~</span> (I) <span class="sc">*</span> (beta) <span class="sc">*</span> (<span class="dv">1</span><span class="sc">/</span>N))</span>
+<span id="cb37-9"><a href="other-variables.html#cb37-9" aria-hidden="true" tabindex="-1"></a>  <span class="sc">%&gt;%</span> <span class="fu">add_rate</span>(<span class="st">&quot;I&quot;</span>, <span class="st">&quot;R&quot;</span>, <span class="sc">~</span> (gamma))</span>
+<span id="cb37-10"><a href="other-variables.html#cb37-10" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<p>The first argument to the <code>add_state_param_sum</code> is just a name for the sum. Note that this name is used in the <code>add_rate</code> function that defines the flows from <code>S</code> to <code>I</code>. The second argument to the <code>add_state_param_sum</code> is a regular expression that is matched agains all parameter names and state variable names. Here we match any state variable with <code>"S|I|R"</code>, which tells McMasterPandemic to add up all state variables and save the result in the variable called <code>"N"</code>.</p>
+</div>
+<div id="factrs" class="section level3" number="7.1.2">
+<h3><span class="header-section-number">7.1.2</span> Factrs</h3>
+<p>First off, I’m sorry about the name <code>factr</code>. It is not a typo, I just don’t have the energy to change it to something better right now.</p>
+<p><code>factr</code>s are simply a saved expression that follows the same rules for rates of [Flows Between States]. These <code>factr</code>s are named and can subsequently be used in rate expressions.</p>
+<p>The SIR model is not really complex enough to justify using <code>factr</code>s, but if we wanted to we could store the proportion of individuals that are in the <code>I</code> box as a <code>factr</code> and then use that <code>factr</code> in the expression for the rate from <code>S</code> to <code>I</code>.</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="other-variables.html#cb38-1" aria-hidden="true" tabindex="-1"></a>sir <span class="ot">=</span> (<span class="fu">flexmodel</span>(</span>
+<span id="cb38-2"><a href="other-variables.html#cb38-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">params =</span> <span class="fu">c</span>(<span class="at">beta =</span> <span class="fl">0.1</span>, <span class="at">gamma =</span> <span class="fl">0.01</span>),</span>
+<span id="cb38-3"><a href="other-variables.html#cb38-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">state =</span> <span class="fu">c</span>(<span class="at">S =</span> <span class="dv">99</span>, <span class="at">I =</span> <span class="dv">1</span>, <span class="at">R =</span> <span class="dv">0</span>),</span>
+<span id="cb38-4"><a href="other-variables.html#cb38-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">start_date =</span> <span class="st">&quot;2020-03-11&quot;</span>,</span>
+<span id="cb38-5"><a href="other-variables.html#cb38-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">end_date =</span> <span class="st">&quot;2020-12-01&quot;</span></span>
+<span id="cb38-6"><a href="other-variables.html#cb38-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb38-7"><a href="other-variables.html#cb38-7" aria-hidden="true" tabindex="-1"></a>  <span class="sc">%&gt;%</span> <span class="fu">add_state_param_sum</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;S|I|R&quot;</span>)</span>
+<span id="cb38-8"><a href="other-variables.html#cb38-8" aria-hidden="true" tabindex="-1"></a>  <span class="sc">%&gt;%</span> <span class="fu">add_factr</span>(<span class="st">&quot;Iprop&quot;</span>, <span class="sc">~</span> (I) <span class="sc">*</span> (<span class="dv">1</span><span class="sc">/</span>N))</span>
+<span id="cb38-9"><a href="other-variables.html#cb38-9" aria-hidden="true" tabindex="-1"></a>  <span class="sc">%&gt;%</span> <span class="fu">add_rate</span>(<span class="st">&quot;S&quot;</span>, <span class="st">&quot;I&quot;</span>, <span class="sc">~</span> (Iprop) <span class="sc">*</span> (beta))</span>
+<span id="cb38-10"><a href="other-variables.html#cb38-10" aria-hidden="true" tabindex="-1"></a>  <span class="sc">%&gt;%</span> <span class="fu">add_rate</span>(<span class="st">&quot;I&quot;</span>, <span class="st">&quot;R&quot;</span>, <span class="sc">~</span> (gamma))</span>
+<span id="cb38-11"><a href="other-variables.html#cb38-11" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+</div>
+</div>
+<div id="additional-variables-in-the-simulation-history" class="section level2" number="7.2">
+<h2><span class="header-section-number">7.2</span> Additional Variables in the Simulation History</h2>
+<p>The <code>simulation_history</code> function returns a data frame containing many of the variables in the model, with each row giving each time step in the simulation. This <code>simulation_history</code> function is introduced in the chapter on <a href="simulation.html#simulation">Simulation</a>. This simulation history table is used for two purposes: (1) to return to the user as simulation output and (2) to compare with observed time series in in the process of <a href="calibration.html#calibration">Calibration</a>.</p>
+<p>The simulation history contains the following variables in the following order:</p>
+<ol style="list-style-type: decimal">
+<li>State variables</li>
+<li>Flow rates that vary in simulation time (constant rates are omitted)</li>
+<li>Sums of state variables and parameters</li>
+<li><code>factr</code>s</li>
+<li>Expressions following the rules in [Flows Between States] of any of the variables in 1-4 above</li>
+<li>Lagged differenced versions of 1-5</li>
+<li>Convolutions of 1-5</li>
+</ol>
+<p>Items 5-7 consitute the additional variables in the simulation history. In the next sections we illustrate how to add such variables to the SIR model.</p>
+<div id="simulation-history-expressions" class="section level3" number="7.2.1">
+<h3><span class="header-section-number">7.2.1</span> Simulation History Expressions</h3>
+<p>TODO</p>
+</div>
+<div id="lagged-differencing" class="section level3" number="7.2.2">
+<h3><span class="header-section-number">7.2.2</span> Lagged Differencing</h3>
+<p>TODO</p>
+</div>
+<div id="convolutions" class="section level3" number="7.2.3">
+<h3><span class="header-section-number">7.2.3</span> Convolutions</h3>
+<p>TODO</p>
 
+</div>
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="vectors.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="hazard-smoothing.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="time-varying-parameters.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="vectors.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -277,7 +342,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/USERNAME/REPO/edit/BRANCH/08-state-initializers.Rmd",
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/06-other-variables.Rmd",
 "text": "Edit"
 },
 "history": {

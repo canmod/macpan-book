@@ -8,9 +8,7 @@ suppressPackageStartupMessages(library(tidyr))
 suppressPackageStartupMessages(library(lubridate)) # shouldn't need this -- only here due to experimental changes to macpan
 ```
 
-Before one may define the dynamics of their compartmental model they must initialize it using the `init_model` function. Here we describe each of the basic and required arguments to `init_model` and how to set them. This function allows one to define things like the parameter and state spaces, the date range in which to run simulations, default parameter values, and the initial state (or settings for computing stable initial states).
-
-However, in this chapter we just cover the basic requirements.
+Before one may define the dynamics of their compartmental model they must initialize it using the `flexmodel` function. Here we describe each of the basic and required arguments to `flexmodel` and how to set them. This function allows one to define many details of the model, but in this chapter we cover just the requirements.
 
 * Parameter vector
 * State vector

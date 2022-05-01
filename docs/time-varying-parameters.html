@@ -32,7 +32,7 @@
   
   
 <link rel="prev" href="calibration.html"/>
-<link rel="next" href="hazard-smoothing.html"/>
+<link rel="next" href="other-variables.html"/>
 <script src="libs/header-attrs-2.9/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
@@ -55,10 +55,6 @@
 <script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
 <link href="libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
 <script src="libs/pagedtable-1.1/js/pagedtable.js"></script>
-<script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
-<script src="libs/viz-1.8.2/viz.js"></script>
-<link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
-<script src="libs/grViz-binding-1.0.8/grViz.js"></script>
 
 
 <style type="text/css">
@@ -176,35 +172,48 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.1" data-path="time-varying-parameters.html"><a href="time-varying-parameters.html#example-of-time-variation"><i class="fa fa-check"></i><b>6.1</b> Example of Time-Variation</a></li>
 <li class="chapter" data-level="6.2" data-path="time-varying-parameters.html"><a href="time-varying-parameters.html#calibrating-time-variation-schedules"><i class="fa fa-check"></i><b>6.2</b> Calibrating Time-Variation Schedules</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="hazard-smoothing.html"><a href="hazard-smoothing.html"><i class="fa fa-check"></i><b>7</b> Hazard Smoothing</a></li>
-<li class="chapter" data-level="8" data-path="state-initialization.html"><a href="state-initialization.html"><i class="fa fa-check"></i><b>8</b> State Initialization</a></li>
-<li class="chapter" data-level="9" data-path="vector-rates.html"><a href="vector-rates.html"><i class="fa fa-check"></i><b>9</b> Vector Rates</a></li>
-<li class="chapter" data-level="10" data-path="outflows.html"><a href="outflows.html"><i class="fa fa-check"></i><b>10</b> Outflows</a>
+<li class="chapter" data-level="7" data-path="other-variables.html"><a href="other-variables.html"><i class="fa fa-check"></i><b>7</b> Other Variables</a>
 <ul>
-<li class="chapter" data-level="10.1" data-path="outflows.html"><a href="outflows.html#standard-inflow-outflow-balance"><i class="fa fa-check"></i><b>10.1</b> Standard Inflow-Outflow Balance</a></li>
-<li class="chapter" data-level="10.2" data-path="outflows.html"><a href="outflows.html#accumulators"><i class="fa fa-check"></i><b>10.2</b> Accumulators</a></li>
+<li class="chapter" data-level="7.1" data-path="other-variables.html"><a href="other-variables.html#intermediate-results"><i class="fa fa-check"></i><b>7.1</b> Intermediate Results</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="other-variables.html"><a href="other-variables.html#sums-of-state-variables-and-parameters"><i class="fa fa-check"></i><b>7.1.1</b> Sums of State Variables and Parameters</a></li>
+<li class="chapter" data-level="7.1.2" data-path="other-variables.html"><a href="other-variables.html#factrs"><i class="fa fa-check"></i><b>7.1.2</b> Factrs</a></li>
 </ul></li>
-<li class="chapter" data-level="11" data-path="examples.html"><a href="examples.html"><i class="fa fa-check"></i><b>11</b> Examples</a>
+<li class="chapter" data-level="7.2" data-path="other-variables.html"><a href="other-variables.html#additional-variables-in-the-simulation-history"><i class="fa fa-check"></i><b>7.2</b> Additional Variables in the Simulation History</a>
 <ul>
-<li class="chapter" data-level="11.1" data-path="examples.html"><a href="examples.html#hello-world-simulating-an-sir-model"><i class="fa fa-check"></i><b>11.1</b> Hello World: Simulating an SIR Model</a></li>
-<li class="chapter" data-level="11.2" data-path="examples.html"><a href="examples.html#si"><i class="fa fa-check"></i><b>11.2</b> SI</a></li>
-<li class="chapter" data-level="11.3" data-path="examples.html"><a href="examples.html#seir"><i class="fa fa-check"></i><b>11.3</b> SEIR</a></li>
-<li class="chapter" data-level="11.4" data-path="examples.html"><a href="examples.html#structure-two-strain-sir"><i class="fa fa-check"></i><b>11.4</b> Structure: Two-Strain SIR</a></li>
-<li class="chapter" data-level="11.5" data-path="examples.html"><a href="examples.html#erlang-seir"><i class="fa fa-check"></i><b>11.5</b> Erlang SEIR</a></li>
-<li class="chapter" data-level="11.6" data-path="examples.html"><a href="examples.html#the-sirv-model"><i class="fa fa-check"></i><b>11.6</b> The SIRV model</a></li>
-<li class="chapter" data-level="11.7" data-path="examples.html"><a href="examples.html#variolation-model"><i class="fa fa-check"></i><b>11.7</b> Variolation model</a></li>
-<li class="chapter" data-level="11.8" data-path="examples.html"><a href="examples.html#seird-model"><i class="fa fa-check"></i><b>11.8</b> SEIRD Model</a></li>
-<li class="chapter" data-level="11.9" data-path="examples.html"><a href="examples.html#covid-seir"><i class="fa fa-check"></i><b>11.9</b> Covid SEIR</a></li>
-<li class="chapter" data-level="11.10" data-path="examples.html"><a href="examples.html#bc-covid-omicron"><i class="fa fa-check"></i><b>11.10</b> BC Covid Omicron</a></li>
-<li class="chapter" data-level="11.11" data-path="examples.html"><a href="examples.html#classic-mcmasterpandemic"><i class="fa fa-check"></i><b>11.11</b> Classic McMasterPandemic</a></li>
+<li class="chapter" data-level="7.2.1" data-path="other-variables.html"><a href="other-variables.html#simulation-history-expressions"><i class="fa fa-check"></i><b>7.2.1</b> Simulation History Expressions</a></li>
+<li class="chapter" data-level="7.2.2" data-path="other-variables.html"><a href="other-variables.html#lagged-differencing"><i class="fa fa-check"></i><b>7.2.2</b> Lagged Differencing</a></li>
+<li class="chapter" data-level="7.2.3" data-path="other-variables.html"><a href="other-variables.html#convolutions"><i class="fa fa-check"></i><b>7.2.3</b> Convolutions</a></li>
 </ul></li>
-<li class="chapter" data-level="12" data-path="troubleshooting.html"><a href="troubleshooting.html"><i class="fa fa-check"></i><b>12</b> Troubleshooting</a>
+</ul></li>
+<li class="chapter" data-level="8" data-path="vectors.html"><a href="vectors.html"><i class="fa fa-check"></i><b>8</b> Vectors</a></li>
+<li class="chapter" data-level="9" data-path="state-initialization.html"><a href="state-initialization.html"><i class="fa fa-check"></i><b>9</b> State Initialization</a></li>
+<li class="chapter" data-level="10" data-path="hazard-smoothing.html"><a href="hazard-smoothing.html"><i class="fa fa-check"></i><b>10</b> Hazard Smoothing</a></li>
+<li class="chapter" data-level="11" data-path="outflows.html"><a href="outflows.html"><i class="fa fa-check"></i><b>11</b> Outflows</a>
 <ul>
-<li class="chapter" data-level="12.1" data-path="troubleshooting.html"><a href="troubleshooting.html#nan-valued-objective-function"><i class="fa fa-check"></i><b>12.1</b> NaN-Valued Objective Function</a>
+<li class="chapter" data-level="11.1" data-path="outflows.html"><a href="outflows.html#accumulators"><i class="fa fa-check"></i><b>11.1</b> Accumulators</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="examples.html"><a href="examples.html"><i class="fa fa-check"></i><b>12</b> Examples</a>
 <ul>
-<li class="chapter" data-level="12.1.1" data-path="troubleshooting.html"><a href="troubleshooting.html#simulated-time-series-close-to-zero"><i class="fa fa-check"></i><b>12.1.1</b> Simulated time-series close to zero</a></li>
-<li class="chapter" data-level="12.1.2" data-path="troubleshooting.html"><a href="troubleshooting.html#negative-rate-matrix-elements"><i class="fa fa-check"></i><b>12.1.2</b> Negative rate matrix elements</a></li>
-<li class="chapter" data-level="12.1.3" data-path="troubleshooting.html"><a href="troubleshooting.html#optimizer-tries-very-large-dispersion-parameters"><i class="fa fa-check"></i><b>12.1.3</b> Optimizer tries very large dispersion parameters</a></li>
+<li class="chapter" data-level="12.1" data-path="examples.html"><a href="examples.html#hello-world-simulating-an-sir-model"><i class="fa fa-check"></i><b>12.1</b> Hello World: Simulating an SIR Model</a></li>
+<li class="chapter" data-level="12.2" data-path="examples.html"><a href="examples.html#si"><i class="fa fa-check"></i><b>12.2</b> SI</a></li>
+<li class="chapter" data-level="12.3" data-path="examples.html"><a href="examples.html#seir"><i class="fa fa-check"></i><b>12.3</b> SEIR</a></li>
+<li class="chapter" data-level="12.4" data-path="examples.html"><a href="examples.html#structure-two-strain-sir"><i class="fa fa-check"></i><b>12.4</b> Structure: Two-Strain SIR</a></li>
+<li class="chapter" data-level="12.5" data-path="examples.html"><a href="examples.html#erlang-seir"><i class="fa fa-check"></i><b>12.5</b> Erlang SEIR</a></li>
+<li class="chapter" data-level="12.6" data-path="examples.html"><a href="examples.html#the-sirv-model"><i class="fa fa-check"></i><b>12.6</b> The SIRV model</a></li>
+<li class="chapter" data-level="12.7" data-path="examples.html"><a href="examples.html#variolation-model"><i class="fa fa-check"></i><b>12.7</b> Variolation model</a></li>
+<li class="chapter" data-level="12.8" data-path="examples.html"><a href="examples.html#seird-model"><i class="fa fa-check"></i><b>12.8</b> SEIRD Model</a></li>
+<li class="chapter" data-level="12.9" data-path="examples.html"><a href="examples.html#covid-seir"><i class="fa fa-check"></i><b>12.9</b> Covid SEIR</a></li>
+<li class="chapter" data-level="12.10" data-path="examples.html"><a href="examples.html#bc-covid-omicron"><i class="fa fa-check"></i><b>12.10</b> BC Covid Omicron</a></li>
+<li class="chapter" data-level="12.11" data-path="examples.html"><a href="examples.html#classic-mcmasterpandemic"><i class="fa fa-check"></i><b>12.11</b> Classic McMasterPandemic</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="troubleshooting.html"><a href="troubleshooting.html"><i class="fa fa-check"></i><b>13</b> Troubleshooting</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="troubleshooting.html"><a href="troubleshooting.html#nan-valued-objective-function"><i class="fa fa-check"></i><b>13.1</b> NaN-Valued Objective Function</a>
+<ul>
+<li class="chapter" data-level="13.1.1" data-path="troubleshooting.html"><a href="troubleshooting.html#simulated-time-series-close-to-zero"><i class="fa fa-check"></i><b>13.1.1</b> Simulated time-series close to zero</a></li>
+<li class="chapter" data-level="13.1.2" data-path="troubleshooting.html"><a href="troubleshooting.html#negative-rate-matrix-elements"><i class="fa fa-check"></i><b>13.1.2</b> Negative rate matrix elements</a></li>
+<li class="chapter" data-level="13.1.3" data-path="troubleshooting.html"><a href="troubleshooting.html#optimizer-tries-very-large-dispersion-parameters"><i class="fa fa-check"></i><b>13.1.3</b> Optimizer tries very large dispersion parameters</a></li>
 </ul></li>
 </ul></li>
 <li class="divider"></li>
@@ -337,7 +346,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
         </div>
       </div>
 <a href="calibration.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="hazard-smoothing.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="other-variables.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -368,7 +377,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/USERNAME/REPO/edit/BRANCH/06-time-varying-parameters.Rmd",
+"link": "https://github.com/USERNAME/REPO/edit/BRANCH/05-time-varying-parameters.Rmd",
 "text": "Edit"
 },
 "history": {
