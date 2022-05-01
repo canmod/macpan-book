@@ -24,7 +24,7 @@
 <meta name="author" content="Steve Walker" />
 
 
-<meta name="date" content="2022-04-29" />
+<meta name="date" content="2022-04-30" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -230,19 +230,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="header">
 <h1 class="title">Generalized McMasterPandemic</h1>
 <p class="author"><em>Steve Walker</em></p>
-<p class="date"><em>2022-04-29</em></p>
+<p class="date"><em>2022-04-30</em></p>
 </div>
 <div id="fast-and-flexible-modelling-with-mcmasterpandemic" class="section level1" number="1">
 <h1><span class="header-section-number">Chapter 1</span> Fast and Flexible Modelling with McMasterPandemic</h1>
 <p><a href="https://github.com/mac-theobio/McMasterPandemic">McMasterPandemic</a> is a modelling tool that was rapidly developed to provide timely insights into the Covid-19 Pandemic in Canada. We are currently refactoring this tool so that it is faster and more general. This book describes how to use this refactored version of McMasterPandemic.</p>
-<p>The general model underlying McMasterPandmic’s flexible engine and interface based on a discrete time compartmental model.</p>
 <div id="installation" class="section level2" number="1.1">
 <h2><span class="header-section-number">1.1</span> Installation</h2>
-<p>This generalized McMasterPandemic framework is still in an experimental phase. Therefore you will need to install the experimental <code>tmb-condense</code> branch that contains the experimental implementation directly from github. A convenient way to do this is using the <code>remotes</code> package as follows.</p>
+<p>This generalized McMasterPandemic framework is still in an experimental phase. Therefore you will need to install the <code>tmb-condense</code> code branch that contains the experimental implementation directly from github. A convenient way to do this is to use the <code>remotes</code> package as follows.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="index.html#cb1-1" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">&quot;mac-theobio/McMasterPandemic@tmb-condense&quot;</span>)</span></code></pre></div>
 </div>
 <div id="generalized-model-at-a-glance" class="section level2" number="1.2">
 <h2><span class="header-section-number">1.2</span> Generalized Model at a Glance</h2>
+<p>The general model underlying McMasterPandmic’s flexible engine and interface based on a discrete time compartmental model.</p>
 <p><span class="math display">\[
 s_{i,t+1} = s_{i,t} + \sum_j M_{ji,t} s_{j,t} - s_{i,t} \sum_j  M_{ij,t} \delta_{ij}
 \]</span>

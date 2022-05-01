@@ -24,7 +24,7 @@
 <meta name="author" content="Steve Walker" />
 
 
-<meta name="date" content="2022-04-29" />
+<meta name="date" content="2022-04-30" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -274,11 +274,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="calibrating-time-variation-schedules" class="section level2" number="6.2">
 <h2><span class="header-section-number">6.2</span> Calibrating Time-Variation Schedules</h2>
 <p>Entries in the <code>Value</code> column can be <code>NA</code>, indicating that these should be fitted using <a href="calibration.html#calibration">Calibration</a>. When flagging time-variation values for calibration in this way, one must also provide information on any parameter transformations and prior distributions. Do provide this information, we use a technique similar to the one described in the <a href="calibration.html#calibration">Calibration</a> chapter to specify transformations and prior distributions for parameters in the <code>params</code> element of <code>flexmodel</code> objects. In that chapter we used the <code>add_opt_params</code> function – here we use the <code>add_opt_tv_params</code> function (the <code>tv</code> stands for time-variation).</p>
-<p>To illustrate calibration of time-variation values, we mark five of the six parameter change points in our example above.</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="time-varying-parameters.html#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(2L)</span>
-<span id="cb30-2"><a href="time-varying-parameters.html#cb30-2" aria-hidden="true" tabindex="-1"></a>calibrate_timevar <span class="ot">=</span> (random_timevar</span>
-<span id="cb30-3"><a href="time-varying-parameters.html#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">Value =</span> <span class="cn">NA</span>)</span>
-<span id="cb30-4"><a href="time-varying-parameters.html#cb30-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<p>To illustrate calibration of time-variation values, we mark for calibration the break-point on May 15 in our example above.</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="time-varying-parameters.html#cb30-1" aria-hidden="true" tabindex="-1"></a>calibrate_timevar <span class="ot">=</span> (random_timevar</span>
+<span id="cb30-2"><a href="time-varying-parameters.html#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">Value =</span> <span class="cn">NA</span>)</span>
+<span id="cb30-3"><a href="time-varying-parameters.html#cb30-3" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <p>Then we update our model with the <code>sir_with_timevar</code> simulations to fit to, and specify how to optimize the parameters.</p>
 <div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="time-varying-parameters.html#cb31-1" aria-hidden="true" tabindex="-1"></a>sir_to_cal_tv <span class="ot">=</span> (sir_with_timevar</span>
 <span id="cb31-2"><a href="time-varying-parameters.html#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">%&gt;%</span> <span class="fu">update_observed</span>(timevar_sims)</span>

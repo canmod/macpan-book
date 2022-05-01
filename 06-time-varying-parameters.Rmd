@@ -65,10 +65,9 @@ See [The SIRV model] and [Covid SEIR] for other examples of the use of time-vary
 
 Entries in the `Value` column can be `NA`, indicating that these should be fitted using [Calibration]. When flagging time-variation values for calibration in this way, one must also provide information on any parameter transformations and prior distributions.  Do provide this information, we use a technique similar to the one described in the [Calibration] chapter to specify transformations and prior distributions for parameters in the `params` element of `flexmodel` objects. In that chapter we used the `add_opt_params` function -- here we use the `add_opt_tv_params` function (the `tv` stands for time-variation).
 
-To illustrate calibration of time-variation values, we mark five of the six parameter change points in our example above.
+To illustrate calibration of time-variation values, we mark for calibration the break-point on May 15 in our example above.
 
 ```{r set_timevar_na}
-set.seed(2L)
 calibrate_timevar = (random_timevar
   %>% mutate(Value = NA)
 )
