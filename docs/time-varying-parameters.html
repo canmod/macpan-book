@@ -5,26 +5,26 @@
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 6 Time Varying Parameters | Generalized McMasterPandemic</title>
-  <meta name="description" content="McMasterPandemic is a modelling tool that was rapidly developed to provide timely insights into the Covid-19 Pandemic in Canada. We are currently refactoring this tool so that it is faster and more general. This book describes how to use this refactored version of McMasterPandemic." />
+  <meta name="description" content="McMasterPandemic is a modelling tool that was rapidly developed to provide timely insights into the Covid-19 Pandemic in Canada. We are currently refactoring this tool so that it is faster and more general. This guide describes how to use this refactored version of McMasterPandemic." />
   <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 6 Time Varying Parameters | Generalized McMasterPandemic" />
   <meta property="og:type" content="book" />
   
   <meta property="og:image" content="/path to the social sharing image like images/seird.jpg" />
-  <meta property="og:description" content="McMasterPandemic is a modelling tool that was rapidly developed to provide timely insights into the Covid-19 Pandemic in Canada. We are currently refactoring this tool so that it is faster and more general. This book describes how to use this refactored version of McMasterPandemic." />
+  <meta property="og:description" content="McMasterPandemic is a modelling tool that was rapidly developed to provide timely insights into the Covid-19 Pandemic in Canada. We are currently refactoring this tool so that it is faster and more general. This guide describes how to use this refactored version of McMasterPandemic." />
   <meta name="github-repo" content="canmod/macpan-book" />
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Chapter 6 Time Varying Parameters | Generalized McMasterPandemic" />
   
-  <meta name="twitter:description" content="McMasterPandemic is a modelling tool that was rapidly developed to provide timely insights into the Covid-19 Pandemic in Canada. We are currently refactoring this tool so that it is faster and more general. This book describes how to use this refactored version of McMasterPandemic." />
+  <meta name="twitter:description" content="McMasterPandemic is a modelling tool that was rapidly developed to provide timely insights into the Covid-19 Pandemic in Canada. We are currently refactoring this tool so that it is faster and more general. This guide describes how to use this refactored version of McMasterPandemic." />
   <meta name="twitter:image" content="/path to the social sharing image like images/seird.jpg" />
 
 <meta name="author" content="Steve Walker" />
 
 
-<meta name="date" content="2022-04-30" />
+<meta name="date" content="2022-05-01" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -142,7 +142,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Fast and Flexible Modelling with McMasterPandemic</a>
 <ul>
 <li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#installation"><i class="fa fa-check"></i><b>1.1</b> Installation</a></li>
-<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#generalized-model-at-a-glance"><i class="fa fa-check"></i><b>1.2</b> Generalized Model at a Glance</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#dependencies"><i class="fa fa-check"></i><b>1.2</b> Dependencies</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#generalized-model-at-a-glance"><i class="fa fa-check"></i><b>1.3</b> Generalized Model at a Glance</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="simple-model-initializtion.html"><a href="simple-model-initializtion.html"><i class="fa fa-check"></i><b>2</b> Simple Model Initializtion</a>
 <ul>
@@ -255,28 +256,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="example-of-time-variation" class="section level2" number="6.1">
 <h2><span class="header-section-number">6.1</span> Example of Time-Variation</h2>
 <p>In this example we create a time-variation schedule that causes the transmission, <code>beta</code>, drop to very low levels on May 15.</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="time-varying-parameters.html#cb26-1" aria-hidden="true" tabindex="-1"></a>random_timevar <span class="ot">=</span> <span class="fu">data.frame</span>(</span>
-<span id="cb26-2"><a href="time-varying-parameters.html#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">Date =</span> <span class="fu">ymd</span>(<span class="dv">20200515</span>),</span>
-<span id="cb26-3"><a href="time-varying-parameters.html#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">Symbol =</span> <span class="st">&#39;beta&#39;</span>,</span>
-<span id="cb26-4"><a href="time-varying-parameters.html#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">Value =</span> <span class="fl">0.01</span>,</span>
-<span id="cb26-5"><a href="time-varying-parameters.html#cb26-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">Type =</span> <span class="st">&#39;abs&#39;</span></span>
-<span id="cb26-6"><a href="time-varying-parameters.html#cb26-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb26-7"><a href="time-varying-parameters.html#cb26-7" aria-hidden="true" tabindex="-1"></a>random_timevar</span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="time-varying-parameters.html#cb28-1" aria-hidden="true" tabindex="-1"></a>random_timevar <span class="ot">=</span> <span class="fu">data.frame</span>(</span>
+<span id="cb28-2"><a href="time-varying-parameters.html#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">Date =</span> <span class="fu">ymd</span>(<span class="dv">20200515</span>),</span>
+<span id="cb28-3"><a href="time-varying-parameters.html#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">Symbol =</span> <span class="st">&#39;beta&#39;</span>,</span>
+<span id="cb28-4"><a href="time-varying-parameters.html#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">Value =</span> <span class="fl">0.01</span>,</span>
+<span id="cb28-5"><a href="time-varying-parameters.html#cb28-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">Type =</span> <span class="st">&#39;abs&#39;</span></span>
+<span id="cb28-6"><a href="time-varying-parameters.html#cb28-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb28-7"><a href="time-varying-parameters.html#cb28-7" aria-hidden="true" tabindex="-1"></a>random_timevar</span></code></pre></div>
 <pre><code>##         Date Symbol Value Type
 ## 1 2020-05-15   beta  0.01  abs</code></pre>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="time-varying-parameters.html#cb28-1" aria-hidden="true" tabindex="-1"></a>sir_with_timevar <span class="ot">=</span> (sir</span>
-<span id="cb28-2"><a href="time-varying-parameters.html#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">%&gt;%</span> <span class="fu">update_piece_wise</span>(random_timevar)</span>
-<span id="cb28-3"><a href="time-varying-parameters.html#cb28-3" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="time-varying-parameters.html#cb29-1" aria-hidden="true" tabindex="-1"></a>timevar_sims <span class="ot">=</span> (sir_with_timevar</span>
-<span id="cb29-2"><a href="time-varying-parameters.html#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">%&gt;%</span> <span class="fu">simulation_history</span>(<span class="at">include_initial_date =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb29-3"><a href="time-varying-parameters.html#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="sc">%&gt;%</span> tidyr<span class="sc">::</span><span class="fu">pivot_longer</span>(<span class="sc">-</span>Date, <span class="at">names_to =</span> <span class="st">&quot;var&quot;</span>)</span>
-<span id="cb29-4"><a href="time-varying-parameters.html#cb29-4" aria-hidden="true" tabindex="-1"></a>  <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="at">date =</span> Date)</span>
-<span id="cb29-5"><a href="time-varying-parameters.html#cb29-5" aria-hidden="true" tabindex="-1"></a>  <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">value =</span> <span class="fu">round</span>(value))</span>
-<span id="cb29-6"><a href="time-varying-parameters.html#cb29-6" aria-hidden="true" tabindex="-1"></a>  <span class="sc">%&gt;%</span> <span class="fu">filter</span>(var <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;S&quot;</span>, <span class="st">&quot;I&quot;</span>, <span class="st">&quot;R&quot;</span>))</span>
-<span id="cb29-7"><a href="time-varying-parameters.html#cb29-7" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb29-8"><a href="time-varying-parameters.html#cb29-8" aria-hidden="true" tabindex="-1"></a>(<span class="fu">ggplot</span>(timevar_sims)</span>
-<span id="cb29-9"><a href="time-varying-parameters.html#cb29-9" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">geom_line</span>(<span class="fu">aes</span>(date, value, <span class="at">colour =</span> var))</span>
-<span id="cb29-10"><a href="time-varying-parameters.html#cb29-10" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="time-varying-parameters.html#cb30-1" aria-hidden="true" tabindex="-1"></a>sir_with_timevar <span class="ot">=</span> (sir</span>
+<span id="cb30-2"><a href="time-varying-parameters.html#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">%&gt;%</span> <span class="fu">update_piece_wise</span>(random_timevar)</span>
+<span id="cb30-3"><a href="time-varying-parameters.html#cb30-3" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="time-varying-parameters.html#cb31-1" aria-hidden="true" tabindex="-1"></a>timevar_sims <span class="ot">=</span> (sir_with_timevar</span>
+<span id="cb31-2"><a href="time-varying-parameters.html#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">%&gt;%</span> <span class="fu">simulation_history</span>(<span class="at">include_initial_date =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb31-3"><a href="time-varying-parameters.html#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="sc">%&gt;%</span> tidyr<span class="sc">::</span><span class="fu">pivot_longer</span>(<span class="sc">-</span>Date, <span class="at">names_to =</span> <span class="st">&quot;var&quot;</span>)</span>
+<span id="cb31-4"><a href="time-varying-parameters.html#cb31-4" aria-hidden="true" tabindex="-1"></a>  <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="at">date =</span> Date)</span>
+<span id="cb31-5"><a href="time-varying-parameters.html#cb31-5" aria-hidden="true" tabindex="-1"></a>  <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">value =</span> <span class="fu">round</span>(value))</span>
+<span id="cb31-6"><a href="time-varying-parameters.html#cb31-6" aria-hidden="true" tabindex="-1"></a>  <span class="sc">%&gt;%</span> <span class="fu">filter</span>(var <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;S&quot;</span>, <span class="st">&quot;I&quot;</span>, <span class="st">&quot;R&quot;</span>))</span>
+<span id="cb31-7"><a href="time-varying-parameters.html#cb31-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb31-8"><a href="time-varying-parameters.html#cb31-8" aria-hidden="true" tabindex="-1"></a>(<span class="fu">ggplot</span>(timevar_sims)</span>
+<span id="cb31-9"><a href="time-varying-parameters.html#cb31-9" aria-hidden="true" tabindex="-1"></a>  <span class="sc">+</span> <span class="fu">geom_line</span>(<span class="fu">aes</span>(date, value, <span class="at">colour =</span> var))</span>
+<span id="cb31-10"><a href="time-varying-parameters.html#cb31-10" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/simulate_with_timevar-1.png" width="672" /></p>
 <p>Notice the abrupt break-point on May 15.</p>
 <p>See <a href="examples.html#the-sirv-model">The SIRV model</a> and <a href="examples.html#covid-seir">Covid SEIR</a> for other examples of the use of time-varying parameters in simulation models.</p>
@@ -285,27 +286,27 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">6.2</span> Calibrating Time-Variation Schedules</h2>
 <p>Entries in the <code>Value</code> column can be <code>NA</code>, indicating that these should be fitted using <a href="calibration.html#calibration">Calibration</a>. When flagging time-variation values for calibration in this way, one must also provide information on any parameter transformations and prior distributions. Do provide this information, we use a technique similar to the one described in the <a href="calibration.html#calibration">Calibration</a> chapter to specify transformations and prior distributions for parameters in the <code>params</code> element of <code>flexmodel</code> objects. In that chapter we used the <code>add_opt_params</code> function – here we use the <code>add_opt_tv_params</code> function (the <code>tv</code> stands for time-variation).</p>
 <p>To illustrate calibration of time-variation values, we mark for calibration the break-point on May 15 in our example above.</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="time-varying-parameters.html#cb30-1" aria-hidden="true" tabindex="-1"></a>calibrate_timevar <span class="ot">=</span> (random_timevar</span>
-<span id="cb30-2"><a href="time-varying-parameters.html#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">Value =</span> <span class="cn">NA</span>)</span>
-<span id="cb30-3"><a href="time-varying-parameters.html#cb30-3" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="time-varying-parameters.html#cb32-1" aria-hidden="true" tabindex="-1"></a>calibrate_timevar <span class="ot">=</span> (random_timevar</span>
+<span id="cb32-2"><a href="time-varying-parameters.html#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">Value =</span> <span class="cn">NA</span>)</span>
+<span id="cb32-3"><a href="time-varying-parameters.html#cb32-3" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <p>Then we update our model with the <code>sir_with_timevar</code> simulations to fit to, and specify how to optimize the parameters.</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="time-varying-parameters.html#cb31-1" aria-hidden="true" tabindex="-1"></a>sir_to_cal_tv <span class="ot">=</span> (sir_with_timevar</span>
-<span id="cb31-2"><a href="time-varying-parameters.html#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">%&gt;%</span> <span class="fu">update_observed</span>(timevar_sims)</span>
-<span id="cb31-3"><a href="time-varying-parameters.html#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="sc">%&gt;%</span> <span class="fu">update_piece_wise</span>(calibrate_timevar)</span>
-<span id="cb31-4"><a href="time-varying-parameters.html#cb31-4" aria-hidden="true" tabindex="-1"></a>  <span class="sc">%&gt;%</span> <span class="fu">add_opt_params</span>(log_beta <span class="sc">~</span> <span class="fu">log_flat</span>(<span class="dv">0</span>)</span>
-<span id="cb31-5"><a href="time-varying-parameters.html#cb31-5" aria-hidden="true" tabindex="-1"></a>    , log_nb_disp_S <span class="sc">~</span> <span class="fu">log_normal</span>(<span class="dv">0</span>, <span class="dv">1</span>)</span>
-<span id="cb31-6"><a href="time-varying-parameters.html#cb31-6" aria-hidden="true" tabindex="-1"></a>    , log_nb_disp_I <span class="sc">~</span> <span class="fu">log_normal</span>(<span class="dv">0</span>, <span class="dv">1</span>)</span>
-<span id="cb31-7"><a href="time-varying-parameters.html#cb31-7" aria-hidden="true" tabindex="-1"></a>    , log_nb_disp_R <span class="sc">~</span> <span class="fu">log_normal</span>(<span class="dv">0</span>, <span class="dv">1</span>)</span>
-<span id="cb31-8"><a href="time-varying-parameters.html#cb31-8" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb31-9"><a href="time-varying-parameters.html#cb31-9" aria-hidden="true" tabindex="-1"></a>  <span class="sc">%&gt;%</span> <span class="fu">add_opt_tv_params</span>(<span class="at">tv_type =</span> <span class="st">&quot;abs&quot;</span></span>
-<span id="cb31-10"><a href="time-varying-parameters.html#cb31-10" aria-hidden="true" tabindex="-1"></a>    , log_beta <span class="sc">~</span> <span class="fu">log_flat</span>(<span class="dv">0</span>)</span>
-<span id="cb31-11"><a href="time-varying-parameters.html#cb31-11" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb31-12"><a href="time-varying-parameters.html#cb31-12" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="time-varying-parameters.html#cb33-1" aria-hidden="true" tabindex="-1"></a>sir_to_cal_tv <span class="ot">=</span> (sir_with_timevar</span>
+<span id="cb33-2"><a href="time-varying-parameters.html#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">%&gt;%</span> <span class="fu">update_observed</span>(timevar_sims)</span>
+<span id="cb33-3"><a href="time-varying-parameters.html#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="sc">%&gt;%</span> <span class="fu">update_piece_wise</span>(calibrate_timevar)</span>
+<span id="cb33-4"><a href="time-varying-parameters.html#cb33-4" aria-hidden="true" tabindex="-1"></a>  <span class="sc">%&gt;%</span> <span class="fu">add_opt_params</span>(log_beta <span class="sc">~</span> <span class="fu">log_flat</span>(<span class="dv">0</span>)</span>
+<span id="cb33-5"><a href="time-varying-parameters.html#cb33-5" aria-hidden="true" tabindex="-1"></a>    , log_nb_disp_S <span class="sc">~</span> <span class="fu">log_normal</span>(<span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb33-6"><a href="time-varying-parameters.html#cb33-6" aria-hidden="true" tabindex="-1"></a>    , log_nb_disp_I <span class="sc">~</span> <span class="fu">log_normal</span>(<span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb33-7"><a href="time-varying-parameters.html#cb33-7" aria-hidden="true" tabindex="-1"></a>    , log_nb_disp_R <span class="sc">~</span> <span class="fu">log_normal</span>(<span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb33-8"><a href="time-varying-parameters.html#cb33-8" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb33-9"><a href="time-varying-parameters.html#cb33-9" aria-hidden="true" tabindex="-1"></a>  <span class="sc">%&gt;%</span> <span class="fu">add_opt_tv_params</span>(<span class="at">tv_type =</span> <span class="st">&quot;abs&quot;</span></span>
+<span id="cb33-10"><a href="time-varying-parameters.html#cb33-10" aria-hidden="true" tabindex="-1"></a>    , log_beta <span class="sc">~</span> <span class="fu">log_flat</span>(<span class="dv">0</span>)</span>
+<span id="cb33-11"><a href="time-varying-parameters.html#cb33-11" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb33-12"><a href="time-varying-parameters.html#cb33-12" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <p>The key function here is <code>add_opt_tv_params</code>, which allows us to specify a flat prior on the log scale for fitting the time-variation values.</p>
 <p>It turns out that in this case we need to make one technical adjustment – see <a href="troubleshooting.html#simulated-time-series-close-to-zero">Simulated time-series close to zero</a> for an explanation.</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="time-varying-parameters.html#cb32-1" aria-hidden="true" tabindex="-1"></a>sir_to_cal_tv<span class="sc">$</span>do_sim_constraint <span class="ot">=</span> <span class="cn">TRUE</span></span></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="time-varying-parameters.html#cb34-1" aria-hidden="true" tabindex="-1"></a>sir_to_cal_tv<span class="sc">$</span>do_sim_constraint <span class="ot">=</span> <span class="cn">TRUE</span></span></code></pre></div>
 <p>With this <code>sir_to_cal_tv</code> object we can now fit this model to the simulated data.</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="time-varying-parameters.html#cb33-1" aria-hidden="true" tabindex="-1"></a>sir_cal_tv <span class="ot">=</span> <span class="fu">nlminb_flexmodel</span>(sir_to_cal_tv)</span></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="time-varying-parameters.html#cb35-1" aria-hidden="true" tabindex="-1"></a>sir_cal_tv <span class="ot">=</span> <span class="fu">nlminb_flexmodel</span>(sir_to_cal_tv)</span></code></pre></div>
 <pre><code>## outer mgc:  141602.9 
 ## outer mgc:  323.4935 
 ## outer mgc:  865.305 
@@ -331,11 +332,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## outer mgc:  0.01292487 
 ## outer mgc:  9.024538e-06</code></pre>
 <p>The time-variation values before, during, and after optimization look as we would expect, given that we fitted to the same model that generated the data.</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="time-varying-parameters.html#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(</span>
-<span id="cb35-2"><a href="time-varying-parameters.html#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">before =</span> sir_with_timevar<span class="sc">$</span>timevar<span class="sc">$</span>piece_wise<span class="sc">$</span>schedule<span class="sc">$</span>Value,</span>
-<span id="cb35-3"><a href="time-varying-parameters.html#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">during =</span> sir_to_cal_tv<span class="sc">$</span>timevar<span class="sc">$</span>piece_wise<span class="sc">$</span>schedule<span class="sc">$</span>Value,</span>
-<span id="cb35-4"><a href="time-varying-parameters.html#cb35-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">after =</span> sir_cal_tv<span class="sc">$</span>timevar<span class="sc">$</span>piece_wise<span class="sc">$</span>schedule<span class="sc">$</span>Value</span>
-<span id="cb35-5"><a href="time-varying-parameters.html#cb35-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="time-varying-parameters.html#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(</span>
+<span id="cb37-2"><a href="time-varying-parameters.html#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">before =</span> sir_with_timevar<span class="sc">$</span>timevar<span class="sc">$</span>piece_wise<span class="sc">$</span>schedule<span class="sc">$</span>Value,</span>
+<span id="cb37-3"><a href="time-varying-parameters.html#cb37-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">during =</span> sir_to_cal_tv<span class="sc">$</span>timevar<span class="sc">$</span>piece_wise<span class="sc">$</span>schedule<span class="sc">$</span>Value,</span>
+<span id="cb37-4"><a href="time-varying-parameters.html#cb37-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">after =</span> sir_cal_tv<span class="sc">$</span>timevar<span class="sc">$</span>piece_wise<span class="sc">$</span>schedule<span class="sc">$</span>Value</span>
+<span id="cb37-5"><a href="time-varying-parameters.html#cb37-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>##      before      during       after 
 ## 0.010000000          NA 0.009945231</code></pre>
 

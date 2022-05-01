@@ -1,5 +1,6 @@
 fast-and-flexible-modelling-with-mcmasterpandemic
 installation
+dependencies
 generalized-model-at-a-glance
 simple-model-initializtion
 initial-parameter-vector

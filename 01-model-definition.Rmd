@@ -1,13 +1,5 @@
 # Simple Model Initializtion
 
-```{r echo = FALSE, message = FALSE}
-suppressPackageStartupMessages(library(ggplot2))
-suppressPackageStartupMessages(library(McMasterPandemic))
-suppressPackageStartupMessages(library(dplyr))
-suppressPackageStartupMessages(library(tidyr))
-suppressPackageStartupMessages(library(lubridate)) # shouldn't need this -- only here due to experimental changes to macpan
-```
-
 Before one may define the dynamics of their compartmental model they must initialize it using the `flexmodel` function. Here we describe each of the basic and required arguments to `flexmodel` and how to set them. This function allows one to define many details of the model, but in this chapter we cover just the requirements.
 
 * Parameter vector

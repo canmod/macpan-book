@@ -8,14 +8,14 @@ bibliography: [book.bib, packages.bib]
 # url: your book url like https://bookdown.org/yihui/bookdown
 cover-image: path to the social sharing image like images/seird.jpg
 description: |
-  McMasterPandemic is a modelling tool that was rapidly developed to provide timely insights into the Covid-19 Pandemic in Canada. We are currently refactoring this tool so that it is faster and more general. This book describes how to use this refactored version of McMasterPandemic.
+  McMasterPandemic is a modelling tool that was rapidly developed to provide timely insights into the Covid-19 Pandemic in Canada. We are currently refactoring this tool so that it is faster and more general. This guide describes how to use this refactored version of McMasterPandemic.
 link-citations: yes
 github-repo: canmod/macpan-book
 ---
 
 # Fast and Flexible Modelling with McMasterPandemic
 
-[McMasterPandemic](https://github.com/mac-theobio/McMasterPandemic) is a modelling tool that was rapidly developed to provide timely insights into the Covid-19 Pandemic in Canada. We are currently refactoring this tool so that it is faster and more general. This book describes how to use this refactored version of McMasterPandemic.
+[McMasterPandemic](https://github.com/mac-theobio/McMasterPandemic) is a modelling tool that was rapidly developed to provide timely insights into the Covid-19 Pandemic in Canada. We are currently refactoring this tool so that it is faster and more general. This guide describes how to use this refactored version of McMasterPandemic.
 
 ## Installation
 
@@ -23,6 +23,21 @@ This generalized McMasterPandemic framework is still in an experimental phase. T
 
 ```{r eval = FALSE}
 remotes::install_github("mac-theobio/McMasterPandemic@tmb-condense")
+```
+
+## Dependencies
+
+```{r echo = FALSE, message = FALSE}
+suppressPackageStartupMessages(library(ggplot2))
+suppressPackageStartupMessages(library(McMasterPandemic))
+suppressPackageStartupMessages(library(dplyr))
+suppressPackageStartupMessages(library(tidyr))
+suppressPackageStartupMessages(library(lubridate))
+```
+
+This guide makes use of the following session.
+```{r sessionInfo}
+sessionInfo()
 ```
 
 ## Generalized Model at a Glance

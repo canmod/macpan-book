@@ -5,26 +5,26 @@
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 12 Outflows | Generalized McMasterPandemic</title>
-  <meta name="description" content="McMasterPandemic is a modelling tool that was rapidly developed to provide timely insights into the Covid-19 Pandemic in Canada. We are currently refactoring this tool so that it is faster and more general. This book describes how to use this refactored version of McMasterPandemic." />
+  <meta name="description" content="McMasterPandemic is a modelling tool that was rapidly developed to provide timely insights into the Covid-19 Pandemic in Canada. We are currently refactoring this tool so that it is faster and more general. This guide describes how to use this refactored version of McMasterPandemic." />
   <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 12 Outflows | Generalized McMasterPandemic" />
   <meta property="og:type" content="book" />
   
   <meta property="og:image" content="/path to the social sharing image like images/seird.jpg" />
-  <meta property="og:description" content="McMasterPandemic is a modelling tool that was rapidly developed to provide timely insights into the Covid-19 Pandemic in Canada. We are currently refactoring this tool so that it is faster and more general. This book describes how to use this refactored version of McMasterPandemic." />
+  <meta property="og:description" content="McMasterPandemic is a modelling tool that was rapidly developed to provide timely insights into the Covid-19 Pandemic in Canada. We are currently refactoring this tool so that it is faster and more general. This guide describes how to use this refactored version of McMasterPandemic." />
   <meta name="github-repo" content="canmod/macpan-book" />
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Chapter 12 Outflows | Generalized McMasterPandemic" />
   
-  <meta name="twitter:description" content="McMasterPandemic is a modelling tool that was rapidly developed to provide timely insights into the Covid-19 Pandemic in Canada. We are currently refactoring this tool so that it is faster and more general. This book describes how to use this refactored version of McMasterPandemic." />
+  <meta name="twitter:description" content="McMasterPandemic is a modelling tool that was rapidly developed to provide timely insights into the Covid-19 Pandemic in Canada. We are currently refactoring this tool so that it is faster and more general. This guide describes how to use this refactored version of McMasterPandemic." />
   <meta name="twitter:image" content="/path to the social sharing image like images/seird.jpg" />
 
 <meta name="author" content="Steve Walker" />
 
 
-<meta name="date" content="2022-04-30" />
+<meta name="date" content="2022-05-01" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -142,7 +142,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Fast and Flexible Modelling with McMasterPandemic</a>
 <ul>
 <li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#installation"><i class="fa fa-check"></i><b>1.1</b> Installation</a></li>
-<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#generalized-model-at-a-glance"><i class="fa fa-check"></i><b>1.2</b> Generalized Model at a Glance</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#dependencies"><i class="fa fa-check"></i><b>1.2</b> Dependencies</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#generalized-model-at-a-glance"><i class="fa fa-check"></i><b>1.3</b> Generalized Model at a Glance</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="simple-model-initializtion.html"><a href="simple-model-initializtion.html"><i class="fa fa-check"></i><b>2</b> Simple Model Initializtion</a>
 <ul>
@@ -245,29 +246,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">12.1</span> Accumulators</h2>
 <p>It is sometimes necessary to override this default inflow-outflow balance. One use-case that requires something other than the default is in the definition of an accumulator compartment, which allows one to track the cumulative number of individuals that have ever entered a particular compartment or set of compartments.</p>
 <p>For example, suppose that we want to keep track of the total number of individuals who have ever been infected in our SIR model. To do this we define an <code>X</code> accumulator compartment. This <code>X</code> box has the same inflow from <code>S</code> as does <code>I</code>, but we restrict outflow from <code>S</code> as individuals flow in to <code>X</code> – otherwise we would double-count the draining of <code>S</code>. We specify this custom outflow model with the <code>add_outflow</code> function.</p>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="outflows.html#cb39-1" aria-hidden="true" tabindex="-1"></a>sir_with_accumulator <span class="ot">=</span> (<span class="fu">init_model</span>(</span>
-<span id="cb39-2"><a href="outflows.html#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">params =</span> <span class="fu">c</span>(<span class="at">beta =</span> <span class="fl">0.1</span>, <span class="at">gamma =</span> <span class="fl">0.01</span>, <span class="at">N =</span> <span class="dv">100</span>),</span>
-<span id="cb39-3"><a href="outflows.html#cb39-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">state =</span> <span class="fu">c</span>(<span class="at">S =</span> <span class="dv">99</span>, <span class="at">I =</span> <span class="dv">1</span>, <span class="at">R =</span> <span class="dv">0</span>, <span class="at">X =</span> <span class="dv">1</span>),</span>
-<span id="cb39-4"><a href="outflows.html#cb39-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">start_date =</span> <span class="st">&quot;2020-03-11&quot;</span>,</span>
-<span id="cb39-5"><a href="outflows.html#cb39-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">end_date =</span> <span class="st">&quot;2020-12-01&quot;</span></span>
-<span id="cb39-6"><a href="outflows.html#cb39-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb39-7"><a href="outflows.html#cb39-7" aria-hidden="true" tabindex="-1"></a> <span class="sc">%&gt;%</span> <span class="fu">add_rate</span>(<span class="st">&quot;S&quot;</span>, <span class="st">&quot;I&quot;</span>, <span class="sc">~</span> (I) <span class="sc">*</span> (beta) <span class="sc">*</span> (<span class="dv">1</span><span class="sc">/</span>N))</span>
-<span id="cb39-8"><a href="outflows.html#cb39-8" aria-hidden="true" tabindex="-1"></a> <span class="sc">%&gt;%</span> <span class="fu">add_rate</span>(<span class="st">&quot;S&quot;</span>, <span class="st">&quot;X&quot;</span>, <span class="sc">~</span> (I) <span class="sc">*</span> (beta) <span class="sc">*</span> (<span class="dv">1</span><span class="sc">/</span>N))</span>
-<span id="cb39-9"><a href="outflows.html#cb39-9" aria-hidden="true" tabindex="-1"></a> <span class="sc">%&gt;%</span> <span class="fu">add_rate</span>(<span class="st">&quot;I&quot;</span>, <span class="st">&quot;R&quot;</span>, <span class="sc">~</span> (gamma))</span>
-<span id="cb39-10"><a href="outflows.html#cb39-10" aria-hidden="true" tabindex="-1"></a> <span class="sc">%&gt;%</span> <span class="fu">add_outflow</span>(<span class="at">from =</span> <span class="st">&quot;S|I&quot;</span>, <span class="at">to =</span> <span class="st">&quot;I|R&quot;</span>)</span>
-<span id="cb39-11"><a href="outflows.html#cb39-11" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="outflows.html#cb41-1" aria-hidden="true" tabindex="-1"></a>sir_with_accumulator <span class="ot">=</span> (<span class="fu">init_model</span>(</span>
+<span id="cb41-2"><a href="outflows.html#cb41-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">params =</span> <span class="fu">c</span>(<span class="at">beta =</span> <span class="fl">0.1</span>, <span class="at">gamma =</span> <span class="fl">0.01</span>, <span class="at">N =</span> <span class="dv">100</span>),</span>
+<span id="cb41-3"><a href="outflows.html#cb41-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">state =</span> <span class="fu">c</span>(<span class="at">S =</span> <span class="dv">99</span>, <span class="at">I =</span> <span class="dv">1</span>, <span class="at">R =</span> <span class="dv">0</span>, <span class="at">X =</span> <span class="dv">1</span>),</span>
+<span id="cb41-4"><a href="outflows.html#cb41-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">start_date =</span> <span class="st">&quot;2020-03-11&quot;</span>,</span>
+<span id="cb41-5"><a href="outflows.html#cb41-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">end_date =</span> <span class="st">&quot;2020-12-01&quot;</span></span>
+<span id="cb41-6"><a href="outflows.html#cb41-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb41-7"><a href="outflows.html#cb41-7" aria-hidden="true" tabindex="-1"></a> <span class="sc">%&gt;%</span> <span class="fu">add_rate</span>(<span class="st">&quot;S&quot;</span>, <span class="st">&quot;I&quot;</span>, <span class="sc">~</span> (I) <span class="sc">*</span> (beta) <span class="sc">*</span> (<span class="dv">1</span><span class="sc">/</span>N))</span>
+<span id="cb41-8"><a href="outflows.html#cb41-8" aria-hidden="true" tabindex="-1"></a> <span class="sc">%&gt;%</span> <span class="fu">add_rate</span>(<span class="st">&quot;S&quot;</span>, <span class="st">&quot;X&quot;</span>, <span class="sc">~</span> (I) <span class="sc">*</span> (beta) <span class="sc">*</span> (<span class="dv">1</span><span class="sc">/</span>N))</span>
+<span id="cb41-9"><a href="outflows.html#cb41-9" aria-hidden="true" tabindex="-1"></a> <span class="sc">%&gt;%</span> <span class="fu">add_rate</span>(<span class="st">&quot;I&quot;</span>, <span class="st">&quot;R&quot;</span>, <span class="sc">~</span> (gamma))</span>
+<span id="cb41-10"><a href="outflows.html#cb41-10" aria-hidden="true" tabindex="-1"></a> <span class="sc">%&gt;%</span> <span class="fu">add_outflow</span>(<span class="at">from =</span> <span class="st">&quot;S|I&quot;</span>, <span class="at">to =</span> <span class="st">&quot;I|R&quot;</span>)</span>
+<span id="cb41-11"><a href="outflows.html#cb41-11" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <pre><code>## Warning in init_model(params = c(beta = 0.1, gamma = 0.01, N = 100), state = c(S = 99, : 
 ## init_model is deprecated.
 ## please use flexmodel.
 ## the only difference between the two functions is the name.</code></pre>
 <p>The <code>add_outflow</code> function here takes two regular expressions, <code>from</code> and <code>to</code>. The first <code>from</code> regular expression matches states that individuals must flow out of, only if the flow is to states matched by the second <code>to</code> regular expression.</p>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="outflows.html#cb41-1" aria-hidden="true" tabindex="-1"></a>(sir_with_accumulator</span>
-<span id="cb41-2"><a href="outflows.html#cb41-2" aria-hidden="true" tabindex="-1"></a> <span class="sc">%&gt;%</span> simulation_history</span>
-<span id="cb41-3"><a href="outflows.html#cb41-3" aria-hidden="true" tabindex="-1"></a> <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>S_to_I, <span class="sc">-</span>S_to_X)</span>
-<span id="cb41-4"><a href="outflows.html#cb41-4" aria-hidden="true" tabindex="-1"></a> <span class="sc">%&gt;%</span> <span class="fu">pivot_longer</span>(<span class="sc">-</span>Date, <span class="at">names_to =</span> <span class="st">&quot;State&quot;</span>, <span class="at">values_to =</span> <span class="st">&quot;Population&quot;</span>)</span>
-<span id="cb41-5"><a href="outflows.html#cb41-5" aria-hidden="true" tabindex="-1"></a> <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>()</span>
-<span id="cb41-6"><a href="outflows.html#cb41-6" aria-hidden="true" tabindex="-1"></a> <span class="sc">+</span> <span class="fu">geom_line</span>(<span class="fu">aes</span>(Date, Population, <span class="at">colour =</span> State))</span>
-<span id="cb41-7"><a href="outflows.html#cb41-7" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="outflows.html#cb43-1" aria-hidden="true" tabindex="-1"></a>(sir_with_accumulator</span>
+<span id="cb43-2"><a href="outflows.html#cb43-2" aria-hidden="true" tabindex="-1"></a> <span class="sc">%&gt;%</span> simulation_history</span>
+<span id="cb43-3"><a href="outflows.html#cb43-3" aria-hidden="true" tabindex="-1"></a> <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>S_to_I, <span class="sc">-</span>S_to_X)</span>
+<span id="cb43-4"><a href="outflows.html#cb43-4" aria-hidden="true" tabindex="-1"></a> <span class="sc">%&gt;%</span> <span class="fu">pivot_longer</span>(<span class="sc">-</span>Date, <span class="at">names_to =</span> <span class="st">&quot;State&quot;</span>, <span class="at">values_to =</span> <span class="st">&quot;Population&quot;</span>)</span>
+<span id="cb43-5"><a href="outflows.html#cb43-5" aria-hidden="true" tabindex="-1"></a> <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>()</span>
+<span id="cb43-6"><a href="outflows.html#cb43-6" aria-hidden="true" tabindex="-1"></a> <span class="sc">+</span> <span class="fu">geom_line</span>(<span class="fu">aes</span>(Date, Population, <span class="at">colour =</span> State))</span>
+<span id="cb43-7"><a href="outflows.html#cb43-7" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/sim_accumulator-1.png" width="672" /></p>
 <p>Note how sometime in July almost everyone has been infected at some point in the epidemic.</p>
 
