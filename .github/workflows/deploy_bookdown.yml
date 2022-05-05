@@ -19,6 +19,8 @@ jobs:
         run: Rscript -e 'install.packages(c("rmarkdown","bookdown","ggplot2","dplyr","tidyr","lubridate","remotes"))'
       - name: Install McMasterPandemic
         run: Rscript -e 'remotes::install_github("mac-theobio/McMasterPandemic@tmb-condense")'
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
       - name: Render Book
         run: Rscript -e 'rmarkdown::render_site(output_format = "bookdown::gitbook", encoding = "UTF-8")'
       - uses: actions/upload-artifact@v1
