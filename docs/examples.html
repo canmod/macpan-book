@@ -11,7 +11,7 @@
   <meta property="og:title" content="Chapter 13 Examples | Generalized McMasterPandemic" />
   <meta property="og:type" content="book" />
   
-  <meta property="og:image" content="/path to the social sharing image like images/seird.jpg" />
+  
   <meta property="og:description" content="McMasterPandemic is a modelling tool that was rapidly developed to provide timely insights into the Covid-19 Pandemic in Canada. We are currently refactoring this tool so that it is faster and more general. This guide describes how to use this refactored version of McMasterPandemic." />
   <meta name="github-repo" content="canmod/macpan-book" />
 
@@ -19,7 +19,7 @@
   <meta name="twitter:title" content="Chapter 13 Examples | Generalized McMasterPandemic" />
   
   <meta name="twitter:description" content="McMasterPandemic is a modelling tool that was rapidly developed to provide timely insights into the Covid-19 Pandemic in Canada. We are currently refactoring this tool so that it is faster and more general. This guide describes how to use this refactored version of McMasterPandemic." />
-  <meta name="twitter:image" content="/path to the social sharing image like images/seird.jpg" />
+  
 
 <meta name="author" content="Steve Walker" />
 
@@ -885,7 +885,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="examples.html#cb67-1" aria-hidden="true" tabindex="-1"></a>params <span class="ot">=</span> <span class="fu">read_params</span>(<span class="st">&quot;ICU1.csv&quot;</span>)</span>
 <span id="cb67-2"><a href="examples.html#cb67-2" aria-hidden="true" tabindex="-1"></a>model <span class="ot">=</span> (<span class="fu">flexmodel</span>(</span>
 <span id="cb67-3"><a href="examples.html#cb67-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">params =</span> params,</span>
-<span id="cb67-4"><a href="examples.html#cb67-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">state =</span> <span class="fu">make_state</span>(<span class="at">params =</span> params),</span>
+<span id="cb67-4"><a href="examples.html#cb67-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">state =</span> <span class="fu">make_state</span>(<span class="at">params =</span> params)[<span class="sc">-</span><span class="dv">14</span>], <span class="co"># -14 removes V compartment</span></span>
 <span id="cb67-5"><a href="examples.html#cb67-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">start_date =</span> <span class="st">&quot;2020-03-10&quot;</span>,</span>
 <span id="cb67-6"><a href="examples.html#cb67-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">end_date =</span> <span class="st">&quot;2020-12-10&quot;</span>,</span>
 <span id="cb67-7"><a href="examples.html#cb67-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">do_make_state =</span> <span class="cn">FALSE</span>,</span>
@@ -964,7 +964,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/USERNAME/REPO/edit/BRANCH/12-examples.Rmd",
+"link": "https://github.com/canmod/macpan-book/edit/main/12-examples.Rmd",
 "text": "Edit"
 },
 "history": {
