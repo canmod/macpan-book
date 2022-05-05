@@ -27,10 +27,10 @@ jobs:
         with:
           name: _book
           path: _book/
-      #- name: Deploy 🚀
-      #  uses: JamesIves/github-pages-deploy-action@v4.3.3
-      #  with:
-      #    branch: main # The branch the action should deploy to.
-      #    folder: _book # The folder the action should deploy.
-      #    dry_run: true
-      #    target_folder: docs
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@v4.3.3
+        with:
+          branch: main # The branch the action should deploy to.
+          folder: _book # The folder the action should deploy.
+          clean: false
+          target-folder: docs
