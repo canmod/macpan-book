@@ -27,24 +27,8 @@ jobs:
         with:
           name: _book
           path: _book/
-
-
-  checkout-and-deploy:
-    runs-on: ubuntu-latest
-    needs: bookdown
-    steps:
-      - name: Checkout
-        uses: actions/checkout@master
-      - name: Download artifact
-        uses: actions/download-artifact@v1.0.0
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@v4.3.3
         with:
-          # Artifact name
-          name: _book # optional
-          # Destination path
-          path: docs/ # optional
-      - name: Deploy to GitHub Pages
-        uses: Cecilapp/GitHub-Pages-deploy@master
-        env:
-          EMAIL: ${{ secrets.EMAIL }}               # must be a verified email
-          GH_TOKEN: ${{ secrets.GH_PAT }} # https://github.com/settings/tokens
-          BUILD_DIR: docs/                     # "_site/" by default
+          branch: main # The branch the action should deploy to.
+          folder: _book # The folder the action should deploy.
