@@ -1,3 +1,3 @@
 # Ensemble Forecasts
 
-
+Good forecasts include measures of uncertainty associated with each forecasted data point. The `simulate_ensemble` function allows one to make such forecasts.
