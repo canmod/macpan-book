@@ -1,0 +1,22 @@
+# Troubleshooting
+
+## NaN-Valued Objective Function
+
+### Simulated time-series close to zero
+
+When the simulated values that are being compared with data are close to zero (e.g. less than 1e-12), the negative binomial loss function often returns NaN.  This can be fixed by setting `do_sim_constraint = TRUE` as an argument to `flexmodel` or whatever model constructor is being used (e.g. `make_vaccination_model`). This flag causes the simulated values to pass through the following soft-thresholding function to keep the simulations, $x$, from falling below a tolerance, $\epsilon$.
+
+$$
+x + \frac{\epsilon}{1-(x-\epsilon)/\epsilon + (x-\epsilon)^2/\epsilon^2}
+$$
+
+This tolerance can be adjusted by setting the `sim_lower_bound = 1e-12`. Note that both `do_sim_constraint` and `sim_lower_bound` can be set using the global options `MP_default_do_sim_constraint` and `MP_default_sim_lower_bound`.
+
+
+### Negative rate matrix elements
+
+These can arise naturally due to time-varying parameters that appear in `1-x` terms in rate formulas. The best way to avoid this is to use the `abs` type of time-variation, so that logit transformations can be used directly on the changing parameters. This approach ensures that the parameter never leaves the interval between zero and one. In the future we should have a time-variation option that updates changing parameters on the logit scale, which would also solve this problem.
+
+### Optimizer tries very large dispersion parameters
+
+For some reason the TMB `dnbinom2` function cannot handle large dispersion parameters, even though the standard R `dnbinom` function seems fine with them.  Nevertheless, this entire issue can be avoided by setting priors on the dispersion parameters. In the future we might try to exploit the fact that the limit of the log negative binomial density as the dispersion parameter gets large tends to the log poisson density. Such an improvement is not entirely trivial due to the need for maintaining differentiability.

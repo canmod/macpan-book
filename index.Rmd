@@ -1,0 +1,58 @@
+--- 
+title: "Generalized McMasterPandemic"
+author: "Steve Walker"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+documentclass: book
+description: |
+  McMasterPandemic is a modelling tool that was rapidly developed to provide timely insights into the Covid-19 Pandemic in Canada. We are currently refactoring this tool so that it is faster and more general. This guide describes how to use this refactored version of McMasterPandemic.
+link-citations: yes
+github-repo: canmod/macpan-book
+---
+
+# Fast and Flexible Modelling with McMasterPandemic
+
+[McMasterPandemic](https://github.com/mac-theobio/McMasterPandemic) is a modelling tool that was rapidly developed to provide timely insights into the Covid-19 Pandemic in Canada. We are currently refactoring this tool so that it is faster and more general. This guide describes how to use this refactored version of McMasterPandemic.
+
+## Installation
+
+This generalized McMasterPandemic framework is still in an experimental phase. Therefore you will need to install the `tmb-condense` code branch that contains the experimental implementation directly from github. A convenient way to do this is to use the `remotes` package as follows.
+
+```{r eval = FALSE}
+remotes::install_github("mac-theobio/McMasterPandemic@tmb-condense")
+```
+
+## Dependencies
+
+```{r echo = FALSE, message = FALSE}
+suppressPackageStartupMessages(library(ggplot2))
+suppressPackageStartupMessages(library(McMasterPandemic))
+suppressPackageStartupMessages(library(dplyr))
+suppressPackageStartupMessages(library(tidyr))
+suppressPackageStartupMessages(library(lubridate))
+```
+
+This guide makes use of the following session.
+```{r sessionInfo}
+sessionInfo()
+```
+
+## Generalized Model at a Glance
+
+The general model underlying McMasterPandmic's flexible engine and interface based on a discrete time compartmental model.
+
+$$
+s_{i,t+1} = s_{i,t} + \underbrace{\sum_j M_{ji,t} s_{j,t}}_{\text{inflow}} - \underbrace{s_{i,t} \sum_j  M_{ij,t} {\mathcal I}_{ij}}_{\text{outflow}}
+$$
+where,
+
+* $s_{i,t}$ is the state of the $i$th compartment at time $t$
+* $M_{ij,t}$ is the per-capita rate of flow from compartment $i$ to compartment $j$ at time $t$
+* ${\mathcal I}_{ij}\in\{0,1\}$ indicates whether or not individuals should be removed from compartment $i$ after flowing to compartment $j$
+
+The per-capita rates, $M_{ij,t}$, can be any expression involving only sums and products of any of the following at time $t$:
+
+  * State of any compartment
+  * Model parameter -- either time-varying or not
+  * Complements of any of the above (i.e. $1-x$)
+  * Inverses of any of the above (i.e. $1/x$)

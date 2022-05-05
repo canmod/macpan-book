@@ -1,0 +1,9 @@
+# Vectors
+
+Throughout most of our discussions we have used a simple SIR model as an example. However, many real-world applications involve some kind of compartment structure. For example, the McMaster COVID modelling team used a model with vaccination structure where each epidemiological status (e.g. S, E, I, R) requires five compartments. Each of these five compartments represents a different vaccination status: unvaccinated, received first dose, protected by first dose, receieved second dose, protected by second dose. There are many other examples of model structure that multiply the numbers of compartments including age, variants, and space.
+
+As base epidemiological compartments are multiplied with structure, the scalar valued parameters, states, and rates become vectors and matrices. (TODO: describe matrix-formulations of the force of infection under structure).
+
+McMasterPandemic provides `struc` objects for doing symbolic matrix algebra that allows one to specify vector-valued rates to multiple flows at the same time (e.g. force of infection for every vaccination status). The `scal`, `vec`, and `mat` functions can be used to construct scalar-valued, vector-valued, and matrix-valued `struc` objects.
+
+A very simple example of `struc` objects is given by this [Two-Strain SIR](Structure: Two-Strain SIR) model.
