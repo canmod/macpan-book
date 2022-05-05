@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>2 Simple Model Initializtion | Generalized McMasterPandemic</title>
+  <meta name="description" content="McMasterPandemic is a modelling tool that was rapidly developed to provide timely insights into the Covid-19 Pandemic in Canada. We are currently refactoring this tool so that it is faster and more general. This guide describes how to use this refactored version of McMasterPandemic." />
+  <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="2 Simple Model Initializtion | Generalized McMasterPandemic" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="McMasterPandemic is a modelling tool that was rapidly developed to provide timely insights into the Covid-19 Pandemic in Canada. We are currently refactoring this tool so that it is faster and more general. This guide describes how to use this refactored version of McMasterPandemic." />
+  <meta name="github-repo" content="canmod/macpan-book" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="2 Simple Model Initializtion | Generalized McMasterPandemic" />
+  
+  <meta name="twitter:description" content="McMasterPandemic is a modelling tool that was rapidly developed to provide timely insights into the Covid-19 Pandemic in Canada. We are currently refactoring this tool so that it is faster and more general. This guide describes how to use this refactored version of McMasterPandemic." />
+  
+
+<meta name="author" content="Steve Walker" />
+
+
+<meta name="date" content="2022-05-05" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="index.html"/>
+<link rel="next" href="flow-between-states.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<link href="libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
+<script src="libs/pagedtable-1.1/js/pagedtable.js"></script>
+
+
+<style type="text/css">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Fast and Flexible Modelling with McMasterPandemic</a><ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#installation"><i class="fa fa-check"></i><b>1.1</b> Installation</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#dependencies"><i class="fa fa-check"></i><b>1.2</b> Dependencies</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#generalized-model-at-a-glance"><i class="fa fa-check"></i><b>1.3</b> Generalized Model at a Glance</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="simple-model-initializtion.html"><a href="simple-model-initializtion.html"><i class="fa fa-check"></i><b>2</b> Simple Model Initializtion</a><ul>
+<li class="chapter" data-level="2.1" data-path="simple-model-initializtion.html"><a href="simple-model-initializtion.html#initial-parameter-vector"><i class="fa fa-check"></i><b>2.1</b> Initial Parameter Vector</a></li>
+<li class="chapter" data-level="2.2" data-path="simple-model-initializtion.html"><a href="simple-model-initializtion.html#initial-state-vector"><i class="fa fa-check"></i><b>2.2</b> Initial State Vector</a></li>
+<li class="chapter" data-level="2.3" data-path="simple-model-initializtion.html"><a href="simple-model-initializtion.html#start-and-end-date"><i class="fa fa-check"></i><b>2.3</b> Start and End Date</a></li>
+<li class="chapter" data-level="2.4" data-path="simple-model-initializtion.html"><a href="simple-model-initializtion.html#next-steps"><i class="fa fa-check"></i><b>2.4</b> Next Steps</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="flow-between-states.html"><a href="flow-between-states.html"><i class="fa fa-check"></i><b>3</b> Flow Between States</a><ul>
+<li class="chapter" data-level="3.1" data-path="flow-between-states.html"><a href="flow-between-states.html#state-flows"><i class="fa fa-check"></i><b>3.1</b> State Flows</a></li>
+<li class="chapter" data-level="3.2" data-path="flow-between-states.html"><a href="flow-between-states.html#flow-matrix"><i class="fa fa-check"></i><b>3.2</b> Flow Matrix</a></li>
+<li class="chapter" data-level="3.3" data-path="flow-between-states.html"><a href="flow-between-states.html#rate-matrix"><i class="fa fa-check"></i><b>3.3</b> Rate Matrix</a></li>
+<li class="chapter" data-level="3.4" data-path="flow-between-states.html"><a href="flow-between-states.html#rate-matrix-dependence-on-state-variables-and-parameters"><i class="fa fa-check"></i><b>3.4</b> Rate Matrix Dependence on State Variables and Parameters</a></li>
+<li class="chapter" data-level="3.5" data-path="flow-between-states.html"><a href="flow-between-states.html#next-steps-1"><i class="fa fa-check"></i><b>3.5</b> Next Steps</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="simulation.html"><a href="simulation.html"><i class="fa fa-check"></i><b>4</b> Simulation</a></li>
+<li class="chapter" data-level="5" data-path="calibration.html"><a href="calibration.html"><i class="fa fa-check"></i><b>5</b> Calibration</a><ul>
+<li class="chapter" data-level="5.1" data-path="calibration.html"><a href="calibration.html#loss-functions"><i class="fa fa-check"></i><b>5.1</b> Loss Functions</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="calibration.html"><a href="calibration.html#negative-binomial"><i class="fa fa-check"></i><b>5.1.1</b> Negative Binomial</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="time-varying-parameters.html"><a href="time-varying-parameters.html"><i class="fa fa-check"></i><b>6</b> Time Varying Parameters</a><ul>
+<li class="chapter" data-level="6.1" data-path="time-varying-parameters.html"><a href="time-varying-parameters.html#example-of-time-variation"><i class="fa fa-check"></i><b>6.1</b> Example of Time-Variation</a></li>
+<li class="chapter" data-level="6.2" data-path="time-varying-parameters.html"><a href="time-varying-parameters.html#calibrating-time-variation-schedules"><i class="fa fa-check"></i><b>6.2</b> Calibrating Time-Variation Schedules</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="other-variables.html"><a href="other-variables.html"><i class="fa fa-check"></i><b>7</b> Other Variables</a><ul>
+<li class="chapter" data-level="7.1" data-path="other-variables.html"><a href="other-variables.html#intermediate-results"><i class="fa fa-check"></i><b>7.1</b> Intermediate Results</a><ul>
+<li class="chapter" data-level="7.1.1" data-path="other-variables.html"><a href="other-variables.html#sums-of-state-variables-and-parameters"><i class="fa fa-check"></i><b>7.1.1</b> Sums of State Variables and Parameters</a></li>
+<li class="chapter" data-level="7.1.2" data-path="other-variables.html"><a href="other-variables.html#factrs"><i class="fa fa-check"></i><b>7.1.2</b> Factrs</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="other-variables.html"><a href="other-variables.html#additional-variables-in-the-simulation-history"><i class="fa fa-check"></i><b>7.2</b> Additional Variables in the Simulation History</a><ul>
+<li class="chapter" data-level="7.2.1" data-path="other-variables.html"><a href="other-variables.html#simulation-history-expressions"><i class="fa fa-check"></i><b>7.2.1</b> Simulation History Expressions</a></li>
+<li class="chapter" data-level="7.2.2" data-path="other-variables.html"><a href="other-variables.html#lagged-differencing"><i class="fa fa-check"></i><b>7.2.2</b> Lagged Differencing</a></li>
+<li class="chapter" data-level="7.2.3" data-path="other-variables.html"><a href="other-variables.html#convolutions"><i class="fa fa-check"></i><b>7.2.3</b> Convolutions</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="ensemble-forecasts.html"><a href="ensemble-forecasts.html"><i class="fa fa-check"></i><b>8</b> Ensemble Forecasts</a></li>
+<li class="chapter" data-level="9" data-path="vectors.html"><a href="vectors.html"><i class="fa fa-check"></i><b>9</b> Vectors</a></li>
+<li class="chapter" data-level="10" data-path="hazard-smoothing.html"><a href="hazard-smoothing.html"><i class="fa fa-check"></i><b>10</b> Hazard Smoothing</a></li>
+<li class="chapter" data-level="11" data-path="state-initialization.html"><a href="state-initialization.html"><i class="fa fa-check"></i><b>11</b> State Initialization</a></li>
+<li class="chapter" data-level="12" data-path="outflows.html"><a href="outflows.html"><i class="fa fa-check"></i><b>12</b> Outflows</a><ul>
+<li class="chapter" data-level="12.1" data-path="outflows.html"><a href="outflows.html#accumulators"><i class="fa fa-check"></i><b>12.1</b> Accumulators</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="examples.html"><a href="examples.html"><i class="fa fa-check"></i><b>13</b> Examples</a><ul>
+<li class="chapter" data-level="13.1" data-path="examples.html"><a href="examples.html#hello-world-simulating-an-sir-model"><i class="fa fa-check"></i><b>13.1</b> Hello World: Simulating an SIR Model</a></li>
+<li class="chapter" data-level="13.2" data-path="examples.html"><a href="examples.html#si"><i class="fa fa-check"></i><b>13.2</b> SI</a></li>
+<li class="chapter" data-level="13.3" data-path="examples.html"><a href="examples.html#seir"><i class="fa fa-check"></i><b>13.3</b> SEIR</a></li>
+<li class="chapter" data-level="13.4" data-path="examples.html"><a href="examples.html#structure-two-strain-sir"><i class="fa fa-check"></i><b>13.4</b> Structure: Two-Strain SIR</a></li>
+<li class="chapter" data-level="13.5" data-path="examples.html"><a href="examples.html#erlang-seir"><i class="fa fa-check"></i><b>13.5</b> Erlang SEIR</a></li>
+<li class="chapter" data-level="13.6" data-path="examples.html"><a href="examples.html#the-sirv-model"><i class="fa fa-check"></i><b>13.6</b> The SIRV model</a></li>
+<li class="chapter" data-level="13.7" data-path="examples.html"><a href="examples.html#variolation-model"><i class="fa fa-check"></i><b>13.7</b> Variolation model</a></li>
+<li class="chapter" data-level="13.8" data-path="examples.html"><a href="examples.html#seird-model"><i class="fa fa-check"></i><b>13.8</b> SEIRD Model</a></li>
+<li class="chapter" data-level="13.9" data-path="examples.html"><a href="examples.html#covid-seir"><i class="fa fa-check"></i><b>13.9</b> Covid SEIR</a></li>
+<li class="chapter" data-level="13.10" data-path="examples.html"><a href="examples.html#bc-covid-omicron"><i class="fa fa-check"></i><b>13.10</b> BC Covid Omicron</a></li>
+<li class="chapter" data-level="13.11" data-path="examples.html"><a href="examples.html#classic-mcmasterpandemic"><i class="fa fa-check"></i><b>13.11</b> Classic McMasterPandemic</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="troubleshooting.html"><a href="troubleshooting.html"><i class="fa fa-check"></i><b>14</b> Troubleshooting</a><ul>
+<li class="chapter" data-level="14.1" data-path="troubleshooting.html"><a href="troubleshooting.html#nan-valued-objective-function"><i class="fa fa-check"></i><b>14.1</b> NaN-Valued Objective Function</a><ul>
+<li class="chapter" data-level="14.1.1" data-path="troubleshooting.html"><a href="troubleshooting.html#simulated-time-series-close-to-zero"><i class="fa fa-check"></i><b>14.1.1</b> Simulated time-series close to zero</a></li>
+<li class="chapter" data-level="14.1.2" data-path="troubleshooting.html"><a href="troubleshooting.html#negative-rate-matrix-elements"><i class="fa fa-check"></i><b>14.1.2</b> Negative rate matrix elements</a></li>
+<li class="chapter" data-level="14.1.3" data-path="troubleshooting.html"><a href="troubleshooting.html#optimizer-tries-very-large-dispersion-parameters"><i class="fa fa-check"></i><b>14.1.3</b> Optimizer tries very large dispersion parameters</a></li>
+</ul></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Generalized McMasterPandemic</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="simple-model-initializtion" class="section level1 hasAnchor">
+<h1><span class="header-section-number">2</span> Simple Model Initializtion<a href="simple-model-initializtion.html#simple-model-initializtion" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Before one may define the dynamics of their compartmental model they must initialize it using the <code>flexmodel</code> function. Here we describe each of the basic and required arguments to <code>flexmodel</code> and how to set them. This function allows one to define many details of the model, but in this chapter we cover just the requirements.</p>
+<ul>
+<li>Parameter vector</li>
+<li>State vector</li>
+<li>Start and end dates</li>
+</ul>
+<p>Here is a simple SIR model example.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="simple-model-initializtion.html#cb4-1"></a>sir =<span class="st"> </span><span class="kw">flexmodel</span>(</span>
+<span id="cb4-2"><a href="simple-model-initializtion.html#cb4-2"></a>  <span class="dt">params =</span> <span class="kw">c</span>(<span class="dt">beta =</span> <span class="fl">0.1</span>, <span class="dt">gamma =</span> <span class="fl">0.01</span>, <span class="dt">N =</span> <span class="dv">100</span>),</span>
+<span id="cb4-3"><a href="simple-model-initializtion.html#cb4-3"></a>  <span class="dt">state =</span> <span class="kw">c</span>(<span class="dt">S =</span> <span class="dv">99</span>, <span class="dt">I =</span> <span class="dv">1</span>, <span class="dt">R =</span> <span class="dv">0</span>),</span>
+<span id="cb4-4"><a href="simple-model-initializtion.html#cb4-4"></a>  <span class="dt">start_date =</span> <span class="st">&quot;2020-03-11&quot;</span>,</span>
+<span id="cb4-5"><a href="simple-model-initializtion.html#cb4-5"></a>  <span class="dt">end_date =</span> <span class="st">&quot;2020-12-01&quot;</span></span>
+<span id="cb4-6"><a href="simple-model-initializtion.html#cb4-6"></a>)</span></code></pre></div>
+<div class="infobox caution">
+<p>To learn more about these options, please keep reading this chapter.</p>
+<p>To continue building this simple SIR model, please move on the the next chapter, where you can define <a href="flow-between-states.html#flow-between-states">Flow Between States</a>.</p>
+</div>
+<div id="initial-parameter-vector" class="section level2 hasAnchor">
+<h2><span class="header-section-number">2.1</span> Initial Parameter Vector<a href="simple-model-initializtion.html#initial-parameter-vector" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The parameter vector contains the following kinds of information.</p>
+<ul>
+<li>State transition rates or parameters determining them (e.g. transmission rate, <span class="math inline">\(\beta\)</span>)</li>
+<li>Initial numbers of individuals in a compartment or group of compartments (e.g. initial number of exposed individuals, <span class="math inline">\(E_0\)</span>)</li>
+<li>Data processing parameters to make observed and simulated time-series more comparable (e.g. fraction of incidence reported as positive tests, <span class="math inline">\(c_\text{prop}\)</span>)</li>
+</ul>
+<p>In its simplest form these parameters can be specified as a standard named numeric vector. We used this approach above in our SIR example, and this parameter vector can be extracted from the model.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="simple-model-initializtion.html#cb5-1"></a>sir<span class="op">$</span>params</span></code></pre></div>
+<pre><code>##  beta gamma     N 
+## 1e-01 1e-02 1e+02</code></pre>
+<p>McMasterPandemic also has a special <code>params_pansim</code> object class for representing parameters. These objects come with descriptions of the meaning of each parameter. An example of this <code>params_pansim</code> format can be explored with the following command.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="simple-model-initializtion.html#cb7-1"></a>rmarkdown<span class="op">::</span><span class="kw">paged_table</span>(<span class="kw">describe_params</span>(<span class="kw">read_params</span>(<span class="st">&#39;ICU1.csv&#39;</span>)))</span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["symbol"],"name":[1],"type":["chr"],"align":["left"]},{"label":["value"],"name":[2],"type":["chr"],"align":["left"]},{"label":["meaning"],"name":[3],"type":["chr"],"align":["left"]}],"data":[{"1":"beta0","2":"1","3":"Baseline (non-intervention) transmission across categories"},{"1":"Ca","2":"0.667","3":"relative asymptomatic transmission (or contact)"},{"1":"Cp","2":"1","3":"relative presymptomatic transmission (or contact)"},{"1":"Cm","2":"1","3":"relative mildly symptomatic transmission (or contact)"},{"1":"Cs","2":"1","3":"relative severely symptomatic transmission (or contact)"},{"1":"alpha","2":"0.333","3":"Fraction of cases asymptomatic"},{"1":"sigma","2":"0.192","3":"1/time in exposed class"},{"1":"gamma_a","2":"0.143","3":"1/time for asymptomatic recovery"},{"1":"gamma_m","2":"0.143","3":"1/time for mildly symptomatic recovery"},{"1":"gamma_s","2":"0.175","3":"1/time for severely symptomatic transition to hospital/death"},{"1":"gamma_p","2":"2","3":"1/time in pre-symptomatic class"},{"1":"rho","2":"0.1","3":"1/time in hospital (acute care)"},{"1":"delta","2":"0","3":"Fraction of acute-care cases that are fatal"},{"1":"mu","2":"0.956","3":"Fraction of symptomatic cases that are mild (or moderate)"},{"1":"N","2":"1e+06","3":"Population size"},{"1":"E0","2":"5","3":"Initial number exposed"},{"1":"nonhosp_mort","2":"0","3":"probability of mortality without hospitalization"},{"1":"iso_m","2":"0","3":"Relative self-isolation/distancing of mild cases"},{"1":"iso_s","2":"0","3":"Relative self-isolation/distancing of severe cases"},{"1":"phi1","2":"0.76","3":"Fraction of hospital cases to ICU"},{"1":"phi2","2":"0.5","3":"Fraction of ICU cases dying"},{"1":"psi1","2":"0.05","3":"Rate of ICU back to acute care"},{"1":"psi2","2":"0.125","3":"Rate of ICU to death"},{"1":"psi3","2":"0.2","3":"Rate of post-ICU to discharge"},{"1":"c_prop","2":"0.1","3":"fraction of incidence reported as positive tests"},{"1":"c_delay_mean","2":"11","3":"average delay between incidence and test report"},{"1":"c_delay_cv","2":"0.25","3":"coefficient of variation of testing delay"},{"1":"proc_disp","2":"0","3":"dispersion parameter for process error (0=demog stoch only)"},{"1":"zeta","2":"0","3":"phenomenological heterogeneity parameter"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>See the McMasterPandemic <a href="https://mac-theobio.github.io/McMasterPandemic/articles/getting_started.html">getting started vignette</a> for more info on <code>params_pansim</code> objects.</p>
+</div>
+<div id="initial-state-vector" class="section level2 hasAnchor">
+<h2><span class="header-section-number">2.2</span> Initial State Vector<a href="simple-model-initializtion.html#initial-state-vector" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The state vector is used to declare the names of the state variables. In the SIR example above we did this via a named numeric vector, and these names become the names of the states.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="simple-model-initializtion.html#cb8-1"></a>sir<span class="op">$</span>state</span></code></pre></div>
+<pre><code>##  S  I  R 
+## 99  1  0</code></pre>
+<p>The numbers in this vector can be used as initial values in simulations, but often the initial values will depend on the parameters (see <code>do_make_state</code> TODO). In these cases where the initial state is computed as opposed to specified, the <code>state</code> argument to <code>init_model</code> can just be character vector giving the names of the state variables.</p>
+<p>Classic McMasterPandemic also has a <code>state_pansim</code> object type (TODO: describe).</p>
+</div>
+<div id="start-and-end-date" class="section level2 hasAnchor">
+<h2><span class="header-section-number">2.3</span> Start and End Date<a href="simple-model-initializtion.html#start-and-end-date" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The simulation model takes a step every day. The <code>start_date</code> and <code>end_date</code> arguments give start and end of these simulations. The format of these dates can be supplied in any format that is accepted by <code>as.Date</code> without any formatting options.</p>
+</div>
+<div id="next-steps" class="section level2 hasAnchor">
+<h2><span class="header-section-number">2.4</span> Next Steps<a href="simple-model-initializtion.html#next-steps" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Models can be initialized with more complex features including time-varying parameters, hazard steps, and model linearization for computing state vectors that lead to greater stability (TODO: link to chapters/sections).</p>
+<p>But before getting to these complexities there is something more important: definition of the flows of individuals amongst the states (TODO: link to next chapter).</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="flow-between-states.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
