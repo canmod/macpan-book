@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>14 Troubleshooting | Generalized McMasterPandemic</title>
+  <title>Page not found | Generalized McMasterPandemic</title>
   <meta name="description" content="McMasterPandemic is a modelling tool that was rapidly developed to provide timely insights into the Covid-19 Pandemic in Canada. We are currently refactoring this tool so that it is faster and more general. This guide describes how to use this refactored version of McMasterPandemic." />
   <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="14 Troubleshooting | Generalized McMasterPandemic" />
+  <meta property="og:title" content="Page not found | Generalized McMasterPandemic" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="McMasterPandemic is a modelling tool that was rapidly developed to provide timely insights into the Covid-19 Pandemic in Canada. We are currently refactoring this tool so that it is faster and more general. This guide describes how to use this refactored version of McMasterPandemic." />
   <meta name="github-repo" content="canmod/macpan-book" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="14 Troubleshooting | Generalized McMasterPandemic" />
+  <meta name="twitter:title" content="Page not found | Generalized McMasterPandemic" />
   
   <meta name="twitter:description" content="McMasterPandemic is a modelling tool that was rapidly developed to provide timely insights into the Covid-19 Pandemic in Canada. We are currently refactoring this tool so that it is faster and more general. This guide describes how to use this refactored version of McMasterPandemic." />
   
@@ -30,7 +30,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="examples.html"/>
+
 
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
@@ -218,35 +218,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="troubleshooting" class="section level1 hasAnchor">
-<h1><span class="header-section-number">14</span> Troubleshooting<a href="troubleshooting.html#troubleshooting" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<div id="nan-valued-objective-function" class="section level2 hasAnchor">
-<h2><span class="header-section-number">14.1</span> NaN-Valued Objective Function<a href="troubleshooting.html#nan-valued-objective-function" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div id="simulated-time-series-close-to-zero" class="section level3 hasAnchor">
-<h3><span class="header-section-number">14.1.1</span> Simulated time-series close to zero<a href="troubleshooting.html#simulated-time-series-close-to-zero" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>When the simulated values that are being compared with data are close to zero (e.g. less than 1e-12), the negative binomial loss function often returns NaN. This can be fixed by setting <code>do_sim_constraint = TRUE</code> as an argument to <code>flexmodel</code> or whatever model constructor is being used (e.g. <code>make_vaccination_model</code>). This flag causes the simulated values to pass through the following soft-thresholding function to keep the simulations, <span class="math inline">\(x\)</span>, from falling below a tolerance, <span class="math inline">\(\epsilon\)</span>.</p>
-<p><span class="math display">\[
-x + \frac{\epsilon}{1-(x-\epsilon)/\epsilon + (x-\epsilon)^2/\epsilon^2}
-\]</span></p>
-<p>This tolerance can be adjusted by setting the <code>sim_lower_bound = 1e-12</code>. Note that both <code>do_sim_constraint</code> and <code>sim_lower_bound</code> can be set using the global options <code>MP_default_do_sim_constraint</code> and <code>MP_default_sim_lower_bound</code>.</p>
-</div>
-<div id="negative-rate-matrix-elements" class="section level3 hasAnchor">
-<h3><span class="header-section-number">14.1.2</span> Negative rate matrix elements<a href="troubleshooting.html#negative-rate-matrix-elements" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>These can arise naturally due to time-varying parameters that appear in <code>1-x</code> terms in rate formulas. The best way to avoid this is to use the <code>abs</code> type of time-variation, so that logit transformations can be used directly on the changing parameters. This approach ensures that the parameter never leaves the interval between zero and one. In the future we should have a time-variation option that updates changing parameters on the logit scale, which would also solve this problem.</p>
-</div>
-<div id="optimizer-tries-very-large-dispersion-parameters" class="section level3 hasAnchor">
-<h3><span class="header-section-number">14.1.3</span> Optimizer tries very large dispersion parameters<a href="troubleshooting.html#optimizer-tries-very-large-dispersion-parameters" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>For some reason the TMB <code>dnbinom2</code> function cannot handle large dispersion parameters, even though the standard R <code>dnbinom</code> function seems fine with them. Nevertheless, this entire issue can be avoided by setting priors on the dispersion parameters. In the future we might try to exploit the fact that the limit of the log negative binomial density as the dispersion parameter gets large tends to the log poisson density. Such an improvement is not entirely trivial due to the need for maintaining differentiability.</p>
-
-</div>
-</div>
+<div id="page-not-found" class="section level1">
+<h1>Page not found</h1>
+<p>The page you requested cannot be found (perhaps it was moved or renamed).</p>
+<p>You may want to try searching to find the page's new location, or use
+the table of contents to find the page you are looking for.</p>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="examples.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
 
     </div>
   </div>
