@@ -865,7 +865,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="examples.html#cb67-1"></a>params =<span class="st"> </span><span class="kw">read_params</span>(<span class="st">&quot;ICU1.csv&quot;</span>)</span>
 <span id="cb67-2"><a href="examples.html#cb67-2"></a>model =<span class="st"> </span>(<span class="kw">flexmodel</span>(</span>
 <span id="cb67-3"><a href="examples.html#cb67-3"></a>    <span class="dt">params =</span> params,</span>
-<span id="cb67-4"><a href="examples.html#cb67-4"></a>    <span class="dt">state =</span> <span class="kw">make_state</span>(<span class="dt">params =</span> params)[<span class="op">-</span><span class="dv">14</span>], <span class="co"># -14 removes V compartment</span></span>
+<span id="cb67-4"><a href="examples.html#cb67-4"></a>    <span class="dt">state =</span> <span class="kw">make_state</span>(<span class="dt">params =</span> params),</span>
 <span id="cb67-5"><a href="examples.html#cb67-5"></a>    <span class="dt">start_date =</span> <span class="st">&quot;2020-03-10&quot;</span>,</span>
 <span id="cb67-6"><a href="examples.html#cb67-6"></a>    <span class="dt">end_date =</span> <span class="st">&quot;2020-12-10&quot;</span>,</span>
 <span id="cb67-7"><a href="examples.html#cb67-7"></a>    <span class="dt">do_make_state =</span> <span class="ot">FALSE</span>,</span>
