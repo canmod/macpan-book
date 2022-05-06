@@ -1,4 +1,4 @@
-# Simple Model Initializtion
+# Simple Model Initialization
 
 Before one may define the dynamics of their compartmental model they must initialize it using the `flexmodel` function. Here we describe each of the basic and required arguments to `flexmodel` and how to set them. This function allows one to define many details of the model, but in this chapter we cover just the requirements.
 
@@ -20,7 +20,7 @@ sir = flexmodel(
 ::: {.infobox .caution data-latex="{caution}"}
 To learn more about these options, please keep reading this chapter.
 
-To continue building this simple SIR model, please move on the the next chapter, where you can define [Flow Between States].
+To continue building this simple SIR model, please move on to the next chapter, where you can define [Flow Between States].
 :::
 
 ## Initial Parameter Vector

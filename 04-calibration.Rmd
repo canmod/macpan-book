@@ -27,7 +27,7 @@ synthetic_data = (sir
 rmarkdown::paged_table(synthetic_data)
 ```
 
-When fitting data to a model a specific format must be used. In particular there must be exactly the following three columns.
+When fitting data to a model, a specific format must be used. In particular there must be exactly the following three columns.
 
 * `date` -- date associated with each observation
 * `var` -- name of the state variable to compare
