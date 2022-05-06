@@ -726,7 +726,7 @@ category_pattern = "^(S|E|I|R)(_omicron|_delta)?_(unvax|onedose|boost)$"
 params = read_params("ICU1.csv")
 model = (flexmodel(
     params = params,
-    state = make_state(params = params)[-14], # -14 removes V compartment
+    state = make_state(params = params),
     start_date = "2020-03-10",
     end_date = "2020-12-10",
     do_make_state = FALSE,
