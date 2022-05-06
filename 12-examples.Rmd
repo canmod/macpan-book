@@ -760,6 +760,7 @@ model = (flexmodel(
 (model
   %>% simulate_state_vector(add_dates = TRUE)
   %>% pivot_longer(!Date)
+  %>% mutate(name = factor(name, levels = topological_sort(model)))
   %>% ggplot()
    +  facet_wrap(~ name, scales = 'free', ncol = 3)
    +  geom_line(aes(Date, value))
