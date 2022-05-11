@@ -28,7 +28,7 @@ Here are the rules of these rate formulas (although these can be relaxed to some
 * both state variables and parameters can be referred to by name as variables in the formulas
 * variables must be encapsulated with parentheses
 * variables can be converted to their inverse `(1/x)` or complement `(1-x)`
-* varaibles, their inverses, and their complements can be combined using `+` and `*` operators
+* variables, their inverses, and their complements can be combined using `+` and `*` operators
 
 Examples of valid rate formulas for this model include:
 
