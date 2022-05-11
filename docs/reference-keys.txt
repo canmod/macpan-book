@@ -2,7 +2,7 @@ fast-and-flexible-modelling-with-mcmasterpandemic
 installation
 dependencies
 generalized-model-at-a-glance
-simple-model-initializtion
+simple-model-initialization
 initial-parameter-vector
 initial-state-vector
 start-and-end-date
