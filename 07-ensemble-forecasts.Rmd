@@ -1,3 +1,30 @@
 # Ensemble Forecasts
 
+```{r echo = FALSE}
+sir = (flexmodel(
+  params = c(beta = 0.1, gamma = 0.01, N = 100),
+  state = c(S = 99, I = 1, R = 0),
+  start_date = "2020-03-11",
+  end_date = "2020-12-01"
+)
+  %>% add_rate("S", "I", ~ (I) * (beta) * (1/N))
+  %>% add_rate("I", "R", ~ (gamma))
+)
+synthetic_data = (sir
+  %>% simulation_history(include_initial_date = FALSE)
+  %>% select(Date, I)
+  %>% pivot_longer(-Date, names_to = "var", values_to = "value")
+  %>% rename(date = Date)
+)
+sir_to_calibrate = (sir
+  %>% update_observed(synthetic_data)
+  %>% update_opt_params(
+    log_beta ~ log_flat(0),
+    log_nb_disp_I ~ log_normal(0, 2)
+  )
+)
+sir_calibrated = calibrate_flexmodel(sir_to_calibrate)
+sir_forecasts = simulate_ensemble(sir_calibrated, PDify = TRUE)
+```
+
 Good forecasts include measures of uncertainty associated with each forecasted data point. The `simulate_ensemble` function allows one to make such forecasts.

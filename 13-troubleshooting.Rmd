@@ -20,3 +20,9 @@ These can arise naturally due to time-varying parameters that appear in `1-x` te
 ### Optimizer tries very large dispersion parameters
 
 For some reason the TMB `dnbinom2` function cannot handle large dispersion parameters, even though the standard R `dnbinom` function seems fine with them.  Nevertheless, this entire issue can be avoided by setting priors on the dispersion parameters. In the future we might try to exploit the fact that the limit of the log negative binomial density as the dispersion parameter gets large tends to the log poisson density. Such an improvement is not entirely trivial due to the need for maintaining differentiability.
+
+## Non-Positive Definite Covariance Matrix
+
+When generating ensemble forecasts ...
+
+Use `PDify = TRUE` ...

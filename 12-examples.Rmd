@@ -266,7 +266,7 @@ erlang_seir = (flexmodel(
 )
 ```
 
-## The SIRV model
+## SIRV
 
 ```{r sirv}
 state = c(S = 20000, I = 100, R = 0, V = 0)
@@ -386,7 +386,7 @@ variolation_model <- (
 
 ```
 
-## SEIRD Model
+## SEIRD
 
 This is the [Mac Theo Bio Model](https://github.com/mac-theobio/mac-theobio.github.io/blob/master/seird.jpg).
 
