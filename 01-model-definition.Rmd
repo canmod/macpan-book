@@ -53,7 +53,7 @@ The state vector is used to declare the names of the state variables. In the SIR
 sir$state
 ```
 
-The numbers in this vector can be used as initial values in simulations, but often the initial values will depend on the parameters (see `do_make_state` TODO). In these cases where the initial state is computed as opposed to specified, the `state` argument to `init_model` can just be character vector giving the names of the state variables.
+The numbers in this vector can be used as initial values in simulations, but often the initial values will depend on the parameters (see `do_make_state` TODO). In these cases where the initial state is computed as opposed to specified, the `state` argument to `flexmodel` can just be character vector giving the names of the state variables.
 
 Classic McMasterPandemic also has a `state_pansim` object type (TODO: describe).
 
