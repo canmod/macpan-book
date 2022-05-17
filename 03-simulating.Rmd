@@ -56,4 +56,36 @@ There are a few places you can go from here:
 
 1. Learn how to fit a model to observed data through [Calibration]
 2. Learn how to modify the values of parameters in simulation time using [Time Varying Parameters]
+3. Keep reading to learn about simulating with [Observation Error]
 :::
+
+## Observation Error
+
+```{r obs_err_sims}
+sir_with_obs_err = (sir
+  %>% update_loss_params(data.frame(
+    Parameter = "nb_disp", 
+    Distribution = "negative_binomial",
+    Variable = c("S", "I", "R")
+  ))
+  %>% update_params(c(
+    nb_disp_S = 1e4, 
+    nb_disp_I = 1e4, 
+    nb_disp_R = 1e4
+  ))
+)
+```
+
+```{r plot_obs_err}
+set.seed(1L)
+(sir_with_obs_err
+  %>% simulation_history(obs_error = TRUE)
+  %>% select(Date, S, I, R)
+  %>% pivot_longer(-Date, names_to = "var", values_to = "value")
+  %>% rename(date = Date)
+  %>% mutate(var = factor(var, levels = topological_sort(sir)))
+  %>% ggplot
+  + facet_wrap(~ var)
+  + geom_point(aes(date, value))
+)
+```
