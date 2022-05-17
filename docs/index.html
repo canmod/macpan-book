@@ -23,7 +23,7 @@
 <meta name="author" content="Steve Walker" />
 
 
-<meta name="date" content="2022-05-06" />
+<meta name="date" content="2022-05-12" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -140,9 +140,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <li class="divider"></li>
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Fast and Flexible Modelling with McMasterPandemic</a><ul>
-<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#installation"><i class="fa fa-check"></i><b>1.1</b> Installation</a></li>
-<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#dependencies"><i class="fa fa-check"></i><b>1.2</b> Dependencies</a></li>
-<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#generalized-model-at-a-glance"><i class="fa fa-check"></i><b>1.3</b> Generalized Model at a Glance</a></li>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#history-and-motivation"><i class="fa fa-check"></i><b>1.1</b> History and Motivation</a><ul>
+<li class="chapter" data-level="1.1.1" data-path="index.html"><a href="index.html#covid-19-forecasts"><i class="fa fa-check"></i><b>1.1.1</b> COVID-19 Forecasts</a></li>
+<li class="chapter" data-level="1.1.2" data-path="index.html"><a href="index.html#calibration-to-data"><i class="fa fa-check"></i><b>1.1.2</b> Calibration to data</a></li>
+<li class="chapter" data-level="1.1.3" data-path="index.html"><a href="index.html#speed"><i class="fa fa-check"></i><b>1.1.3</b> Speed</a></li>
+<li class="chapter" data-level="1.1.4" data-path="index.html"><a href="index.html#model-extensibility"><i class="fa fa-check"></i><b>1.1.4</b> Model Extensibility</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#installation"><i class="fa fa-check"></i><b>1.2</b> Installation</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#dependencies"><i class="fa fa-check"></i><b>1.3</b> Dependencies</a></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#generalized-model-at-a-glance"><i class="fa fa-check"></i><b>1.4</b> Generalized Model at a Glance</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="simple-model-initialization.html"><a href="simple-model-initialization.html"><i class="fa fa-check"></i><b>2</b> Simple Model Initialization</a><ul>
 <li class="chapter" data-level="2.1" data-path="simple-model-initialization.html"><a href="simple-model-initialization.html#initial-parameter-vector"><i class="fa fa-check"></i><b>2.1</b> Initial Parameter Vector</a></li>
@@ -191,9 +197,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="13.3" data-path="examples.html"><a href="examples.html#seir"><i class="fa fa-check"></i><b>13.3</b> SEIR</a></li>
 <li class="chapter" data-level="13.4" data-path="examples.html"><a href="examples.html#structure-two-strain-sir"><i class="fa fa-check"></i><b>13.4</b> Structure: Two-Strain SIR</a></li>
 <li class="chapter" data-level="13.5" data-path="examples.html"><a href="examples.html#erlang-seir"><i class="fa fa-check"></i><b>13.5</b> Erlang SEIR</a></li>
-<li class="chapter" data-level="13.6" data-path="examples.html"><a href="examples.html#the-sirv-model"><i class="fa fa-check"></i><b>13.6</b> The SIRV model</a></li>
+<li class="chapter" data-level="13.6" data-path="examples.html"><a href="examples.html#sirv"><i class="fa fa-check"></i><b>13.6</b> SIRV</a></li>
 <li class="chapter" data-level="13.7" data-path="examples.html"><a href="examples.html#variolation-model"><i class="fa fa-check"></i><b>13.7</b> Variolation model</a></li>
-<li class="chapter" data-level="13.8" data-path="examples.html"><a href="examples.html#seird-model"><i class="fa fa-check"></i><b>13.8</b> SEIRD Model</a></li>
+<li class="chapter" data-level="13.8" data-path="examples.html"><a href="examples.html#seird"><i class="fa fa-check"></i><b>13.8</b> SEIRD</a></li>
 <li class="chapter" data-level="13.9" data-path="examples.html"><a href="examples.html#covid-seir"><i class="fa fa-check"></i><b>13.9</b> Covid SEIR</a></li>
 <li class="chapter" data-level="13.10" data-path="examples.html"><a href="examples.html#bc-covid-omicron"><i class="fa fa-check"></i><b>13.10</b> BC Covid Omicron</a></li>
 <li class="chapter" data-level="13.11" data-path="examples.html"><a href="examples.html#classic-mcmasterpandemic"><i class="fa fa-check"></i><b>13.11</b> Classic McMasterPandemic</a></li>
@@ -204,6 +210,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="14.1.2" data-path="troubleshooting.html"><a href="troubleshooting.html#negative-rate-matrix-elements"><i class="fa fa-check"></i><b>14.1.2</b> Negative rate matrix elements</a></li>
 <li class="chapter" data-level="14.1.3" data-path="troubleshooting.html"><a href="troubleshooting.html#optimizer-tries-very-large-dispersion-parameters"><i class="fa fa-check"></i><b>14.1.3</b> Optimizer tries very large dispersion parameters</a></li>
 </ul></li>
+<li class="chapter" data-level="14.2" data-path="troubleshooting.html"><a href="troubleshooting.html#non-positive-definite-covariance-matrix"><i class="fa fa-check"></i><b>14.2</b> Non-Positive Definite Covariance Matrix</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -228,20 +235,79 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="header">
 <h1 class="title">Generalized McMasterPandemic</h1>
 <p class="author"><em>Steve Walker</em></p>
-<p class="date"><em>2022-05-06</em></p>
+<p class="date"><em>2022-05-12</em></p>
 </div>
 <div id="fast-and-flexible-modelling-with-mcmasterpandemic" class="section level1 hasAnchor">
 <h1><span class="header-section-number">1</span> Fast and Flexible Modelling with McMasterPandemic<a href="index.html#fast-and-flexible-modelling-with-mcmasterpandemic" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p><a href="https://github.com/mac-theobio/McMasterPandemic">McMasterPandemic</a> is a modelling tool that was rapidly developed to provide timely insights into the Covid-19 Pandemic in Canada. We are currently refactoring this tool so that it is faster and more general. This guide describes how to use this refactored version of McMasterPandemic.</p>
+<div id="history-and-motivation" class="section level2 hasAnchor">
+<h2><span class="header-section-number">1.1</span> History and Motivation<a href="index.html#history-and-motivation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="covid-19-forecasts" class="section level3 hasAnchor">
+<h3><span class="header-section-number">1.1.1</span> COVID-19 Forecasts<a href="index.html#covid-19-forecasts" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>McMasterPandemic has been used to do interesting things like <a href="https://mac-theobio.github.io/forecasts/outputs/ON_accuracy.html">predict the third wave</a> of the COVID-19 pandemic in Ontario Canada when case numbers were going down.</p>
+<p><img src="images/third_wave_prediction.gif" /><!-- --></p>
+</div>
+<div id="calibration-to-data" class="section level3 hasAnchor">
+<h3><span class="header-section-number">1.1.2</span> Calibration to data<a href="index.html#calibration-to-data" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>McMasterPandemic has not just been an epidemic simulation tool, but can also be used to formally <a href="calibration.html#calibration">calibrate</a> to data. The following animation provides an illustrative example.</p>
+<ul>
+<li>observed case reports – dots</li>
+<li>simulated case reports – line</li>
+<li>transmission rate optimized using maximum likelihood</li>
+<li>negative binomial error model</li>
+</ul>
+<p><img src="images/animation.gif" /><!-- --></p>
+</div>
+<div id="speed" class="section level3 hasAnchor">
+<h3><span class="header-section-number">1.1.3</span> Speed<a href="index.html#speed" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>As the COVID-19 pandemic progressed, the following scenario became more common.</p>
+<ul>
+<li>Public health modeller has to make weekly forecasts</li>
+<li>Model fitting/calibration takes two days</li>
+<li>Only three days to
+<ul>
+<li>explore scenarios</li>
+<li>write the report</li>
+</ul></li>
+<li>No time to refine the model or messaging</li>
+</ul>
+<p>So we refactored the McMasterPandemic engine using the <a href="https://kaskr.github.io/adcomp/_book/Introduction.html">TMB</a> C++ framework, which resulted in the following unsolicited feedback from a senior research scientist at the Public Health Agency of Canada.</p>
+<blockquote>
+<p>“It is insanely fast and definitely saves me hours everyday and allows me to explore more scenarios. I can do many more things I couldn’t do before due to computational limitations.”</p>
+</blockquote>
+</div>
+<div id="model-extensibility" class="section level3 hasAnchor">
+<h3><span class="header-section-number">1.1.4</span> Model Extensibility<a href="index.html#model-extensibility" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Another common scenario also arose throughout the COVID-19 pandemic progressed.</p>
+<ul>
+<li>New variant emerges, as immunity from vaccination wanes</li>
+<li>Public health modeller has to create new model structure</li>
+<li>Requires a few weeks of software development</li>
+<li>Public health situation changes over this time</li>
+<li>Model is less relevant when complete</li>
+</ul>
+<p>In response to this we built an <a href="flow-between-states.html#flow-between-states">interface</a> allowing users to create their own compartmental model structure.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="index.html#cb1-1"></a>sir =<span class="st"> </span>(<span class="kw">flexmodel</span>(</span>
+<span id="cb1-2"><a href="index.html#cb1-2"></a>    <span class="dt">params =</span> <span class="kw">c</span>(<span class="dt">beta =</span> <span class="fl">0.1</span>, <span class="dt">gamma =</span> <span class="fl">0.01</span>, <span class="dt">N =</span> <span class="dv">100</span>),</span>
+<span id="cb1-3"><a href="index.html#cb1-3"></a>    <span class="dt">state =</span> <span class="kw">c</span>(<span class="dt">S =</span> <span class="dv">99</span>, <span class="dt">I =</span> <span class="dv">1</span>, <span class="dt">R =</span> <span class="dv">0</span>),</span>
+<span id="cb1-4"><a href="index.html#cb1-4"></a>    <span class="dt">start_date =</span> <span class="st">&quot;2020-03-11&quot;</span>,</span>
+<span id="cb1-5"><a href="index.html#cb1-5"></a>    <span class="dt">end_date =</span> <span class="st">&quot;2020-12-01&quot;</span></span>
+<span id="cb1-6"><a href="index.html#cb1-6"></a>  )</span>
+<span id="cb1-7"><a href="index.html#cb1-7"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">add_rate</span>(<span class="st">&quot;S&quot;</span>, <span class="st">&quot;I&quot;</span>, <span class="op">~</span><span class="st"> </span>(I) <span class="op">*</span><span class="st"> </span>(beta) <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span><span class="op">/</span>N))</span>
+<span id="cb1-8"><a href="index.html#cb1-8"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">add_rate</span>(<span class="st">&quot;I&quot;</span>, <span class="st">&quot;R&quot;</span>, <span class="op">~</span><span class="st"> </span>(gamma))</span>
+<span id="cb1-9"><a href="index.html#cb1-9"></a>)</span></code></pre></div>
+<p><a href="examples.html#examples">This library of models</a> is a quick-start guide with the following examples: <a href="examples.html#hello-world-simulating-an-sir-model">SIR</a>, <a href="examples.html#si">SI</a>, <a href="examples.html#seir">SEIR</a>, <a href="examples.html#structure-two-strain-sir">two-strain SIR</a>, <a href="examples.html#erlang-seir">Erlang SEIR</a>, <a href="examples.html#sirv">SIRV</a>, <a href="examples.html#variolation-model">variolation SIR</a>, <a href="examples.html#seird">SEIRD</a>, <a href="examples.html#bc-covid-omicron">BC’s model of the Omicron COVID variant</a>, and <a href="examples.html#classic-mcmasterpandemic">Classic McMasterPandemic</a>.</p>
+</div>
+</div>
 <div id="installation" class="section level2 hasAnchor">
-<h2><span class="header-section-number">1.1</span> Installation<a href="index.html#installation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<h2><span class="header-section-number">1.2</span> Installation<a href="index.html#installation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>This generalized McMasterPandemic framework is still in an experimental phase. Therefore you will need to install the <code>tmb-condense</code> code branch that contains the experimental implementation directly from github. A convenient way to do this is to use the <code>remotes</code> package as follows.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="index.html#cb1-1"></a>remotes<span class="op">::</span><span class="kw">install_github</span>(<span class="st">&quot;mac-theobio/McMasterPandemic@tmb-condense&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="index.html#cb2-1"></a>remotes<span class="op">::</span><span class="kw">install_github</span>(<span class="st">&quot;mac-theobio/McMasterPandemic@tmb-condense&quot;</span>)</span></code></pre></div>
 </div>
 <div id="dependencies" class="section level2 hasAnchor">
-<h2><span class="header-section-number">1.2</span> Dependencies<a href="index.html#dependencies" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<h2><span class="header-section-number">1.3</span> Dependencies<a href="index.html#dependencies" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>This guide makes use of the following session.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="index.html#cb2-1"></a><span class="kw">sessionInfo</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="index.html#cb3-1"></a><span class="kw">sessionInfo</span>()</span></code></pre></div>
 <pre><code>## R version 4.2.0 (2022-04-22)
 ## Platform: x86_64-apple-darwin17.0 (64-bit)
 ## Running under: macOS Big Sur/Monterey 10.16
@@ -264,7 +330,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 
 ## loaded via a namespace (and not attached):
 ##  [1] shape_1.4.6         diagram_1.6.5       tidyselect_1.1.2   
-##  [4] xfun_0.30           bslib_0.3.1         purrr_0.3.4        
+##  [4] xfun_0.31           bslib_0.3.1         purrr_0.3.4        
 ##  [7] splines_4.2.0       lattice_0.20-45     colorspace_2.0-3   
 ## [10] vctrs_0.4.1         generics_0.1.2      htmltools_0.5.2    
 ## [13] stats4_4.2.0        yaml_2.3.5          utf8_1.2.2         
@@ -274,19 +340,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## [25] munsell_0.5.0       gtable_0.3.0        bdsmatrix_1.3-4    
 ## [28] mvtnorm_1.1-3       codetools_0.2-18    evaluate_0.15      
 ## [31] forcats_0.5.1       knitr_1.39          tzdb_0.3.0         
-## [34] fastmap_1.1.0       fansi_1.0.3         Rcpp_1.0.8.3       
-## [37] readr_2.1.2         scales_1.2.0        fastmatrix_0.4-1   
-## [40] jsonlite_1.8.0      hms_1.1.1           digest_0.6.29      
-## [43] stringi_1.7.6       bookdown_0.26       numDeriv_2016.8-1.1
-## [46] grid_4.2.0          cli_3.3.0           tools_4.2.0        
-## [49] bbmle_1.0.24        magrittr_2.0.3      sass_0.4.1         
-## [52] tibble_3.1.7        crayon_1.5.1        pkgconfig_2.0.3    
-## [55] MASS_7.3-56         ellipsis_0.3.2      Matrix_1.4-1       
-## [58] rmarkdown_2.14      rstudioapi_0.13     iterators_1.0.14   
-## [61] R6_2.5.1            compiler_4.2.0</code></pre>
+## [34] fastmap_1.1.0       fansi_1.0.3         highr_0.9          
+## [37] Rcpp_1.0.8.3        readr_2.1.2         scales_1.2.0       
+## [40] fastmatrix_0.4-1    jsonlite_1.8.0      hms_1.1.1          
+## [43] digest_0.6.29       stringi_1.7.6       bookdown_0.26      
+## [46] numDeriv_2016.8-1.1 grid_4.2.0          cli_3.3.0          
+## [49] tools_4.2.0         bbmle_1.0.25        magrittr_2.0.3     
+## [52] sass_0.4.1          tibble_3.1.7        crayon_1.5.1       
+## [55] pkgconfig_2.0.3     MASS_7.3-56         ellipsis_0.3.2     
+## [58] Matrix_1.4-1        rmarkdown_2.14      rstudioapi_0.13    
+## [61] iterators_1.0.14    R6_2.5.1            compiler_4.2.0</code></pre>
 </div>
 <div id="generalized-model-at-a-glance" class="section level2 hasAnchor">
-<h2><span class="header-section-number">1.3</span> Generalized Model at a Glance<a href="index.html#generalized-model-at-a-glance" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<h2><span class="header-section-number">1.4</span> Generalized Model at a Glance<a href="index.html#generalized-model-at-a-glance" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The general model underlying McMasterPandmic’s flexible engine and interface based on a discrete time compartmental model.</p>
 <p><span class="math display">\[
 s_{i,t+1} = s_{i,t} + \underbrace{\sum_j M_{ji,t} s_{j,t}}_{\text{inflow}} - \underbrace{s_{i,t} \sum_j  M_{ij,t} {\mathcal I}_{ij}}_{\text{outflow}}

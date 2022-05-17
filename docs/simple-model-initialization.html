@@ -23,7 +23,7 @@
 <meta name="author" content="Steve Walker" />
 
 
-<meta name="date" content="2022-05-06" />
+<meta name="date" content="2022-05-12" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -140,9 +140,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <li class="divider"></li>
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Fast and Flexible Modelling with McMasterPandemic</a><ul>
-<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#installation"><i class="fa fa-check"></i><b>1.1</b> Installation</a></li>
-<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#dependencies"><i class="fa fa-check"></i><b>1.2</b> Dependencies</a></li>
-<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#generalized-model-at-a-glance"><i class="fa fa-check"></i><b>1.3</b> Generalized Model at a Glance</a></li>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#history-and-motivation"><i class="fa fa-check"></i><b>1.1</b> History and Motivation</a><ul>
+<li class="chapter" data-level="1.1.1" data-path="index.html"><a href="index.html#covid-19-forecasts"><i class="fa fa-check"></i><b>1.1.1</b> COVID-19 Forecasts</a></li>
+<li class="chapter" data-level="1.1.2" data-path="index.html"><a href="index.html#calibration-to-data"><i class="fa fa-check"></i><b>1.1.2</b> Calibration to data</a></li>
+<li class="chapter" data-level="1.1.3" data-path="index.html"><a href="index.html#speed"><i class="fa fa-check"></i><b>1.1.3</b> Speed</a></li>
+<li class="chapter" data-level="1.1.4" data-path="index.html"><a href="index.html#model-extensibility"><i class="fa fa-check"></i><b>1.1.4</b> Model Extensibility</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#installation"><i class="fa fa-check"></i><b>1.2</b> Installation</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#dependencies"><i class="fa fa-check"></i><b>1.3</b> Dependencies</a></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#generalized-model-at-a-glance"><i class="fa fa-check"></i><b>1.4</b> Generalized Model at a Glance</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="simple-model-initialization.html"><a href="simple-model-initialization.html"><i class="fa fa-check"></i><b>2</b> Simple Model Initialization</a><ul>
 <li class="chapter" data-level="2.1" data-path="simple-model-initialization.html"><a href="simple-model-initialization.html#initial-parameter-vector"><i class="fa fa-check"></i><b>2.1</b> Initial Parameter Vector</a></li>
@@ -191,9 +197,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="13.3" data-path="examples.html"><a href="examples.html#seir"><i class="fa fa-check"></i><b>13.3</b> SEIR</a></li>
 <li class="chapter" data-level="13.4" data-path="examples.html"><a href="examples.html#structure-two-strain-sir"><i class="fa fa-check"></i><b>13.4</b> Structure: Two-Strain SIR</a></li>
 <li class="chapter" data-level="13.5" data-path="examples.html"><a href="examples.html#erlang-seir"><i class="fa fa-check"></i><b>13.5</b> Erlang SEIR</a></li>
-<li class="chapter" data-level="13.6" data-path="examples.html"><a href="examples.html#the-sirv-model"><i class="fa fa-check"></i><b>13.6</b> The SIRV model</a></li>
+<li class="chapter" data-level="13.6" data-path="examples.html"><a href="examples.html#sirv"><i class="fa fa-check"></i><b>13.6</b> SIRV</a></li>
 <li class="chapter" data-level="13.7" data-path="examples.html"><a href="examples.html#variolation-model"><i class="fa fa-check"></i><b>13.7</b> Variolation model</a></li>
-<li class="chapter" data-level="13.8" data-path="examples.html"><a href="examples.html#seird-model"><i class="fa fa-check"></i><b>13.8</b> SEIRD Model</a></li>
+<li class="chapter" data-level="13.8" data-path="examples.html"><a href="examples.html#seird"><i class="fa fa-check"></i><b>13.8</b> SEIRD</a></li>
 <li class="chapter" data-level="13.9" data-path="examples.html"><a href="examples.html#covid-seir"><i class="fa fa-check"></i><b>13.9</b> Covid SEIR</a></li>
 <li class="chapter" data-level="13.10" data-path="examples.html"><a href="examples.html#bc-covid-omicron"><i class="fa fa-check"></i><b>13.10</b> BC Covid Omicron</a></li>
 <li class="chapter" data-level="13.11" data-path="examples.html"><a href="examples.html#classic-mcmasterpandemic"><i class="fa fa-check"></i><b>13.11</b> Classic McMasterPandemic</a></li>
@@ -204,6 +210,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="14.1.2" data-path="troubleshooting.html"><a href="troubleshooting.html#negative-rate-matrix-elements"><i class="fa fa-check"></i><b>14.1.2</b> Negative rate matrix elements</a></li>
 <li class="chapter" data-level="14.1.3" data-path="troubleshooting.html"><a href="troubleshooting.html#optimizer-tries-very-large-dispersion-parameters"><i class="fa fa-check"></i><b>14.1.3</b> Optimizer tries very large dispersion parameters</a></li>
 </ul></li>
+<li class="chapter" data-level="14.2" data-path="troubleshooting.html"><a href="troubleshooting.html#non-positive-definite-covariance-matrix"><i class="fa fa-check"></i><b>14.2</b> Non-Positive Definite Covariance Matrix</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -234,12 +241,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Start and end dates</li>
 </ul>
 <p>Here is a simple SIR model example.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="simple-model-initialization.html#cb4-1"></a>sir =<span class="st"> </span><span class="kw">flexmodel</span>(</span>
-<span id="cb4-2"><a href="simple-model-initialization.html#cb4-2"></a>  <span class="dt">params =</span> <span class="kw">c</span>(<span class="dt">beta =</span> <span class="fl">0.1</span>, <span class="dt">gamma =</span> <span class="fl">0.01</span>, <span class="dt">N =</span> <span class="dv">100</span>),</span>
-<span id="cb4-3"><a href="simple-model-initialization.html#cb4-3"></a>  <span class="dt">state =</span> <span class="kw">c</span>(<span class="dt">S =</span> <span class="dv">99</span>, <span class="dt">I =</span> <span class="dv">1</span>, <span class="dt">R =</span> <span class="dv">0</span>),</span>
-<span id="cb4-4"><a href="simple-model-initialization.html#cb4-4"></a>  <span class="dt">start_date =</span> <span class="st">&quot;2020-03-11&quot;</span>,</span>
-<span id="cb4-5"><a href="simple-model-initialization.html#cb4-5"></a>  <span class="dt">end_date =</span> <span class="st">&quot;2020-12-01&quot;</span></span>
-<span id="cb4-6"><a href="simple-model-initialization.html#cb4-6"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="simple-model-initialization.html#cb5-1"></a>sir =<span class="st"> </span><span class="kw">flexmodel</span>(</span>
+<span id="cb5-2"><a href="simple-model-initialization.html#cb5-2"></a>  <span class="dt">params =</span> <span class="kw">c</span>(<span class="dt">beta =</span> <span class="fl">0.1</span>, <span class="dt">gamma =</span> <span class="fl">0.01</span>, <span class="dt">N =</span> <span class="dv">100</span>),</span>
+<span id="cb5-3"><a href="simple-model-initialization.html#cb5-3"></a>  <span class="dt">state =</span> <span class="kw">c</span>(<span class="dt">S =</span> <span class="dv">99</span>, <span class="dt">I =</span> <span class="dv">1</span>, <span class="dt">R =</span> <span class="dv">0</span>),</span>
+<span id="cb5-4"><a href="simple-model-initialization.html#cb5-4"></a>  <span class="dt">start_date =</span> <span class="st">&quot;2020-03-11&quot;</span>,</span>
+<span id="cb5-5"><a href="simple-model-initialization.html#cb5-5"></a>  <span class="dt">end_date =</span> <span class="st">&quot;2020-12-01&quot;</span></span>
+<span id="cb5-6"><a href="simple-model-initialization.html#cb5-6"></a>)</span></code></pre></div>
 <div class="infobox caution">
 <p>To learn more about these options, please keep reading this chapter.</p>
 <p>To continue building this simple SIR model, please move on to the next chapter, where you can define <a href="flow-between-states.html#flow-between-states">Flow Between States</a>.</p>
@@ -253,11 +260,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Data processing parameters to make observed and simulated time-series more comparable (e.g. fraction of incidence reported as positive tests, <span class="math inline">\(c_\text{prop}\)</span>)</li>
 </ul>
 <p>In its simplest form these parameters can be specified as a standard named numeric vector. We used this approach above in our SIR example, and this parameter vector can be extracted from the model.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="simple-model-initialization.html#cb5-1"></a>sir<span class="op">$</span>params</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="simple-model-initialization.html#cb6-1"></a>sir<span class="op">$</span>params</span></code></pre></div>
 <pre><code>##  beta gamma     N 
 ## 1e-01 1e-02 1e+02</code></pre>
 <p>McMasterPandemic also has a special <code>params_pansim</code> object class for representing parameters. These objects come with descriptions of the meaning of each parameter. An example of this <code>params_pansim</code> format can be explored with the following command.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="simple-model-initialization.html#cb7-1"></a>rmarkdown<span class="op">::</span><span class="kw">paged_table</span>(<span class="kw">describe_params</span>(<span class="kw">read_params</span>(<span class="st">&#39;ICU1.csv&#39;</span>)))</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="simple-model-initialization.html#cb8-1"></a>rmarkdown<span class="op">::</span><span class="kw">paged_table</span>(<span class="kw">describe_params</span>(<span class="kw">read_params</span>(<span class="st">&#39;ICU1.csv&#39;</span>)))</span></code></pre></div>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":["symbol"],"name":[1],"type":["chr"],"align":["left"]},{"label":["value"],"name":[2],"type":["chr"],"align":["left"]},{"label":["meaning"],"name":[3],"type":["chr"],"align":["left"]}],"data":[{"1":"beta0","2":"1","3":"Baseline (non-intervention) transmission across categories"},{"1":"Ca","2":"0.667","3":"relative asymptomatic transmission (or contact)"},{"1":"Cp","2":"1","3":"relative presymptomatic transmission (or contact)"},{"1":"Cm","2":"1","3":"relative mildly symptomatic transmission (or contact)"},{"1":"Cs","2":"1","3":"relative severely symptomatic transmission (or contact)"},{"1":"alpha","2":"0.333","3":"Fraction of cases asymptomatic"},{"1":"sigma","2":"0.192","3":"1/time in exposed class"},{"1":"gamma_a","2":"0.143","3":"1/time for asymptomatic recovery"},{"1":"gamma_m","2":"0.143","3":"1/time for mildly symptomatic recovery"},{"1":"gamma_s","2":"0.175","3":"1/time for severely symptomatic transition to hospital/death"},{"1":"gamma_p","2":"2","3":"1/time in pre-symptomatic class"},{"1":"rho","2":"0.1","3":"1/time in hospital (acute care)"},{"1":"delta","2":"0","3":"Fraction of acute-care cases that are fatal"},{"1":"mu","2":"0.956","3":"Fraction of symptomatic cases that are mild (or moderate)"},{"1":"N","2":"1e+06","3":"Population size"},{"1":"E0","2":"5","3":"Initial number exposed"},{"1":"nonhosp_mort","2":"0","3":"probability of mortality without hospitalization"},{"1":"iso_m","2":"0","3":"Relative self-isolation/distancing of mild cases"},{"1":"iso_s","2":"0","3":"Relative self-isolation/distancing of severe cases"},{"1":"phi1","2":"0.76","3":"Fraction of hospital cases to ICU"},{"1":"phi2","2":"0.5","3":"Fraction of ICU cases dying"},{"1":"psi1","2":"0.05","3":"Rate of ICU back to acute care"},{"1":"psi2","2":"0.125","3":"Rate of ICU to death"},{"1":"psi3","2":"0.2","3":"Rate of post-ICU to discharge"},{"1":"c_prop","2":"0.1","3":"fraction of incidence reported as positive tests"},{"1":"c_delay_mean","2":"11","3":"average delay between incidence and test report"},{"1":"c_delay_cv","2":"0.25","3":"coefficient of variation of testing delay"},{"1":"proc_disp","2":"0","3":"dispersion parameter for process error (0=demog stoch only)"},{"1":"zeta","2":"0","3":"phenomenological heterogeneity parameter"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
@@ -268,10 +275,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="initial-state-vector" class="section level2 hasAnchor">
 <h2><span class="header-section-number">2.2</span> Initial State Vector<a href="simple-model-initialization.html#initial-state-vector" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The state vector is used to declare the names of the state variables. In the SIR example above we did this via a named numeric vector, and these names become the names of the states.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="simple-model-initialization.html#cb8-1"></a>sir<span class="op">$</span>state</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="simple-model-initialization.html#cb9-1"></a>sir<span class="op">$</span>state</span></code></pre></div>
 <pre><code>##  S  I  R 
 ## 99  1  0</code></pre>
-<p>The numbers in this vector can be used as initial values in simulations, but often the initial values will depend on the parameters (see <code>do_make_state</code> TODO). In these cases where the initial state is computed as opposed to specified, the <code>state</code> argument to <code>init_model</code> can just be character vector giving the names of the state variables.</p>
+<p>The numbers in this vector can be used as initial values in simulations, but often the initial values will depend on the parameters (see <code>do_make_state</code> TODO). In these cases where the initial state is computed as opposed to specified, the <code>state</code> argument to <code>flexmodel</code> can just be character vector giving the names of the state variables.</p>
 <p>Classic McMasterPandemic also has a <code>state_pansim</code> object type (TODO: describe).</p>
 </div>
 <div id="start-and-end-date" class="section level2 hasAnchor">

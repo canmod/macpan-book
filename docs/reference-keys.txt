@@ -1,4 +1,9 @@
 fast-and-flexible-modelling-with-mcmasterpandemic
+history-and-motivation
+covid-19-forecasts
+calibration-to-data
+speed
+model-extensibility
 installation
 dependencies
 generalized-model-at-a-glance
@@ -40,9 +45,9 @@ si
 seir
 structure-two-strain-sir
 erlang-seir
-the-sirv-model
+sirv
 variolation-model
-seird-model
+seird
 covid-seir
 bc-covid-omicron
 classic-mcmasterpandemic
@@ -51,3 +56,4 @@ nan-valued-objective-function
 simulated-time-series-close-to-zero
 negative-rate-matrix-elements
 optimizer-tries-very-large-dispersion-parameters
+non-positive-definite-covariance-matrix
