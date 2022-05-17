@@ -90,7 +90,75 @@ Fitted `flexmodel` objects have a `fitted` method that can be used to compare th
 
 As expected, the fit is exact because the model that was fitted was also used to simulate the data.
 
+## Calibrating with Observation Error
 
+```{r redo_obs_err_model, echo=FALSE}
+sir_with_obs_err = (flexmodel(
+    params = c(beta = 0.1, gamma = 0.01, N = 100),
+    state = c(S = 99, I = 1, R = 0),
+    start_date = "2020-03-11",
+    end_date = "2020-12-01",
+    do_make_state = FALSE
+  )
+  %>% add_rate("S", "I", ~ (I) * (beta) * (1/N))
+  %>% add_rate("I", "R", ~ (gamma))
+  %>% update_loss_params(data.frame(
+    Parameter = "nb_disp", 
+    Distribution = "negative_binomial",
+    Variable = c("S", "I", "R")
+  ))
+  %>% update_params(c(
+    nb_disp_S = 1e4, 
+    nb_disp_I = 1e4, 
+    nb_disp_R = 1e4
+  ))
+)
+```
+
+To illustrate fitting to data with observation error we simulate some synthetic `I`-class data from the simulations we did in the [Observation Error] section.
+```{r simulate_synthetic_obs_err_data}
+set.seed(1L)
+synthetic_data = (sir_with_obs_err
+  %>% simulation_history(include_initial_date = FALSE, obs_error = TRUE)
+  %>% select(Date, I)
+  %>% pivot_longer(-Date, names_to = "var", values_to = "value")
+  %>% rename(date = Date)
+)
+ggplot(synthetic_data) + 
+  geom_point(aes(date, value))
+```
+
+We can fit these data to a model following the approaches in [Calibration].
+```{r to_calibrate_obs_err_model}
+sir_to_calibrate = (sir_with_obs_err
+  %>% update_observed(
+    synthetic_data, 
+    loss_params = sir_with_obs_err$observed$loss_params
+  )
+  %>% update_opt_params(
+    log_beta ~ log_flat(0),
+    log_nb_disp_S ~ log_normal(10, 0.01), # fix at ~Poisson error
+    log_nb_disp_I ~ log_normal(0, 5),     # free parameter
+    log_nb_disp_R ~ log_normal(10, 0.01)  # fix at ~Poisson error
+  )
+)
+```
+This process starts by updating the simulation model with observed data and specifying what parameters to optimize. One might wonder why we are specifying the `loss_params` in `update_observed`, given that we did not do that previously in the section on [Calibration]. The reason is that by default `update_observed` will create dispersion parameters for all variables appearing in the data passed to its first argument -- but we want to retain observation error (and therefore dispersion parameters) for all variables in the simulation model, not just the data. In the optimization, these additional dispersion parameters for `S` and `R` must be treated specially, because there is no information in the data about them. Accordingly we specify very narrow prior distributions (in `update_opt_params`) that are centered around very large dispersion parameters, corresponding to approximate Poisson error. Some kind of informative prior distribution, such as this one, is necessary for convergence of the optimizer.
+
+We may pass this model to the optimizer, and indeed do achieve convergence.
+```{r calibrate_obs_err}
+sir_calibrated = calibrate_flexmodel(sir_to_calibrate)
+sir_calibrated$opt_obj@details
+```
+
+Not only do we achieve convergence but we also achieve a good fit, which is not surprising given that we are fitting the same model that was used to simulate the data.
+```{r fit_plot_to_obs_err}
+(fitted(sir_calibrated)
+  %>% ggplot
+  + geom_line(aes(date, value_fitted))
+  + geom_point(aes(date, value))
+)
+```
 
 ## Loss Functions
 

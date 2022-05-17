@@ -1,4 +1,87 @@
 # Ensemble Forecasts
 
-Good forecasts include measures of uncertainty associated with each forecasted data point. The `simulate_ensemble` function allows one to make such forecasts.
+```{r redo_obs_err_fit, echo=FALSE}
+sir_with_obs_err = (flexmodel(
+    params = c(beta = 0.1, gamma = 0.01, N = 100),
+    state = c(S = 99, I = 1, R = 0),
+    start_date = "2020-03-11",
+    end_date = "2020-12-01",
+    do_make_state = FALSE
+  )
+  %>% add_rate("S", "I", ~ (I) * (beta) * (1/N))
+  %>% add_rate("I", "R", ~ (gamma))
+  %>% update_loss_params(data.frame(
+    Parameter = "nb_disp", 
+    Distribution = "negative_binomial",
+    Variable = c("S", "I", "R")
+  ))
+  %>% update_params(c(
+    nb_disp_S = 1e4, 
+    nb_disp_I = 1e4, 
+    nb_disp_R = 1e4
+  ))
+)
+set.seed(1L)
+synthetic_data = (sir_with_obs_err
+  %>% simulation_history(include_initial_date = FALSE, obs_error = TRUE)
+  %>% select(Date, I)
+  %>% pivot_longer(-Date, names_to = "var", values_to = "value")
+  %>% rename(date = Date)
+)
+sir_to_calibrate = (sir_with_obs_err
+  %>% update_observed(
+    synthetic_data, 
+    loss_params = sir_with_obs_err$observed$loss_params
+  )
+  %>% update_opt_params(
+    log_beta ~ log_flat(0),
+    log_nb_disp_S ~ log_normal(10, 0.01), # fix at ~Poisson error
+    log_nb_disp_I ~ log_normal(0, 5),     # free parameter
+    log_nb_disp_R ~ log_normal(10, 0.01)  # fix at ~Poisson error
+  )
+)
+sir_calibrated = calibrate_flexmodel(sir_to_calibrate)
+```
 
+Good forecasts include measures of uncertainty associated with each forecasted data point. The `simulate_ensemble` function allows one to make such forecasts. In [Calibrating with Observation Error] we fitted a model to simulated data with observation error. Here we use this model to illustrate the use of the `simulate_ensemble` function.
+
+The first thing to do before making a forecast is to extend the end date, so that we are actually forecasting the future.
+```{r extend_end_date}
+sir_to_forecast = extend_end_date(
+  sir_calibrated, 
+  days_to_extend = 100
+)
+```
+
+Next just pass the model that is ready for forecasting to the `simulate_ensemble` function.
+```{r simulate_ensemble)}
+sir_forecasts = (simulate_ensemble(
+    sir_to_forecast, 
+    use_progress_bar = FALSE
+  )
+  %>% filter(name != "S_to_I")
+)
+rmarkdown::paged_table(sir_forecasts)
+```
+
+The forecasts can be joined back to the observed data to make plots (TODO: fix the naming of the columns of these functions to be more consistent).
+```{r join_obs_data_to_sims}
+sir_fits = (sir_forecasts
+  %>% left_join(
+    synthetic_data, 
+    c("Date" = "date", "name" = "var"), 
+    suffix = c("_fitted", "")
+  )
+  %>% mutate(
+    name = factor(
+      name, 
+      levels = topological_sort(sir_to_forecast))
+  )
+)
+(ggplot(sir_fits)
+  + facet_wrap(~name, scales = 'free', nrow = 2)
+  + geom_ribbon(aes(x = Date, ymax = upr, ymin = lwr), alpha = 0.5)
+  + geom_point(aes(Date, value), alpha = 0.7)
+  + geom_line(aes(Date, value_fitted), colour = "red")
+)
+```
