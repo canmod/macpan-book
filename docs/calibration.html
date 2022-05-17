@@ -167,8 +167,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.1" data-path="simulation.html"><a href="simulation.html#observation-error"><i class="fa fa-check"></i><b>4.1</b> Observation Error</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="calibration.html"><a href="calibration.html"><i class="fa fa-check"></i><b>5</b> Calibration</a><ul>
-<li class="chapter" data-level="5.1" data-path="calibration.html"><a href="calibration.html#loss-functions"><i class="fa fa-check"></i><b>5.1</b> Loss Functions</a><ul>
-<li class="chapter" data-level="5.1.1" data-path="calibration.html"><a href="calibration.html#negative-binomial"><i class="fa fa-check"></i><b>5.1.1</b> Negative Binomial</a></li>
+<li class="chapter" data-level="5.1" data-path="calibration.html"><a href="calibration.html#calibrating-with-observation-error"><i class="fa fa-check"></i><b>5.1</b> Calibrating with Observation Error</a></li>
+<li class="chapter" data-level="5.2" data-path="calibration.html"><a href="calibration.html#loss-functions"><i class="fa fa-check"></i><b>5.2</b> Loss Functions</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="calibration.html"><a href="calibration.html#negative-binomial"><i class="fa fa-check"></i><b>5.2.1</b> Negative Binomial</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="time-varying-parameters.html"><a href="time-varying-parameters.html"><i class="fa fa-check"></i><b>6</b> Time Varying Parameters</a><ul>
@@ -271,24 +272,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 1e-01 1e-02 1e+02</code></pre>
 <p>The <code>sir_to_calibrate</code> object can be calibrated using one of the optimizers in R that have been wrapped for use with <code>flexmodel</code>s. There are currently two options: <code>nlminb_flexmodel</code> and <code>optim_flexmodel</code>. The difference between the two is that the former uses second-derivative information whereas the latter does not; they both use first-derivative information.</p>
 <div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="calibration.html#cb24-1"></a>sir_calibrated =<span class="st"> </span><span class="kw">nlminb_flexmodel</span>(sir_to_calibrate)</span></code></pre></div>
-<pre><code>## Constructing atomic D_lgamma
-## outer mgc:  64.34046 
-## Constructing atomic D_lgamma
-## outer mgc:  48.12454 
-## outer mgc:  263.9845 
-## outer mgc:  422.1959 
-## outer mgc:  349.1833 
-## outer mgc:  56.51855 
-## outer mgc:  27.31117 
-## outer mgc:  5.80283 
-## outer mgc:  1.992753 
-## outer mgc:  0.6344536 
-## outer mgc:  0.1558516 
-## outer mgc:  0.01837424 
-## outer mgc:  0.0003485235 
-## outer mgc:  1.31046e-07</code></pre>
 <p>The result of these optimization functions is another model object, containing the following additional element.</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="calibration.html#cb26-1"></a>sir_calibrated<span class="op">$</span>opt_obj</span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="calibration.html#cb25-1"></a>sir_calibrated<span class="op">$</span>opt_obj</span></code></pre></div>
 <pre><code>## $par
 ##      log_beta log_nb_disp_I 
 ##     -2.302585      9.366319 
@@ -310,22 +295,89 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## [1] &quot;relative convergence (4)&quot;</code></pre>
 <p>This element is the object returned by the wrapped optimizer (<code>nlminb</code> in this case) – it can provide useful information about how well the optimization worked. In this case we see convergence, but this need not be true. Refer to documentation for <code>nlminb</code> and <code>optim</code> for help on interpreting these outputs.</p>
 <p>We can now look at the parameter vector, which has been updated to reflect the calibration.</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="calibration.html#cb28-1"></a>sir_calibrated<span class="op">$</span>params</span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="calibration.html#cb27-1"></a>sir_calibrated<span class="op">$</span>params</span></code></pre></div>
 <pre><code>##      beta     gamma         N nb_disp_I 
 ##      0.10      0.01    100.00  11688.01 
 ## attr(,&quot;tv_param_indices&quot;)
 ## named integer(0)</code></pre>
 <p>Fitted <code>flexmodel</code> objects have a <code>fitted</code> method that can be used to compare the fits with the observed values.</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="calibration.html#cb30-1"></a>(sir_calibrated</span>
-<span id="cb30-2"><a href="calibration.html#cb30-2"></a> <span class="op">%&gt;%</span><span class="st"> </span>fitted</span>
-<span id="cb30-3"><a href="calibration.html#cb30-3"></a> <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ggplot</span>()</span>
-<span id="cb30-4"><a href="calibration.html#cb30-4"></a> <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(date, value))</span>
-<span id="cb30-5"><a href="calibration.html#cb30-5"></a> <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(date, value_fitted), <span class="dt">colour =</span> <span class="st">&#39;red&#39;</span>)</span>
-<span id="cb30-6"><a href="calibration.html#cb30-6"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="calibration.html#cb29-1"></a>(sir_calibrated</span>
+<span id="cb29-2"><a href="calibration.html#cb29-2"></a> <span class="op">%&gt;%</span><span class="st"> </span>fitted</span>
+<span id="cb29-3"><a href="calibration.html#cb29-3"></a> <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ggplot</span>()</span>
+<span id="cb29-4"><a href="calibration.html#cb29-4"></a> <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(date, value))</span>
+<span id="cb29-5"><a href="calibration.html#cb29-5"></a> <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(date, value_fitted), <span class="dt">colour =</span> <span class="st">&#39;red&#39;</span>)</span>
+<span id="cb29-6"><a href="calibration.html#cb29-6"></a>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/calibrated_fits-1.png" width="672" /></p>
 <p>As expected, the fit is exact because the model that was fitted was also used to simulate the data.</p>
+<div id="calibrating-with-observation-error" class="section level2 hasAnchor">
+<h2><span class="header-section-number">5.1</span> Calibrating with Observation Error<a href="calibration.html#calibrating-with-observation-error" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>To illustrate fitting to data with observation error we simulate some synthetic <code>I</code>-class data from the simulations we did in the <a href="simulation.html#observation-error">Observation Error</a> section.</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="calibration.html#cb30-1"></a><span class="kw">set.seed</span>(1L)</span>
+<span id="cb30-2"><a href="calibration.html#cb30-2"></a>synthetic_data =<span class="st"> </span>(sir_with_obs_err</span>
+<span id="cb30-3"><a href="calibration.html#cb30-3"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">simulation_history</span>(<span class="dt">include_initial_date =</span> <span class="ot">FALSE</span>, <span class="dt">obs_error =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb30-4"><a href="calibration.html#cb30-4"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(Date, I)</span>
+<span id="cb30-5"><a href="calibration.html#cb30-5"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pivot_longer</span>(<span class="op">-</span>Date, <span class="dt">names_to =</span> <span class="st">&quot;var&quot;</span>, <span class="dt">values_to =</span> <span class="st">&quot;value&quot;</span>)</span>
+<span id="cb30-6"><a href="calibration.html#cb30-6"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rename</span>(<span class="dt">date =</span> Date)</span>
+<span id="cb30-7"><a href="calibration.html#cb30-7"></a>)</span>
+<span id="cb30-8"><a href="calibration.html#cb30-8"></a><span class="kw">ggplot</span>(synthetic_data) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb30-9"><a href="calibration.html#cb30-9"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(date, value))</span></code></pre></div>
+<p><img src="_main_files/figure-html/simulate_synthetic_obs_err_data-1.png" width="672" /></p>
+<p>We can fit these data to a model following the approaches in <a href="calibration.html#calibration">Calibration</a>.</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="calibration.html#cb31-1"></a>sir_to_calibrate =<span class="st"> </span>(sir_with_obs_err</span>
+<span id="cb31-2"><a href="calibration.html#cb31-2"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">update_observed</span>(</span>
+<span id="cb31-3"><a href="calibration.html#cb31-3"></a>    synthetic_data, </span>
+<span id="cb31-4"><a href="calibration.html#cb31-4"></a>    <span class="dt">loss_params =</span> sir_with_obs_err<span class="op">$</span>observed<span class="op">$</span>loss_params</span>
+<span id="cb31-5"><a href="calibration.html#cb31-5"></a>  )</span>
+<span id="cb31-6"><a href="calibration.html#cb31-6"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">update_opt_params</span>(</span>
+<span id="cb31-7"><a href="calibration.html#cb31-7"></a>    log_beta <span class="op">~</span><span class="st"> </span><span class="kw">log_flat</span>(<span class="dv">0</span>),</span>
+<span id="cb31-8"><a href="calibration.html#cb31-8"></a>    log_nb_disp_S <span class="op">~</span><span class="st"> </span><span class="kw">log_normal</span>(<span class="dv">10</span>, <span class="fl">0.01</span>), <span class="co"># fix at ~Poisson error</span></span>
+<span id="cb31-9"><a href="calibration.html#cb31-9"></a>    log_nb_disp_I <span class="op">~</span><span class="st"> </span><span class="kw">log_normal</span>(<span class="dv">0</span>, <span class="dv">5</span>),     <span class="co"># free parameter</span></span>
+<span id="cb31-10"><a href="calibration.html#cb31-10"></a>    log_nb_disp_R <span class="op">~</span><span class="st"> </span><span class="kw">log_normal</span>(<span class="dv">10</span>, <span class="fl">0.01</span>)  <span class="co"># fix at ~Poisson error</span></span>
+<span id="cb31-11"><a href="calibration.html#cb31-11"></a>  )</span>
+<span id="cb31-12"><a href="calibration.html#cb31-12"></a>)</span></code></pre></div>
+<p>This process starts by updating the simulation model with observed data and specifying what parameters to optimize. One might wonder why we are specifying the <code>loss_params</code> in <code>update_observed</code>, given that we did not do that previously in the section on <a href="calibration.html#calibration">Calibration</a>. The reason is that by default <code>update_observed</code> will create dispersion parameters for all variables appearing in the data passed to its first argument – but we want to retain observation error (and therefore dispersion parameters) for all variables in the simulation model, not just the data. In the optimization, these additional dispersion parameters for <code>S</code> and <code>R</code> must be treated specially, because there is no information in the data about them. Accordingly we specify very narrow prior distributions (in <code>update_opt_params</code>) that are centered around very large dispersion parameters, corresponding to approximate Poisson error. Some kind of informative prior distribution, such as this one, is necessary for convergence of the optimizer.</p>
+<p>We may pass this model to the optimizer, and indeed do achieve convergence.</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="calibration.html#cb32-1"></a>sir_calibrated =<span class="st"> </span><span class="kw">calibrate_flexmodel</span>(sir_to_calibrate)</span>
+<span id="cb32-2"><a href="calibration.html#cb32-2"></a>sir_calibrated<span class="op">$</span>opt_obj<span class="op">@</span>details</span></code></pre></div>
+<pre><code>## $par
+##      log_beta log_nb_disp_S log_nb_disp_I log_nb_disp_R 
+##     -2.301214     10.000000      6.213817     10.000000 
+## 
+## $value
+## [1] 792.7434
+## 
+## $counts
+## function gradient 
+##       37       13 
+## 
+## $convergence
+## [1] 0
+## 
+## $message
+## NULL
+## 
+## $hessian
+##              [,1]  [,2]       [,3]  [,4]
+## [1,] 8289.2510852     0 -0.6153384     0
+## [2,]    0.0000000 10000  0.0000000     0
+## [3,]   -0.6153383     0  0.9346989     0
+## [4,]    0.0000000     0  0.0000000 10000
+## 
+## $maxgrad
+## [1] 0.1233908
+## 
+## $eratio
+## [1] 9.346533e-05</code></pre>
+<p>Not only do we achieve convergence but we also achieve a good fit, which is not surprising given that we are fitting the same model that was used to simulate the data.</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="calibration.html#cb34-1"></a>(<span class="kw">fitted</span>(sir_calibrated)</span>
+<span id="cb34-2"><a href="calibration.html#cb34-2"></a>  <span class="op">%&gt;%</span><span class="st"> </span>ggplot</span>
+<span id="cb34-3"><a href="calibration.html#cb34-3"></a>  <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(date, value_fitted))</span>
+<span id="cb34-4"><a href="calibration.html#cb34-4"></a>  <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(date, value))</span>
+<span id="cb34-5"><a href="calibration.html#cb34-5"></a>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/fit_plot_to_obs_err-1.png" width="672" /></p>
+</div>
 <div id="loss-functions" class="section level2 hasAnchor">
-<h2><span class="header-section-number">5.1</span> Loss Functions<a href="calibration.html#loss-functions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<h2><span class="header-section-number">5.2</span> Loss Functions<a href="calibration.html#loss-functions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Let <span class="math inline">\(l_{\psi_i}\left(x_i(\theta); y_i\right)\)</span> be a loss function where <span class="math inline">\(x_i(\theta)\)</span> is a simulated element of the history matrix, <span class="math inline">\(y_i\)</span> is an associated observed data point, and <span class="math inline">\(\psi_i\)</span> is a vector of loss function parameters. Note that we write the simulation values as functions of <span class="math inline">\(\theta\)</span> to indicate their dependence on parameters. Every element <span class="math inline">\(i\)</span> that belongs to the same column of the history matrix has the same value for <span class="math inline">\(\psi_i\)</span>, but to simplify notation <span class="math inline">\(\psi\)</span> is sub-scripted by <span class="math inline">\(i\)</span>. Let <span class="math inline">\(r_{\phi_j}(\theta_j)\)</span> be an optional regularization function for each parameter <span class="math inline">\(\theta_j\)</span> being optimized, where <span class="math inline">\(\phi_j\)</span> is a vector of regularization function parameters associated with parameter <span class="math inline">\(j\)</span>. The objective function is then given by the following.</p>
 <p><span class="math display">\[
 L_{\psi, \phi}(\theta; y) = \sum_i l_{\psi_i}\left(x_i(\theta); y_i\right) + \sum_j r_{\phi_j}(\theta_j)
@@ -341,7 +393,7 @@ Currently the only objective function that is offered is the negative log negati
 <li>The objective function, <span class="math inline">\(L\)</span>, is returned by the <code>c++</code> function <code>objective_function</code></li>
 </ol>
 <div id="negative-binomial" class="section level3 hasAnchor">
-<h3><span class="header-section-number">5.1.1</span> Negative Binomial<a href="calibration.html#negative-binomial" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<h3><span class="header-section-number">5.2.1</span> Negative Binomial<a href="calibration.html#negative-binomial" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><span class="math display">\[
 \frac{\Gamma(x+k)}{\Gamma(k) x!} \left(\frac{k}{k + \mu}\right)^k \left(\frac{\mu}{k + \mu}\right)^x
 \]</span>
