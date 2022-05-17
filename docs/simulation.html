@@ -23,7 +23,7 @@
 <meta name="author" content="Steve Walker" />
 
 
-<meta name="date" content="2022-05-12" />
+<meta name="date" content="2022-05-17" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -163,7 +163,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.4" data-path="flow-between-states.html"><a href="flow-between-states.html#rate-matrix-dependence-on-state-variables-and-parameters"><i class="fa fa-check"></i><b>3.4</b> Rate Matrix Dependence on State Variables and Parameters</a></li>
 <li class="chapter" data-level="3.5" data-path="flow-between-states.html"><a href="flow-between-states.html#next-steps-1"><i class="fa fa-check"></i><b>3.5</b> Next Steps</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="simulation.html"><a href="simulation.html"><i class="fa fa-check"></i><b>4</b> Simulation</a></li>
+<li class="chapter" data-level="4" data-path="simulation.html"><a href="simulation.html"><i class="fa fa-check"></i><b>4</b> Simulation</a><ul>
+<li class="chapter" data-level="4.1" data-path="simulation.html"><a href="simulation.html#observation-error"><i class="fa fa-check"></i><b>4.1</b> Observation Error</a></li>
+</ul></li>
 <li class="chapter" data-level="5" data-path="calibration.html"><a href="calibration.html"><i class="fa fa-check"></i><b>5</b> Calibration</a><ul>
 <li class="chapter" data-level="5.1" data-path="calibration.html"><a href="calibration.html#loss-functions"><i class="fa fa-check"></i><b>5.1</b> Loss Functions</a><ul>
 <li class="chapter" data-level="5.1.1" data-path="calibration.html"><a href="calibration.html#negative-binomial"><i class="fa fa-check"></i><b>5.1.1</b> Negative Binomial</a></li>
@@ -267,9 +269,37 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ol style="list-style-type: decimal">
 <li>Learn how to fit a model to observed data through <a href="calibration.html#calibration">Calibration</a></li>
 <li>Learn how to modify the values of parameters in simulation time using <a href="time-varying-parameters.html#time-varying-parameters">Time Varying Parameters</a></li>
+<li>Keep reading to learn about simulating with <a href="simulation.html#observation-error">Observation Error</a></li>
 </ol>
 </div>
+<div id="observation-error" class="section level2 hasAnchor">
+<h2><span class="header-section-number">4.1</span> Observation Error<a href="simulation.html#observation-error" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="simulation.html#cb16-1"></a>sir_with_obs_err =<span class="st"> </span>(sir</span>
+<span id="cb16-2"><a href="simulation.html#cb16-2"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">update_loss_params</span>(<span class="kw">data.frame</span>(</span>
+<span id="cb16-3"><a href="simulation.html#cb16-3"></a>    <span class="dt">Parameter =</span> <span class="st">&quot;nb_disp&quot;</span>, </span>
+<span id="cb16-4"><a href="simulation.html#cb16-4"></a>    <span class="dt">Distribution =</span> <span class="st">&quot;negative_binomial&quot;</span>,</span>
+<span id="cb16-5"><a href="simulation.html#cb16-5"></a>    <span class="dt">Variable =</span> <span class="kw">c</span>(<span class="st">&quot;S&quot;</span>, <span class="st">&quot;I&quot;</span>, <span class="st">&quot;R&quot;</span>)</span>
+<span id="cb16-6"><a href="simulation.html#cb16-6"></a>  ))</span>
+<span id="cb16-7"><a href="simulation.html#cb16-7"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">update_params</span>(<span class="kw">c</span>(</span>
+<span id="cb16-8"><a href="simulation.html#cb16-8"></a>    <span class="dt">nb_disp_S =</span> <span class="fl">1e4</span>, </span>
+<span id="cb16-9"><a href="simulation.html#cb16-9"></a>    <span class="dt">nb_disp_I =</span> <span class="fl">1e4</span>, </span>
+<span id="cb16-10"><a href="simulation.html#cb16-10"></a>    <span class="dt">nb_disp_R =</span> <span class="fl">1e4</span></span>
+<span id="cb16-11"><a href="simulation.html#cb16-11"></a>  ))</span>
+<span id="cb16-12"><a href="simulation.html#cb16-12"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="simulation.html#cb17-1"></a><span class="kw">set.seed</span>(1L)</span>
+<span id="cb17-2"><a href="simulation.html#cb17-2"></a>(sir_with_obs_err</span>
+<span id="cb17-3"><a href="simulation.html#cb17-3"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">simulation_history</span>(<span class="dt">obs_error =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb17-4"><a href="simulation.html#cb17-4"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(Date, S, I, R)</span>
+<span id="cb17-5"><a href="simulation.html#cb17-5"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pivot_longer</span>(<span class="op">-</span>Date, <span class="dt">names_to =</span> <span class="st">&quot;var&quot;</span>, <span class="dt">values_to =</span> <span class="st">&quot;value&quot;</span>)</span>
+<span id="cb17-6"><a href="simulation.html#cb17-6"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rename</span>(<span class="dt">date =</span> Date)</span>
+<span id="cb17-7"><a href="simulation.html#cb17-7"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">var =</span> <span class="kw">factor</span>(var, <span class="dt">levels =</span> <span class="kw">topological_sort</span>(sir)))</span>
+<span id="cb17-8"><a href="simulation.html#cb17-8"></a>  <span class="op">%&gt;%</span><span class="st"> </span>ggplot</span>
+<span id="cb17-9"><a href="simulation.html#cb17-9"></a>  <span class="op">+</span><span class="st"> </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>var)</span>
+<span id="cb17-10"><a href="simulation.html#cb17-10"></a>  <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(date, value))</span>
+<span id="cb17-11"><a href="simulation.html#cb17-11"></a>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/plot_obs_err-1.png" width="672" /></p>
 
+</div>
 </div>
             </section>
 

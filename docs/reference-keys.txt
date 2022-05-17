@@ -19,6 +19,7 @@ rate-matrix
 rate-matrix-dependence-on-state-variables-and-parameters
 next-steps-1
 simulation
+observation-error
 calibration
 loss-functions
 negative-binomial
