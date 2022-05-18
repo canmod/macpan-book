@@ -1,18 +1,5 @@
 # Simulation
 
-```{r echo = FALSE}
-sir = (flexmodel(
-  params = c(beta = 0.1, gamma = 0.01, N = 100),
-  state = c(S = 99, I = 1, R = 0),
-  start_date = "2020-03-11",
-  end_date = "2020-12-01",
-  do_make_state = FALSE
-)
-  %>% add_rate("S", "I", ~ (I) * (beta) * (1/N))
-  %>% add_rate("I", "R", ~ (gamma))
-)
-```
-
 All previous chapters were concerned with defining a compartmental model. In this chapter we switch to getting results from a defined model.
 
 Once a model object is defined, it can be used to generate simulations using the `simulation_history` function.
@@ -45,7 +32,7 @@ We can plug into other existing and popular tools to make a plot of the simulate
  %>% simulation_history
  %>% select(-S_to_I)
  %>% pivot_longer(-Date, names_to = "State", values_to = "Population")
- %>% mutate(State = factor(State, levels = c("S", "I", "R")))
+ %>% mutate(State = factor(State, levels = topological_sort(sir)))
  %>% ggplot
  + geom_line(aes(Date, Population, colour = State))
 )

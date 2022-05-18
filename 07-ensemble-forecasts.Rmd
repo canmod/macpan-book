@@ -1,6 +1,6 @@
 # Ensemble Forecasts
 
-```{r redo_obs_err_fit, echo=FALSE}
+```{r redo_obs_err_fit, echo = FALSE, eval = FALSE}
 sir_with_obs_err = (flexmodel(
     params = c(beta = 0.1, gamma = 0.01, N = 100),
     state = c(S = 99, I = 1, R = 0),
@@ -22,7 +22,7 @@ sir_with_obs_err = (flexmodel(
   ))
 )
 set.seed(1L)
-synthetic_data = (sir_with_obs_err
+noisy_data = (sir_with_obs_err
   %>% simulation_history(include_initial_date = FALSE, obs_error = TRUE)
   %>% select(Date, I)
   %>% pivot_longer(-Date, names_to = "var", values_to = "value")
@@ -30,7 +30,7 @@ synthetic_data = (sir_with_obs_err
 )
 sir_to_calibrate = (sir_with_obs_err
   %>% update_observed(
-    synthetic_data, 
+    noisy_data, 
     loss_params = sir_with_obs_err$observed$loss_params
   )
   %>% update_opt_params(
@@ -47,41 +47,46 @@ Good forecasts include measures of uncertainty associated with each forecasted d
 
 The first thing to do before making a forecast is to extend the end date, so that we are actually forecasting the future.
 ```{r extend_end_date}
-sir_to_forecast = extend_end_date(
-  sir_calibrated, 
+sir_obs_err_to_forecast = extend_end_date(
+  sir_obs_err_calibrated, 
   days_to_extend = 100
 )
 ```
 
 Next just pass the model that is ready for forecasting to the `simulate_ensemble` function.
-```{r simulate_ensemble)}
-sir_forecasts = (simulate_ensemble(
-    sir_to_forecast, 
+```{r simulate_ensemble, eval = TRUE}
+obs_err_forecasts = (simulate_ensemble(
+    sir_obs_err_to_forecast, 
     use_progress_bar = FALSE
   )
   %>% filter(name != "S_to_I")
 )
-rmarkdown::paged_table(sir_forecasts)
+```
+```{r paged_obs_err_forecasts, echo = FALSE}
+rmarkdown::paged_table(obs_err_forecasts)
 ```
 
 The forecasts can be joined back to the observed data to make plots (TODO: fix the naming of the columns of these functions to be more consistent).
-```{r join_obs_data_to_sims}
-sir_fits = (sir_forecasts
+```{r join_obs_data_to_sims, eval = TRUE}
+obs_err_fits = (obs_err_forecasts
   %>% left_join(
-    synthetic_data, 
+    noisy_data, 
     c("Date" = "date", "name" = "var"), 
     suffix = c("_fitted", "")
   )
   %>% mutate(
     name = factor(
       name, 
-      levels = topological_sort(sir_to_forecast))
+      levels = topological_sort(sir_obs_err_to_forecast))
   )
 )
-(ggplot(sir_fits)
+(ggplot(obs_err_fits)
   + facet_wrap(~name, scales = 'free', nrow = 2)
   + geom_ribbon(aes(x = Date, ymax = upr, ymin = lwr), alpha = 0.5)
   + geom_point(aes(Date, value), alpha = 0.7)
   + geom_line(aes(Date, value_fitted), colour = "red")
 )
 ```
+
+
+## Time-Varying Ensemble Forecasts

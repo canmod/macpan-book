@@ -12,12 +12,12 @@ Sometimes the expression giving the rate of flow between two compartments is qui
 
 One may save any sum of state variables and/or parameters to the model. In our SIR model for example, we specified the total population size in the parameter vector as `N`. However, we could compute this population size using the `add_state_param_sum` function.
 ```{r add_sum}
-sir = (flexmodel(
-  params = c(beta = 0.1, gamma = 0.01),
-  state = c(S = 99, I = 1, R = 0),
-  start_date = "2020-03-11",
-  end_date = "2020-12-01"
-)
+sir_with_sums = (flexmodel(
+    params = c(beta = 0.1, gamma = 0.01),
+    state = c(S = 99, I = 1, R = 0),
+    start_date = "2020-03-11",
+    end_date = "2020-12-01"
+  )
   %>% add_state_param_sum("N", "S|I|R")
   %>% add_rate("S", "I", ~ (I) * (beta) * (1/N))
   %>% add_rate("I", "R", ~ (gamma))
@@ -36,12 +36,12 @@ First off, I'm sorry about the name `factr`. It is not a typo, I just don't have
 
 The SIR model is not really complex enough to justify using `factr`s, but if we wanted to we could store the proportion of individuals that are in the `I` box as a `factr` and then use that `factr` in the expression for the rate from `S` to `I`.
 ```{r add_factr}
-sir = (flexmodel(
-  params = c(beta = 0.1, gamma = 0.01),
-  state = c(S = 99, I = 1, R = 0),
-  start_date = "2020-03-11",
-  end_date = "2020-12-01"
-)
+sir_with_factrs = (flexmodel(
+    params = c(beta = 0.1, gamma = 0.01),
+    state = c(S = 99, I = 1, R = 0),
+    start_date = "2020-03-11",
+    end_date = "2020-12-01"
+  )
   %>% add_state_param_sum("N", "S|I|R")
   %>% add_factr("Iprop", ~ (I) * (1/N))
   %>% add_rate("S", "I", ~ (Iprop) * (beta))

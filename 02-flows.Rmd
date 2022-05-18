@@ -4,7 +4,7 @@ Here we describe the definition of the basic model of flows among states. Later 
 
 The per-capita rate of flow between any two states can be defined using the `add_rate` function.
 
-```{r echo = FALSE}
+```{r echo = FALSE, eval = FALSE}
 sir = flexmodel(
   params = c(beta = 0.1, gamma = 0.01, N = 100),
   state = c(S = 99, I = 1, R = 0),
@@ -175,4 +175,25 @@ knitr::kable(rs)
 
 McMasterPandemic is designed to be modular allow multiple definitions of valid expressions for the rate matrix. In later chapters we describe this possibility (TODO).
 
-## Next Steps
+## Connections with Classic McMasterPandemic
+
+```{r make_base_model}
+params <- read_params("ICU1.csv")
+classic_macpan = make_base_model(
+  params = params,
+  state = NULL,
+  start_date = "2021-09-10",
+  end_date = "2021-10-10"
+)
+knitr::kable(rate_summary(classic_macpan, include_parse_info = FALSE))
+```
+
+## Topological Sort
+
+```{r topological_sort}
+knitr::kable(classic_macpan
+ %>% rate_summary(include_parse_info = FALSE)
+ %>% mutate(from = factor(from, topological_sort(classic_macpan)))
+ %>% arrange(from)
+)
+```

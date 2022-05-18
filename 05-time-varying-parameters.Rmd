@@ -1,17 +1,5 @@
 # Time Varying Parameters
 
-```{r echo = FALSE}
-sir = (flexmodel(
-  params = c(beta = 0.1, gamma = 0.01, N = 100),
-  state = c(S = 99, I = 1, R = 0),
-  start_date = "2020-03-11",
-  end_date = "2020-12-01"
-)
-  %>% add_rate("S", "I", ~ (I) * (beta) * (1/N))
-  %>% add_rate("I", "R", ~ (gamma))
-)
-```
-
 Any parameter in a `McMasterPandemic` model can be scheduled to vary in time. A time-variation schedule is a data frame with one row for each date on which each parameter changes its value. This data frame has four columns:
 
 * `Date` -- Date on which a particular parameter changes its value
@@ -111,3 +99,7 @@ c(
   after = sir_cal_tv$timevar$piece_wise$schedule$Value
 )
 ```
+
+## Scenario Exploration -- Forecasting with Time-Variation Schedules
+
+## Complex Time-Variation Schedules
