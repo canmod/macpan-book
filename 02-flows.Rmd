@@ -172,16 +172,14 @@ names(rs) = sub("_", "-", names(rs))
 knitr::kable(rs)
 ```
 
-
-McMasterPandemic is designed to be modular allow multiple definitions of valid expressions for the rate matrix. In later chapters we describe this possibility (TODO).
+McMasterPandemic is designed to be modular and allow multiple definitions of valid expressions for the rate matrix. In later chapters we describe this possibility (TODO).
 
 ## Connections with Classic McMasterPandemic
 
 ```{r make_base_model}
 params <- read_params("ICU1.csv")
 classic_macpan = make_base_model(
-  params = params,
-  state = NULL,
+  params = params,  state = NULL,
   start_date = "2021-09-10",
   end_date = "2021-10-10"
 )

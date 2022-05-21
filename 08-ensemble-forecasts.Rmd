@@ -31,7 +31,7 @@ noisy_data = (sir_with_obs_err
 sir_to_calibrate = (sir_with_obs_err
   %>% update_observed(
     noisy_data, 
-    loss_params = sir_with_obs_err$observed$loss_params
+    loss_params = loss_params(sir_with_obs_err)
   )
   %>% update_opt_params(
     log_beta ~ log_flat(0),

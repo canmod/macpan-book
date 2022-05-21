@@ -1,0 +1,69 @@
+# Convergence
+
+In the last chapter we showed how to fit a simple SIR model to data, and things went relatively smoothly. Now we modify the fitting problem just slightly to illustrate how things can get more challenging pretty quickly. In particular we simulate all three state variables and give them different levels of observation error by specifying different values for the negative binomial dispersion parameter.
+
+```{r harder_sir_opt_problem}
+set.seed(1L)
+more_noisy_data = (sir_with_obs_err
+  %>% update_params(c(
+    nb_disp_S = 0.1,
+    nb_disp_I = 1e4,
+    nb_disp_R = 1
+  ))
+  %>% simulation_history(include_initial_date = FALSE, obs_error = TRUE)
+  %>% select(-S_to_I)
+  %>% pivot_longer(-Date, names_to = "var", values_to = "value")
+  %>% mutate(var = factor(var, topological_sort(sir)))
+  %>% rename(date = Date)
+)
+(ggplot(more_noisy_data)
+  + facet_wrap(~var, scales = 'free')
+  + geom_point(aes(date, value))
+)
+```
+
+With these new simulated data we update the `flexmodel` object that we were previously using for calibration with the more challenging noisy data. Note also that we declare more dispersion parameters to be optimized, because the data now include all three compartments.
+
+```{r define_harder_to_calibrate_model}
+sir_harder_to_calibrate = (sir_to_calibrate
+  %>% update_observed(more_noisy_data)
+  %>% update_opt_params(
+    log_beta ~ log_flat(0),
+    log_nb_disp_S ~ log_flat(0),
+    log_nb_disp_I ~ log_flat(0),
+    log_nb_disp_R ~ log_flat(0)
+  )
+)
+```
+
+Fitting this model using the defaults results in the following errors from the optimizer.
+
+```{r fit_harder_to_calibrate_model}
+sir_hard_attempt_1 = calibrate_flexmodel(sir_harder_to_calibrate)
+convergence_info(sir_hard_attempt_1)
+```
+
+```{r fit_harder_to_calibrate_model_2}
+sir_hard_attempt_2 = calibrate_flexmodel(
+  sir_harder_to_calibrate,
+  optimizer = 'nlminb'
+)
+convergence_info(sir_hard_attempt_2)
+```
+
+```{r fit_harder_to_calibrate_model_3}
+sir_hard_attempt_3 = (sir_harder_to_calibrate
+ %>% update_opt_params(
+    log_beta ~ log_flat(-1),
+    log_nb_disp_S ~ log_flat(0),
+    log_nb_disp_I ~ log_flat(0),
+    log_nb_disp_R ~ log_flat(0)
+  )
+  %>% calibrate_flexmodel
+)
+convergence_info(sir_hard_attempt_3)
+```
+
+TODO: plot profiles and slices
+TODO: add ability to use hessian with bbmle (currently not even possible with optimizer = 'nlminb')
+TODO: add functionality to the package for updating starting values in a more convenient manner than update_opt_params. maybe even a way to modify the starting values based on a vector giving the argument to the objective function. this would allow one to chain together optimization runs.

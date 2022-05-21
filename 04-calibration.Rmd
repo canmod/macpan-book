@@ -110,7 +110,7 @@ We can fit these data to a model following the approaches in the [Calibration] s
 sir_obs_err_to_calibrate = (sir_with_obs_err
   %>% update_observed(
     noisy_data, 
-    loss_params = sir_with_obs_err$observed$loss_params
+    loss_params = loss_params(sir_with_obs_err)
   )
   %>% update_opt_params(
     log_beta ~ log_flat(0),

@@ -50,16 +50,16 @@ There are a few places you can go from here:
 
 ```{r obs_err_sims}
 sir_with_obs_err = (sir
-  %>% update_loss_params(data.frame(
-    Parameter = "nb_disp", 
-    Distribution = "negative_binomial",
-    Variable = c("S", "I", "R")
-  ))
   %>% update_params(c(
-    nb_disp_S = 1e4, 
-    nb_disp_I = 1e4, 
+    nb_disp_S = 1e4,
+    nb_disp_I = 1e4,
     nb_disp_R = 1e4
   ))
+  %>% update_error_dist(
+    S ~ negative_binomial("nb_disp_S"),
+    I ~ negative_binomial("nb_disp_I"),
+    R ~ negative_binomial("nb_disp_R")
+  )
 )
 ```
 
