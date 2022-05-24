@@ -7,7 +7,7 @@ model-extensibility
 installation
 dependencies
 generalized-model-at-a-glance
-simple-model-initialization
+model-initialization
 initial-parameter-vector
 initial-state-vector
 start-and-end-date
@@ -46,6 +46,7 @@ hazard-smoothing
 state-initialization
 outflows
 accumulators
+tmb-engine
 examples
 hello-world-simulating-an-sir-model
 si
