@@ -25,6 +25,7 @@ calibration
 calibrating-with-observation-error
 loss-function-theory
 negative-binomial
+convergence
 time-varying-parameters
 example-of-time-variation
 calibrating-time-variation-schedules

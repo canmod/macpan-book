@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Page not found | Generalized McMasterPandemic</title>
+  <title>6 Convergence | Generalized McMasterPandemic</title>
   <meta name="description" content="McMasterPandemic is a modelling tool that was rapidly developed to provide timely insights into the Covid-19 Pandemic in Canada. We are currently refactoring this tool so that it is faster and more general. This guide describes how to use this refactored version of McMasterPandemic." />
   <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Page not found | Generalized McMasterPandemic" />
+  <meta property="og:title" content="6 Convergence | Generalized McMasterPandemic" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="McMasterPandemic is a modelling tool that was rapidly developed to provide timely insights into the Covid-19 Pandemic in Canada. We are currently refactoring this tool so that it is faster and more general. This guide describes how to use this refactored version of McMasterPandemic." />
   <meta name="github-repo" content="canmod/macpan-book" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Page not found | Generalized McMasterPandemic" />
+  <meta name="twitter:title" content="6 Convergence | Generalized McMasterPandemic" />
   
   <meta name="twitter:description" content="McMasterPandemic is a modelling tool that was rapidly developed to provide timely insights into the Covid-19 Pandemic in Canada. We are currently refactoring this tool so that it is faster and more general. This guide describes how to use this refactored version of McMasterPandemic." />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-
-
+<link rel="prev" href="calibration.html"/>
+<link rel="next" href="time-varying-parameters.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -241,19 +241,157 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="page-not-found" class="section level1">
-<h1>Page not found</h1>
-<p>The page you requested cannot be found (perhaps it was moved or renamed).</p>
-<p>You may want to try searching to find the page's new location, or use
-the table of contents to find the page you are looking for.</p>
+<div id="convergence" class="section level1 hasAnchor">
+<h1><span class="header-section-number">6</span> Convergence<a href="convergence.html#convergence" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>In the last chapter we showed how to fit a simple SIR model to data, and things went relatively smoothly. Now we modify the fitting problem just slightly to illustrate how things can get more challenging pretty quickly. In particular we simulate all three state variables and give them different levels of observation error by specifying different values for the negative binomial dispersion parameter.</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="convergence.html#cb39-1"></a><span class="kw">set.seed</span>(1L)</span>
+<span id="cb39-2"><a href="convergence.html#cb39-2"></a>more_noisy_data =<span class="st"> </span>(sir_with_obs_err</span>
+<span id="cb39-3"><a href="convergence.html#cb39-3"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">update_params</span>(<span class="kw">c</span>(</span>
+<span id="cb39-4"><a href="convergence.html#cb39-4"></a>    <span class="dt">nb_disp_S =</span> <span class="fl">0.1</span>,</span>
+<span id="cb39-5"><a href="convergence.html#cb39-5"></a>    <span class="dt">nb_disp_I =</span> <span class="fl">1e4</span>,</span>
+<span id="cb39-6"><a href="convergence.html#cb39-6"></a>    <span class="dt">nb_disp_R =</span> <span class="dv">1</span></span>
+<span id="cb39-7"><a href="convergence.html#cb39-7"></a>  ))</span>
+<span id="cb39-8"><a href="convergence.html#cb39-8"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">simulation_history</span>(<span class="dt">include_initial_date =</span> <span class="ot">FALSE</span>, <span class="dt">obs_error =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb39-9"><a href="convergence.html#cb39-9"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="op">-</span>S_to_I)</span>
+<span id="cb39-10"><a href="convergence.html#cb39-10"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pivot_longer</span>(<span class="op">-</span>Date, <span class="dt">names_to =</span> <span class="st">&quot;var&quot;</span>, <span class="dt">values_to =</span> <span class="st">&quot;value&quot;</span>)</span>
+<span id="cb39-11"><a href="convergence.html#cb39-11"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">var =</span> <span class="kw">factor</span>(var, <span class="kw">topological_sort</span>(sir)))</span>
+<span id="cb39-12"><a href="convergence.html#cb39-12"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rename</span>(<span class="dt">date =</span> Date)</span>
+<span id="cb39-13"><a href="convergence.html#cb39-13"></a>)</span>
+<span id="cb39-14"><a href="convergence.html#cb39-14"></a>(<span class="kw">ggplot</span>(more_noisy_data)</span>
+<span id="cb39-15"><a href="convergence.html#cb39-15"></a>  <span class="op">+</span><span class="st"> </span><span class="kw">facet_wrap</span>(<span class="op">~</span>var, <span class="dt">scales =</span> <span class="st">&#39;free&#39;</span>)</span>
+<span id="cb39-16"><a href="convergence.html#cb39-16"></a>  <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(date, value))</span>
+<span id="cb39-17"><a href="convergence.html#cb39-17"></a>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/harder_sir_opt_problem-1.png" width="672" /></p>
+<p>With these new simulated data we update the <code>flexmodel</code> object that we were previously using for calibration with the more challenging noisy data. Note also that we declare more dispersion parameters to be optimized, because the data now include all three compartments.</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="convergence.html#cb40-1"></a>sir_harder_to_calibrate =<span class="st"> </span>(sir_to_calibrate</span>
+<span id="cb40-2"><a href="convergence.html#cb40-2"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">update_observed</span>(more_noisy_data)</span>
+<span id="cb40-3"><a href="convergence.html#cb40-3"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">update_opt_params</span>(</span>
+<span id="cb40-4"><a href="convergence.html#cb40-4"></a>    log_beta <span class="op">~</span><span class="st"> </span><span class="kw">log_flat</span>(<span class="dv">0</span>),</span>
+<span id="cb40-5"><a href="convergence.html#cb40-5"></a>    log_nb_disp_S <span class="op">~</span><span class="st"> </span><span class="kw">log_flat</span>(<span class="dv">0</span>),</span>
+<span id="cb40-6"><a href="convergence.html#cb40-6"></a>    log_nb_disp_I <span class="op">~</span><span class="st"> </span><span class="kw">log_flat</span>(<span class="dv">0</span>),</span>
+<span id="cb40-7"><a href="convergence.html#cb40-7"></a>    log_nb_disp_R <span class="op">~</span><span class="st"> </span><span class="kw">log_flat</span>(<span class="dv">0</span>)</span>
+<span id="cb40-8"><a href="convergence.html#cb40-8"></a>  )</span>
+<span id="cb40-9"><a href="convergence.html#cb40-9"></a>)</span></code></pre></div>
+<p>Fitting this model using the defaults results in the following errors from the optimizer.</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="convergence.html#cb41-1"></a>sir_hard_attempt_<span class="dv">1</span> =<span class="st"> </span><span class="kw">calibrate_flexmodel</span>(sir_harder_to_calibrate)</span></code></pre></div>
+<pre><code>## Error in optim(par = c(log_beta = 0, log_nb_disp_S = 0, log_nb_disp_I = 0,  : 
+##   initial value in &#39;vmmin&#39; is not finite</code></pre>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="convergence.html#cb43-1"></a><span class="kw">convergence_info</span>(sir_hard_attempt_<span class="dv">1</span>)</span></code></pre></div>
+<pre><code>## [1] &quot;Error in optim(par = c(log_beta = 0, log_nb_disp_S = 0, log_nb_disp_I = 0,  : \n  initial value in &#39;vmmin&#39; is not finite\n&quot;
+## attr(,&quot;class&quot;)
+## [1] &quot;try-error&quot;
+## attr(,&quot;condition&quot;)
+## &lt;simpleError in optim(par = c(log_beta = 0, log_nb_disp_S = 0, log_nb_disp_I = 0, log_nb_disp_R = 0), fn = function (p) {    if (browse_obj)         browser()    l &lt;- relist2(p, template)    names(p) &lt;- nstart[order(oo)]    l[nfix] &lt;- fixed    if (vecpar) {        l &lt;- namedrop(l[nfull])        l &lt;- unlist(l)        args &lt;- list(l)        args &lt;- c(list(l), args.in.data)    }    else {        args &lt;- c(l, args.in.data)    }    if (namedrop_args)         args &lt;- namedrop(args)    do.call(&quot;minuslogl&quot;, args)}, method = &quot;BFGS&quot;, hessian = FALSE, gr = function (p) {    if (browse_obj)         browser()    l &lt;- relist2(p, template)    names(p) &lt;- nstart[order(oo)]    l[nfix] &lt;- fixed    if (vecpar) {        l &lt;- namedrop(l[nfull])        l &lt;- unlist(l)        args &lt;- list(l)        args &lt;- c(list(l), args.in.data)    }    else {        args &lt;- c(l, args.in.data)    }    v &lt;- do.call(&quot;gr&quot;, args)    if (is.null(names(v))) {        if (length(v) == length(l) &amp;&amp; !is.null(tt &lt;- names(l))) {            vnames &lt;- tt        }        else if (length(v) == length(p) &amp;&amp; !is.null(tt &lt;- names(p))) {            vnames &lt;- tt        }        else if (!is.null(tt &lt;- parnames(minuslogl))) {            vnames &lt;- tt        }        else vnames &lt;- names(formals(minuslogl))        if (length(vnames) != length(v))             stop(&quot;name/length mismatch in gradient function&quot;)        names(v) &lt;- vnames    }    return(v[!names(v) %in% nfix])}, control = list(), lower = -Inf, upper = Inf): initial value in &#39;vmmin&#39; is not finite&gt;</code></pre>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="convergence.html#cb45-1"></a>sir_hard_attempt_<span class="dv">2</span> =<span class="st"> </span><span class="kw">calibrate_flexmodel</span>(</span>
+<span id="cb45-2"><a href="convergence.html#cb45-2"></a>  sir_harder_to_calibrate,</span>
+<span id="cb45-3"><a href="convergence.html#cb45-3"></a>  <span class="dt">optimizer =</span> <span class="st">&#39;nlminb&#39;</span></span>
+<span id="cb45-4"><a href="convergence.html#cb45-4"></a>)</span></code></pre></div>
+<pre><code>## Warning in nlminb(start = start, objective = objectivefunction, hessian =
+## NULL, : NA/NaN function evaluation
+
+## Warning in nlminb(start = start, objective = objectivefunction, hessian =
+## NULL, : NA/NaN function evaluation
+
+## Warning in nlminb(start = start, objective = objectivefunction, hessian =
+## NULL, : NA/NaN function evaluation
+
+## Warning in nlminb(start = start, objective = objectivefunction, hessian =
+## NULL, : NA/NaN function evaluation
+
+## Warning in nlminb(start = start, objective = objectivefunction, hessian =
+## NULL, : NA/NaN function evaluation
+
+## Warning in nlminb(start = start, objective = objectivefunction, hessian =
+## NULL, : NA/NaN function evaluation
+
+## Warning in nlminb(start = start, objective = objectivefunction, hessian =
+## NULL, : NA/NaN function evaluation</code></pre>
+<pre><code>## Warning in bbmle::mle2(obj_fun$fn, start_par, gr = obj_fun$gr, parnames =
+## names(start_par), : couldn&#39;t invert Hessian</code></pre>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="convergence.html#cb48-1"></a><span class="kw">convergence_info</span>(sir_hard_attempt_<span class="dv">2</span>)</span></code></pre></div>
+<pre><code>## $par
+##      log_beta log_nb_disp_S log_nb_disp_I log_nb_disp_R 
+##             0             0             0             0 
+## 
+## $objective
+## [1] Inf
+## 
+## $convergence
+## [1] 0
+## 
+## $iterations
+## [1] 1
+## 
+## $evaluations
+## function gradient 
+##        2        4 
+## 
+## $message
+## [1] &quot;X-convergence (3)&quot;
+## 
+## $hessian
+##          [,1] [,2]     [,3]     [,4]
+## [1,]      NaN  NaN      NaN      NaN
+## [2,]      NaN  NaN      NaN      NaN
+## [3,] 13.64742    0 102.8402   0.0000
+## [4,] 13.27857    0   0.0000 189.5047
+## 
+## $maxgrad
+## [1] NaN
+## 
+## $eratio
+## [1] NA</code></pre>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="convergence.html#cb50-1"></a>sir_hard_attempt_<span class="dv">3</span> =<span class="st"> </span>(sir_harder_to_calibrate</span>
+<span id="cb50-2"><a href="convergence.html#cb50-2"></a> <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">update_opt_params</span>(</span>
+<span id="cb50-3"><a href="convergence.html#cb50-3"></a>    log_beta <span class="op">~</span><span class="st"> </span><span class="kw">log_flat</span>(<span class="op">-</span><span class="dv">1</span>),</span>
+<span id="cb50-4"><a href="convergence.html#cb50-4"></a>    log_nb_disp_S <span class="op">~</span><span class="st"> </span><span class="kw">log_flat</span>(<span class="dv">0</span>),</span>
+<span id="cb50-5"><a href="convergence.html#cb50-5"></a>    log_nb_disp_I <span class="op">~</span><span class="st"> </span><span class="kw">log_flat</span>(<span class="dv">0</span>),</span>
+<span id="cb50-6"><a href="convergence.html#cb50-6"></a>    log_nb_disp_R <span class="op">~</span><span class="st"> </span><span class="kw">log_flat</span>(<span class="dv">0</span>)</span>
+<span id="cb50-7"><a href="convergence.html#cb50-7"></a>  )</span>
+<span id="cb50-8"><a href="convergence.html#cb50-8"></a>  <span class="op">%&gt;%</span><span class="st"> </span>calibrate_flexmodel</span>
+<span id="cb50-9"><a href="convergence.html#cb50-9"></a>)</span>
+<span id="cb50-10"><a href="convergence.html#cb50-10"></a><span class="kw">convergence_info</span>(sir_hard_attempt_<span class="dv">3</span>)</span></code></pre></div>
+<pre><code>## $par
+##      log_beta log_nb_disp_S log_nb_disp_I log_nb_disp_R 
+##    -2.3075737    -2.1004227     9.0642536    -0.1010736 
+## 
+## $value
+## [1] 2294.749
+## 
+## $counts
+## function gradient 
+##       75       28 
+## 
+## $convergence
+## [1] 0
+## 
+## $message
+## NULL
+## 
+## $hessian
+##               [,1]      [,2]         [,3]       [,4]
+## [1,]  1.002927e+04 -19.31947 -0.056975984  -5.624261
+## [2,] -1.931947e+01  39.92026  0.000000000   0.000000
+## [3,] -5.696362e-02   0.00000  0.003400036   0.000000
+## [4,] -5.624261e+00   0.00000  0.000000000 129.828358
+## 
+## $maxgrad
+## [1] 0.005206376
+## 
+## $eratio
+## [1] 3.389777e-07</code></pre>
+<p>TODO: plot profiles and slices
+TODO: add ability to use hessian with bbmle (currently not even possible with optimizer = ‘nlminb’)
+TODO: add functionality to the package for updating starting values in a more convenient manner than update_opt_params. maybe even a way to modify the starting values based on a vector giving the argument to the objective function. this would allow one to chain together optimization runs.</p>
+
 </div>
             </section>
 
           </div>
         </div>
       </div>
-
-
+<a href="calibration.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="time-varying-parameters.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -284,7 +422,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/canmod/macpan-book/edit/main/%s",
+"link": "https://github.com/canmod/macpan-book/edit/main/05-convergence.Rmd",
 "text": "Edit"
 },
 "history": {
