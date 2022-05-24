@@ -1,0 +1,46 @@
+# TMB Engine
+
+The initial engine for calibrating and forecasting in McMasterPandemic was R itself. In the [#fast-and-flexible-modelling-with-mcmasterpandemic](refactored) version of McMasterPandemic we use template model builder, or [TMB](https://github.com/kaskr/adcomp). It is possible to interact with TMB objects directly using the `McMasterPandemic::tmb_fun` function, which we illustrate in this section to do MCMC simulation.
+
+```{r echo = FALSE, eval = FALSE}
+DiagrammeR::grViz("digraph {
+  graph [layout = dot, rankdir = LR]
+  
+  node [shape = rectangle]        
+  S [label = 'S']
+  I [label = 'I']
+  
+  # edge definitions with the node IDs
+  S -> I
+  }",
+  height = 100, width = 200)
+```
+
+
+HACK: For some reason `tmbstan` is not working unless we compile the C++ code rather than use the package-compiled objects.
+
+```{r system_file_cpp}
+cpp_dir = system.file('tmb', '0.2.0', package = "McMasterPandemic")
+set_spec_version('0.2.0', cpp_dir, use_version_directories = FALSE)
+```
+
+We can get the TMB object by calling the `tmb_fun` function on a `flexmodel_to_calibrate` object.
+```{r get_tmb_object}
+sir_obs_err_tmb = tmb_fun(sir_obs_err_to_calibrate)
+```
+
+We can pass this `tmb_fun` object to `tmbstan` (in the [tmbstan](https://github.com/kaskr/tmbstan) package) to generate MCMC samples using [rstan](https://mc-stan.org/users/interfaces/rstan).
+```{r mcmc}
+sir_obs_err_stan = tmbstan(
+  sir_obs_err_tmb,
+  chains = 1
+)
+names(sir_obs_err_stan) = c(
+  names(tmb_params_trans(sir_obs_err_to_calibrate)), 
+  "log_posterior"
+)
+traceplot(sir_obs_err_stan)
+sir_obs_err_stan
+```
+
+One may also use [shinystan](https://mc-stan.org/users/interfaces/shinystan) with these objects.

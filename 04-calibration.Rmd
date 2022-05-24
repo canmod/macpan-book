@@ -61,7 +61,7 @@ sir$params
 
 The `sir_to_calibrate` object can be calibrated using one of the optimizers in R that have been wrapped for use with `flexmodel`s. There are currently two options: `nlminb_flexmodel` and `optim_flexmodel`. The difference between the two is that the former uses second-derivative information whereas the latter does not; they both use first-derivative information.
 ```{r calibrate}
-sir_calibrated = nlminb_flexmodel(sir_to_calibrate)
+sir_calibrated = calibrate_flexmodel(sir_to_calibrate)
 ```
 
 The result of these optimization functions is another model object containing additional information.
@@ -112,15 +112,12 @@ sir_obs_err_to_calibrate = (sir_with_obs_err
     noisy_data, 
     loss_params = loss_params(sir_with_obs_err)
   )
-  %>% update_opt_params(
-    log_beta ~ log_flat(0),
-    log_nb_disp_S ~ log_normal(10, 0.01), # fix at ~Poisson error
-    log_nb_disp_I ~ log_flat(0),     # free parameter
-    log_nb_disp_R ~ log_normal(10, 0.01)  # fix at ~Poisson error
+  %>% update_opt_params(log_beta ~ log_normal(-1, 0.5)
+    ,log_nb_disp_I ~ log_normal(10, 1)
   )
 )
 ```
-This process starts by updating the simulation model with observed data and specifying what parameters to optimize. One might wonder why we are specifying the `loss_params` in `update_observed`, given that we did not do that previously in the section on [Calibration]. The reason is that by default `update_observed` will create dispersion parameters for all variables appearing in the data passed to its first argument -- but we want to retain observation error (and therefore dispersion parameters) for all variables in the simulation model, not just the data. In the optimization, these additional dispersion parameters for `S` and `R` must be treated specially, because there is no information in the data about them. Accordingly we specify very narrow prior distributions (in `update_opt_params`) that are centered around very large dispersion parameters, corresponding to approximate Poisson error. Some kind of informative prior distribution, such as this one, is necessary for convergence of the optimizer.
+This process starts by updating the simulation model with observed data and specifying what parameters to optimize.
 
 We may pass this model to the optimizer, and indeed do achieve convergence.
 ```{r calibrate_obs_err}

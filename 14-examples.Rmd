@@ -1,8 +1,5 @@
 # Examples
 
-[![Live
-Version](https://img.shields.io/static/v1.svg?label=Updated&message=`r Sys.Date()`&color=blue)](https://canmod.net/misc/flex_intro)
-
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
@@ -59,9 +56,11 @@ nn
 
 ```{r print_sir}
 (sir_model
-    %>% simulate_state_vector(add_dates = TRUE)
+    %>% simulation_history
+    %>% select(-S_to_I)
     %>% pivot_longer(!Date)
     %>% rename(state = value, epi_cat = name)
+    %>% mutate(epi_cat = factor(epi_cat, levels = topological_sort(sir_model)))
     %>% ggplot
      +  geom_line(aes(x = Date, y = state, colour = epi_cat))
   )
@@ -69,7 +68,7 @@ nn
 
 ```{r plot_sir}
 (sir_model
-    %>% simulate_changing_ratemat_elements(add_dates = TRUE)
+    %>% simulation_history
     %>% rename(`force of infection` = S_to_I)
     %>% ggplot
      +  geom_line(aes(x = Date, y = `force of infection`))
@@ -158,13 +157,16 @@ two_strain_model = (
 ```
 
 ```{r plot_two_strain}
-regex = "^(S|I|R)(_*)(.*)"
+regex = "^(S|I|R)(_*)(|wild|variant)$"
 (two_strain_model
-    %>% simulate_state_vector(add_dates = TRUE)
+    %>% simulation_history
+    %>% select(Date, matches(regex))
     %>% pivot_longer(!Date)
     %>% rename(state = value)
     %>% mutate(strain  = sub(pattern = regex, replacement = "\\3", name))
     %>% mutate(epi_cat = sub(pattern = regex, replacement = "\\1", name))
+    %>% mutate(strain = factor(strain, c("", "wild", "variant")))
+    %>% mutate(epi_cat = factor(epi_cat, c("S", "I", "R")))
     %>% ggplot
      +  geom_line(aes(x = Date, y = state, colour = epi_cat, linetype = strain))
   )
@@ -172,7 +174,7 @@ regex = "^(S|I|R)(_*)(.*)"
 
 ```{r plot_two_strain_again}
 (two_strain_model
-    %>% simulate_changing_ratemat_elements(add_dates = TRUE)
+    %>% simulation_history
     %>% pivot_longer(starts_with("S_to_I"))
     %>% mutate(name = sub("S_to_I_", "", name))
     %>% rename(`force of infection` = value)
@@ -244,21 +246,22 @@ erlang_seir = (flexmodel(
 )
 
 (erlang_seir
-  %>% simulate_state_vector(add_dates = TRUE)
-  %>% select(-., -D)
+  %>% simulation_history
+  %>% select(-., -D, -S_to_E_1)
   %>% pivot_longer(-Date, names_to = "State", values_to = "Count")
   %>% mutate(State = sub("_[0-9]+", "", State))
   %>% group_by(Date, State)
   %>% summarise(Count = sum(Count))
   %>% ungroup
+  %>% mutate(State = factor(State, c("S", "E", "I", "R")))
   %>% ggplot() + geom_line(aes(Date, Count, colour = State))
 )
 
 # check to make sure that the population density
 # remains constant at one
 (erlang_seir
-  %>% simulate_state_vector(add_dates = FALSE)
-  %>% select(-., -D)
+  %>% simulation_history
+  %>% select(-Date, -., -D, -S_to_E_1, -I)
   %>% rowSums
   %>% sapply(all.equal, 1L)
   %>% sapply(isTRUE)
@@ -300,9 +303,11 @@ sirv_model = (
 )
 
 (sirv_model
-    %>% simulate_state_vector(add_dates = TRUE)
+    %>% simulation_history
+    %>% select(Date, matches("^(S|I|R|V)$"))
     %>% pivot_longer(!Date)
     %>% rename(state = value, epi_cat = name)
+    %>% mutate(epi_cat = factor(epi_cat, topological_sort(sirv_model)))
     %>% ggplot
      +  geom_line(aes(x = Date, y = state, colour = epi_cat))
      +  geom_vline(aes(xintercept = as.Date(Date)), data = params_timevar, colour = 'lightgrey')
@@ -377,7 +382,8 @@ variolation_model <- (
 )
 
 (variolation_model
-    %>% simulate_state_vector(add_dates = TRUE)
+    %>% simulation_history
+    %>% select(-starts_with("S_to_I_"))
     %>% pivot_longer(!Date)
     %>% rename(state = value, epi_cat = name)
     %>% ggplot
@@ -421,9 +427,11 @@ seird_model = (
   %>% add_rate("D", "Null", ~ (1/T_D))
 )
 (seird_model
-    %>% simulate_state_vector(add_dates = TRUE)
+    %>% simulation_history
+    %>% select(Date, matches(any_var(state)))
     %>% pivot_longer(!Date)
     %>% rename(state = value, epi_cat = name)
+    %>% mutate(epi_cat = factor(epi_cat, levels = topological_sort(seird_model)))
     %>% ggplot
      +  geom_line(aes(x = Date, y = state, colour = epi_cat))
   )
@@ -524,7 +532,8 @@ model = (
   )
 )
 (model
-  %>% simulate_state_vector(add_dates = TRUE)
+  %>% simulation_history
+  %>% select(Date, matches(any_var(model$state)))
   %>% pivot_longer(!Date)
   %>% ggplot()
    +  facet_wrap(~ name, scales = 'free', ncol = 2)
@@ -707,7 +716,8 @@ two_strain_bc = (flexmodel(
 
 category_pattern = "^(S|E|I|R)(_omicron|_delta)?_(unvax|onedose|boost)$"
 (two_strain_bc
-  %>% simulate_state_vector(add_date = TRUE)
+  %>% simulation_history
+  %>% select(Date, matches(category_pattern))
   %>% pivot_longer(-Date, names_to = "Compartment", values_to = "State")
   %>% mutate(`Epi Status` = sub(category_pattern, '\\1\\2', Compartment, perl = TRUE))
   %>% mutate(`Vaccination Status` = sub(category_pattern, '\\3', Compartment, perl = TRUE))
@@ -758,7 +768,7 @@ model = (flexmodel(
   %>% add_outflow(".+", "^(S|E|I|H|ICU|D|R)")
 )
 (model
-  %>% simulate_state_vector(add_dates = TRUE)
+  %>% simulation_history
   %>% pivot_longer(!Date)
   %>% mutate(name = factor(name, levels = topological_sort(model)))
   %>% ggplot()

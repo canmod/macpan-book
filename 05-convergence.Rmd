@@ -62,8 +62,13 @@ sir_hard_attempt_3 = (sir_harder_to_calibrate
   %>% calibrate_flexmodel
 )
 convergence_info(sir_hard_attempt_3)
+sir_hard_attempt_4 = profile(opt_obj(sir_hard_attempt_3))
+sir_hard_attempt_4@details
+plot(slice(sir_hard_attempt_4))
 ```
 
 TODO: plot profiles and slices
-TODO: add ability to use hessian with bbmle (currently not even possible with optimizer = 'nlminb')
+
+TODO: add ability to use auto-diff hessian with bbmle (currently not even possible with optimizer = 'nlminb' because this is a bbmle::mle2 argument and bbmle::mle2 doesn't allow use-supplied hessian functions, at least by default)
+
 TODO: add functionality to the package for updating starting values in a more convenient manner than update_opt_params. maybe even a way to modify the starting values based on a vector giving the argument to the objective function. this would allow one to chain together optimization runs.

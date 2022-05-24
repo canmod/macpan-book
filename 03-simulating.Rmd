@@ -27,7 +27,7 @@ Note that the above command uses the tidyverse-style pipe, `%>%`, operator and a
 
 We can plug into other existing and popular tools to make a plot of the simulated epidemic trajectory.
 
-```{r}
+```{r sir_sim}
 (sir
  %>% simulation_history
  %>% select(-S_to_I)

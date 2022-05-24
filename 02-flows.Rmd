@@ -4,7 +4,7 @@ Here we describe the definition of the basic model of flows among states. Later 
 
 The per-capita rate of flow between any two states can be defined using the `add_rate` function.
 
-```{r echo = FALSE, eval = FALSE}
+```{r sir_init, echo = FALSE, eval = FALSE}
 sir = flexmodel(
   params = c(beta = 0.1, gamma = 0.01, N = 100),
   state = c(S = 99, I = 1, R = 0),
@@ -14,7 +14,7 @@ sir = flexmodel(
 ```
 
 
-```{r}
+```{r sir_flows}
 sir = (sir
  %>% add_rate("S", "I", ~ (I) * (beta) * (1/N))
  %>% add_rate("I", "R", ~ (gamma))
@@ -188,10 +188,37 @@ knitr::kable(rate_summary(classic_macpan, include_parse_info = FALSE))
 
 ## Topological Sort
 
+The ordering of compartments with which individuals flow can be determined using the `topological_sort` function, provided that the graph is a DAG (i.e. there are no loops such as waning immunity). So for example the topologically sorted ordering of the classic McMasterPandemic model is given by the following.
+
+```{r topo_sort}
+topological_sort(classic_macpan)
+```
+
+This can be used to order categorical variables for sorting tables and arranging plot facets.
+
 ```{r topological_sort}
 knitr::kable(classic_macpan
  %>% rate_summary(include_parse_info = FALSE)
  %>% mutate(from = factor(from, topological_sort(classic_macpan)))
  %>% arrange(from)
 )
+```
+
+```{r visualizing}
+model = classic_macpan
+state_nms = base::setdiff(topological_sort(model), c("X", "V"))
+nodes = data.frame(
+  id = state_nms,
+  label = state_nms,
+  title = state_nms,
+  physics = FALSE)
+visNetwork(
+  nodes,
+  select(rate_summary(model), from, to) %>%
+    mutate(arrows = "to")) %>%
+  #visLegend() %>%
+  #visLayout() %>% 
+  visInteraction(zoomSpeed = 0.1) %>% 
+  visPhysics(stabilization = TRUE) %>% 
+  visHierarchicalLayout(direction = "LR")
 ```

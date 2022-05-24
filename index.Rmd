@@ -94,6 +94,9 @@ suppressPackageStartupMessages(library(McMasterPandemic))
 suppressPackageStartupMessages(library(dplyr))
 suppressPackageStartupMessages(library(tidyr))
 suppressPackageStartupMessages(library(lubridate))
+suppressPackageStartupMessages(library(visNetwork))
+suppressPackageStartupMessages(library(bbmle))
+suppressPackageStartupMessages(library(tmbstan))
 ```
 
 This guide makes use of the following session.

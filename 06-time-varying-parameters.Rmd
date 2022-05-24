@@ -66,13 +66,13 @@ Then we update our model with the `sir_with_timevar` simulations to fit to, and 
 sir_to_cal_tv = (sir_with_timevar
   %>% update_observed(timevar_sims)
   %>% update_piece_wise(calibrate_timevar)
-  %>% add_opt_params(log_beta ~ log_flat(0)
-    , log_nb_disp_S ~ log_normal(0, 1)
-    , log_nb_disp_I ~ log_normal(0, 1)
-    , log_nb_disp_R ~ log_normal(0, 1)
+  %>% add_opt_params(log_beta ~ log_flat(-1)
+    #, log_nb_disp_S ~ log_normal(0, 5)
+    #, log_nb_disp_I ~ log_normal(0, 5)
+    #, log_nb_disp_R ~ log_normal(0, 5)
   )
   %>% add_opt_tv_params(tv_type = "abs"
-    , log_beta ~ log_flat(0)
+    , log_beta ~ log_flat(-1)
   )
 )
 ```
@@ -87,8 +87,8 @@ sir_to_cal_tv$do_sim_constraint = TRUE
 
 With this `sir_to_cal_tv` object we can now fit this model to the simulated data.
 
-```{r message=FALSE, warning=FALSE}
-sir_cal_tv = nlminb_flexmodel(sir_to_cal_tv)
+```{r}
+sir_cal_tv = calibrate_flexmodel(sir_to_cal_tv, optimizer = 'nlminb')
 ```
 
 The time-variation values before, during, and after optimization look as we would expect, given that we fitted to the same model that generated the data.

@@ -25,7 +25,7 @@ It is sometimes necessary to override this default inflow-outflow balance. One u
 For example, suppose that we want to keep track of the total number of individuals who have ever been infected in our SIR model. To do this we define an `X` accumulator compartment. This `X` box has the same inflow from `S` as does `I`, but we restrict outflow from `S` as individuals flow in to `X` -- otherwise we would double-count the draining of `S`. We specify this custom outflow model with the `add_outflow` function.
 
 ```{r add_outflow}
-sir_with_accumulator = (init_model(
+sir_with_accumulator = (flexmodel(
   params = c(beta = 0.1, gamma = 0.01, N = 100),
   state = c(S = 99, I = 1, R = 0, X = 1),
   start_date = "2020-03-11",
