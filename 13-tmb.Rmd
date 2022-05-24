@@ -1,6 +1,6 @@
 # TMB Engine
 
-The initial engine for calibrating and forecasting in McMasterPandemic was R itself. In the [#fast-and-flexible-modelling-with-mcmasterpandemic](refactored) version of McMasterPandemic we use template model builder, or [TMB](https://github.com/kaskr/adcomp). It is possible to interact with TMB objects directly using the `McMasterPandemic::tmb_fun` function, which we illustrate in this section to do MCMC simulation.
+The initial engine for calibrating and forecasting in McMasterPandemic was R itself. In the [refactored](#fast-and-flexible-modelling-with-mcmasterpandemic) version of McMasterPandemic we use template model builder, or [TMB](https://github.com/kaskr/adcomp). It is possible to interact with TMB objects directly using the `McMasterPandemic::tmb_fun` function, which we illustrate in this section to do MCMC simulation.
 
 ```{r echo = FALSE, eval = FALSE}
 DiagrammeR::grViz("digraph {
