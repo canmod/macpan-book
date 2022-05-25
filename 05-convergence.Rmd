@@ -26,6 +26,7 @@ With these new simulated data we update the `flexmodel` object that we were prev
 
 ```{r define_harder_to_calibrate_model}
 sir_harder_to_calibrate = (sir_to_calibrate
+  %>% reset_error_dist
   %>% update_observed(more_noisy_data)
   %>% update_opt_params(
     log_beta ~ log_flat(0),

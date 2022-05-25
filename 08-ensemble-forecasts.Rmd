@@ -59,7 +59,7 @@ obs_err_forecasts = (simulate_ensemble(
     sir_obs_err_to_forecast, 
     use_progress_bar = FALSE
   )
-  %>% filter(name != "S_to_I")
+  %>% filter(var != "S_to_I")
 )
 ```
 ```{r paged_obs_err_forecasts, echo = FALSE}
@@ -71,17 +71,17 @@ The forecasts can be joined back to the observed data to make plots (TODO: fix t
 obs_err_fits = (obs_err_forecasts
   %>% left_join(
     noisy_data, 
-    c("Date" = "date", "name" = "var"), 
+    c("Date" = "date", "var" = "var"), 
     suffix = c("_fitted", "")
   )
   %>% mutate(
-    name = factor(
-      name, 
+    var = factor(
+      var, 
       levels = topological_sort(sir_obs_err_to_forecast))
   )
 )
 (ggplot(obs_err_fits)
-  + facet_wrap(~name, scales = 'free', nrow = 2)
+  + facet_wrap(~var, scales = 'free', nrow = 2)
   + geom_ribbon(aes(x = Date, ymax = upr, ymin = lwr), alpha = 0.5)
   + geom_point(aes(Date, value), alpha = 0.7)
   + geom_line(aes(Date, value_fitted), colour = "red")

@@ -4,12 +4,6 @@
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-```{r, message=FALSE}
-library(dplyr)
-library(tidyr)
-library(lubridate)
-```
-
 ## Hello World: Simulating an SIR Model
 
 ```{r hello_world, fig.height=8, fig.width=8}
@@ -383,7 +377,7 @@ variolation_model <- (
 
 (variolation_model
     %>% simulation_history
-    %>% select(-starts_with("S_to_I_"))
+    %>% select(Date, matches(any_var(variolation_model$state)))
     %>% pivot_longer(!Date)
     %>% rename(state = value, epi_cat = name)
     %>% ggplot
