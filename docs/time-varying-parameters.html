@@ -23,7 +23,7 @@
 <meta name="author" content="Steve Walker" />
 
 
-<meta name="date" content="2022-05-25" />
+<meta name="date" content="2022-06-02" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -258,8 +258,45 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><code>"abs"</code> – The <code>Value</code> column is the new value for the parameter on <code>Date</code></li>
 <li><code>"rel_orig"</code> – The <code>Value</code> column is multiplied by the original value of the changing parameter at the beginning of the simulation, to generate a new value for the parameter on <code>Date</code></li>
 <li><code>"rel_prev"</code> – The <code>Value</code> column is multiplied by the previous value of the changing parameter, to generate a new value for the parameter on <code>Date</code></li>
+<li><code>"rel_orig_logit"</code> – The logit transform of the <code>Value</code> column is added to the logit transform of the original value, and then the inverse logit transform is applied to this sum to generate a new value for the parameter on <code>Date</code></li>
+<li><code>"rel_prev_logit"</code> – The logit transform of the <code>Value</code> column is added to the logit transform of the previous value of the changing parameter, and then the inverse logit transform is applied to this sum to generate a new value for the parameter on <code>Date</code></li>
 </ul></li>
 </ul>
+<p>Let <span class="math inline">\(\theta_t\)</span> be the focal parameter at time <span class="math inline">\(t\)</span>, let <span class="math inline">\(\theta_0\)</span> be the original value of <span class="math inline">\(\theta\)</span> at the beginning of the simulation, let <span class="math inline">\(t = \tau\)</span> be a time at which <span class="math inline">\(\theta\)</span> changes value, and let <span class="math inline">\(\nu_\tau\)</span> be the number in the <code>Value</code> column associated with the breakpoint at <span class="math inline">\(\tau\)</span>. The following table describes the different types of time variation.</p>
+<table>
+<colgroup>
+<col width="40%" />
+<col width="59%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Time Variation Type</th>
+<th align="left">Parameter Update Expression</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>abs</code></td>
+<td align="left"><span class="math inline">\(\theta_\tau = \nu_\tau\)</span></td>
+</tr>
+<tr class="even">
+<td align="left"><code>rel_orig</code></td>
+<td align="left"><span class="math inline">\(\theta_\tau = \theta_0 \nu_\tau\)</span></td>
+</tr>
+<tr class="odd">
+<td align="left"><code>rel_prev</code></td>
+<td align="left"><span class="math inline">\(\theta_\tau = \theta_{\tau-1} \nu_\tau\)</span></td>
+</tr>
+<tr class="even">
+<td align="left"><code>rel_orig_logit</code></td>
+<td align="left"><span class="math inline">\(\theta_\tau = \text{logit}^{-1}\left(\text{logit}(\theta_0) + \text{logit}(\nu_\tau)\right)\)</span></td>
+</tr>
+<tr class="odd">
+<td align="left"><code>rel_prev_logit</code></td>
+<td align="left"><span class="math inline">\(\theta_\tau = \text{logit}^{-1}\left(\text{logit}(\theta_{\tau-1}) + \text{logit}(\nu_\tau)\right)\)</span></td>
+</tr>
+</tbody>
+</table>
 <p>Once a time-variation data frame is produced it can get added to a model when it is created via the <code>params_timevar</code> argument of <code>flexmodel</code>, or by updating an existing <code>flexmodel</code> object using the <code>update_piece_wise</code> function.</p>
 <div id="example-of-time-variation" class="section level2 hasAnchor">
 <h2><span class="header-section-number">7.1</span> Example of Time-Variation<a href="time-varying-parameters.html#example-of-time-variation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
