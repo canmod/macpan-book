@@ -770,3 +770,139 @@ model = (flexmodel(
    +  geom_line(aes(Date, value))
 )
 ```
+
+## Granich HIV Model
+
+The HIV model from [Granich et al (2008)](https://www.thelancet.com/journals/lancet/article/PIIS0140-6736(08)61697-9/fulltext).
+```{r granich}
+start_date = ymd(20220501)
+end_date = start_date + days(30)
+
+params = c(
+  # phenomenological heterogeneity parameters and constants
+  alpha = 0.1,
+  lambda0 = 0.002,
+  n = 1,  # exponential decrease when n = 1
+  e = exp(1),
+  minus_1 = -1,
+
+  # background birth and mortality rates
+  beta = 0.02,
+  mu = 0.01,
+  one = 1,
+
+  # treatment efficacy (smaller is less infectious)
+  epsilon = 0.2,
+
+  # disease progression rate
+  rho = 0.15,
+
+  # treatment rate
+  tau = 0.8, # value from paper
+
+  # treatment stopping rate
+  phi = 0.015, # value from paper
+
+  # disease progression rate for treated individuals
+  sigma = 0.1
+)
+
+number_of_stages = 4
+state = c(
+  S = 999,
+  layered_zero_state("I", 1:number_of_stages),
+  layered_zero_state("A", 1:number_of_stages),
+  D_disease = 0,
+  D_background = 0
+  #birth_pool = 1000
+)
+state["I_1"] = 1
+
+alive_state_nms = grep("^(S|I|A)", names(state), value = TRUE)
+Ivec = vec("I" %_% 1:number_of_stages)
+Avec = vec("A" %_% 1:number_of_stages)
+epsilon = struc("epsilon")
+I = as.character(sum(Ivec) + sum(Avec))
+J = as.character(sum(Ivec) + sum(epsilon * Avec))
+
+granich = (flexmodel(
+  params = params,
+  state = state,
+  start_date = start_date,
+  end_date = end_date,
+  do_hazard = TRUE
+)
+  %>% add_state_param_sum("N", "^(S|I|A)")
+  %>% add_factr("I", I)
+  %>% add_factr("J", J)
+  %>% add_factr("minus_alpha", ~ (alpha) * (minus_1))
+  %>% add_factr("P", ~ (I) * (1/N))
+  %>% add_pow("het_exponent", "P", "n", "minus_alpha")
+  %>% add_pow("lambda", "e", "het_exponent", "lambda0")
+
+  %>% rep_rate(
+    from = alive_state_nms,
+    to   = "S",
+    ~ (beta)
+  )
+
+  %>% rep_rate(
+    from = alive_state_nms,
+    to = "D_background",
+    ~ (mu)
+  )
+
+  # transmission
+  %>% add_rate(
+    from = "S",
+    to = "I_1",
+    ~ (lambda) * (S) * (J) * (1/N)
+  )
+
+  # treatment dynamics
+  %>% rep_rate(
+    from = "I" %_% (1:number_of_stages),
+    to   = "A" %_% (1:number_of_stages),
+    ~ (tau)
+  )
+  %>% rep_rate(
+    from = "A" %_% (1:number_of_stages),
+    to   = "I" %_% (1:number_of_stages),
+    ~ (phi)
+  )
+
+  # disease progression
+  %>% rep_rate(
+    from = "I" %_% (1:(number_of_stages - 1)),
+    to   = "I" %_% (2:number_of_stages),
+    ~ (rho)
+  )
+  %>% rep_rate(
+    from = "A" %_% (1:(number_of_stages - 1)),
+    to   = "A" %_% (2:number_of_stages),
+    ~ (sigma)
+  )
+
+  # disease death
+  %>% add_rate("I" %_% number_of_stages, "D_disease", ~ (rho))
+  %>% add_rate("A" %_% number_of_stages, "D_disease", ~ (sigma))
+
+  #%>% add_outflow(from = "^[A-Z]") # don't flow out of the 'birth pool'
+  %>% add_outflow(
+    from = '.+',
+    to = '^(I|A|D)_'
+  )
+
+  %>% add_sim_report_expr("Itotal", sum(Ivec))
+  %>% add_sim_report_expr("Atotal", sum(Avec))
+)
+
+(granich
+  %>% simulation_history
+  %>% select(Date, S, Itotal, Atotal, J, D_background, D_disease, lambda, N, P)
+  %>% pivot_longer(-Date)
+  %>% ggplot
+  + facet_wrap(~ name, ncol = 3, scales = 'free')
+  + geom_line(aes(Date, value))
+)
+```

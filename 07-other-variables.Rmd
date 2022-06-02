@@ -6,7 +6,7 @@ There are two basic kinds of other variables: (1) [Intermediate Results] and (2)
 
 ## Intermediate Results
 
-Sometimes the expression giving the rate of flow between two compartments is quite complex, or even just impossible to express in terms of just parameters and state variables given the restrictions described in the chapter on [Flows Between States]. In these cases, it is often convenient or even necessary to store intermediate combinations of parameters and state variables and then use these combinations in subsequent expressions for flow rates.  There are two basic kinds of intermediate results: (1) sums of state variables and parameters and (2) more general expressions, called `factr`s, that combine state variables, parameters, and their sums.
+Sometimes the expression giving the rate of flow between two compartments is quite complex, or even just impossible to express in terms of just parameters and state variables given the restrictions described in the chapter on [Flows Between States]. In these cases, it is often convenient or even necessary to store intermediate combinations of parameters and state variables and then use these combinations in subsequent expressions for flow rates.  There are three basic kinds of intermediate results: (1) sums of state variables and parameters, (2) more general expressions, called `factr`s, that combine state variables, parameters, and their sums, and (3) power laws involving any of these variables as base, exponent, and constant.
 
 ### Sums of State Variables and Parameters
 
@@ -50,6 +50,17 @@ sir_with_factrs = (flexmodel(
 ```
 
 See also the [SI] model example for a use of `factr`s that computes the equilibrium populations in each compartment.
+
+### Power Laws
+
+Intermediate results of the following functional form can be specified.
+
+$$
+y = y_0x^b
+$$
+where $y$ is the new intermediate result, and $y_0$, $x$, and $b$ are parameters, state variables, sums/factrs of state variables and parameters, or other powers that have previously been specified.
+
+[This HIV mode](#granich-hiv-model) provides an example of the usage of power laws.
 
 ## Additional Variables in the Simulation History
 
