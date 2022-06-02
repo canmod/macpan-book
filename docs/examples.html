@@ -188,6 +188,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8.1" data-path="other-variables.html"><a href="other-variables.html#intermediate-results"><i class="fa fa-check"></i><b>8.1</b> Intermediate Results</a><ul>
 <li class="chapter" data-level="8.1.1" data-path="other-variables.html"><a href="other-variables.html#sums-of-state-variables-and-parameters"><i class="fa fa-check"></i><b>8.1.1</b> Sums of State Variables and Parameters</a></li>
 <li class="chapter" data-level="8.1.2" data-path="other-variables.html"><a href="other-variables.html#factrs"><i class="fa fa-check"></i><b>8.1.2</b> Factrs</a></li>
+<li class="chapter" data-level="8.1.3" data-path="other-variables.html"><a href="other-variables.html#power-laws"><i class="fa fa-check"></i><b>8.1.3</b> Power Laws</a></li>
 </ul></li>
 <li class="chapter" data-level="8.2" data-path="other-variables.html"><a href="other-variables.html#additional-variables-in-the-simulation-history"><i class="fa fa-check"></i><b>8.2</b> Additional Variables in the Simulation History</a><ul>
 <li class="chapter" data-level="8.2.1" data-path="other-variables.html"><a href="other-variables.html#simulation-history-expressions"><i class="fa fa-check"></i><b>8.2.1</b> Simulation History Expressions</a></li>
@@ -217,6 +218,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="15.9" data-path="examples.html"><a href="examples.html#covid-seir"><i class="fa fa-check"></i><b>15.9</b> Covid SEIR</a></li>
 <li class="chapter" data-level="15.10" data-path="examples.html"><a href="examples.html#bc-covid-omicron"><i class="fa fa-check"></i><b>15.10</b> BC Covid Omicron</a></li>
 <li class="chapter" data-level="15.11" data-path="examples.html"><a href="examples.html#classic-mcmasterpandemic"><i class="fa fa-check"></i><b>15.11</b> Classic McMasterPandemic</a></li>
+<li class="chapter" data-level="15.12" data-path="examples.html"><a href="examples.html#granich-hiv-model"><i class="fa fa-check"></i><b>15.12</b> Granich HIV Model</a></li>
 </ul></li>
 <li class="chapter" data-level="16" data-path="troubleshooting.html"><a href="troubleshooting.html"><i class="fa fa-check"></i><b>16</b> Troubleshooting</a><ul>
 <li class="chapter" data-level="16.1" data-path="troubleshooting.html"><a href="troubleshooting.html#nan-valued-objective-function"><i class="fa fa-check"></i><b>16.1</b> NaN-Valued Objective Function</a><ul>
@@ -942,6 +944,141 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb111-41"><a href="examples.html#cb111-41"></a>   <span class="op">+</span><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(Date, value))</span>
 <span id="cb111-42"><a href="examples.html#cb111-42"></a>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/classic-macpan-1.png" width="672" /></p>
+</div>
+<div id="granich-hiv-model" class="section level2 hasAnchor">
+<h2><span class="header-section-number">15.12</span> Granich HIV Model<a href="examples.html#granich-hiv-model" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The HIV model from <a href="https://www.thelancet.com/journals/lancet/article/PIIS0140-6736(08)61697-9/fulltext">Granich et al (2008)</a>.</p>
+<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="examples.html#cb112-1"></a>start_date =<span class="st"> </span><span class="kw">ymd</span>(<span class="dv">20220501</span>)</span>
+<span id="cb112-2"><a href="examples.html#cb112-2"></a>end_date =<span class="st"> </span>start_date <span class="op">+</span><span class="st"> </span><span class="kw">days</span>(<span class="dv">30</span>)</span>
+<span id="cb112-3"><a href="examples.html#cb112-3"></a></span>
+<span id="cb112-4"><a href="examples.html#cb112-4"></a>params =<span class="st"> </span><span class="kw">c</span>(</span>
+<span id="cb112-5"><a href="examples.html#cb112-5"></a>  <span class="co"># phenomenological heterogeneity parameters and constants</span></span>
+<span id="cb112-6"><a href="examples.html#cb112-6"></a>  <span class="dt">alpha =</span> <span class="fl">0.1</span>,</span>
+<span id="cb112-7"><a href="examples.html#cb112-7"></a>  <span class="dt">lambda0 =</span> <span class="fl">0.002</span>,</span>
+<span id="cb112-8"><a href="examples.html#cb112-8"></a>  <span class="dt">n =</span> <span class="dv">1</span>,  <span class="co"># exponential decrease when n = 1</span></span>
+<span id="cb112-9"><a href="examples.html#cb112-9"></a>  <span class="dt">e =</span> <span class="kw">exp</span>(<span class="dv">1</span>),</span>
+<span id="cb112-10"><a href="examples.html#cb112-10"></a>  <span class="dt">minus_1 =</span> <span class="dv">-1</span>,</span>
+<span id="cb112-11"><a href="examples.html#cb112-11"></a></span>
+<span id="cb112-12"><a href="examples.html#cb112-12"></a>  <span class="co"># background birth and mortality rates</span></span>
+<span id="cb112-13"><a href="examples.html#cb112-13"></a>  <span class="dt">beta =</span> <span class="fl">0.02</span>,</span>
+<span id="cb112-14"><a href="examples.html#cb112-14"></a>  <span class="dt">mu =</span> <span class="fl">0.01</span>,</span>
+<span id="cb112-15"><a href="examples.html#cb112-15"></a>  <span class="dt">one =</span> <span class="dv">1</span>,</span>
+<span id="cb112-16"><a href="examples.html#cb112-16"></a></span>
+<span id="cb112-17"><a href="examples.html#cb112-17"></a>  <span class="co"># treatment efficacy (smaller is less infectious)</span></span>
+<span id="cb112-18"><a href="examples.html#cb112-18"></a>  <span class="dt">epsilon =</span> <span class="fl">0.2</span>,</span>
+<span id="cb112-19"><a href="examples.html#cb112-19"></a></span>
+<span id="cb112-20"><a href="examples.html#cb112-20"></a>  <span class="co"># disease progression rate</span></span>
+<span id="cb112-21"><a href="examples.html#cb112-21"></a>  <span class="dt">rho =</span> <span class="fl">0.15</span>,</span>
+<span id="cb112-22"><a href="examples.html#cb112-22"></a></span>
+<span id="cb112-23"><a href="examples.html#cb112-23"></a>  <span class="co"># treatment rate</span></span>
+<span id="cb112-24"><a href="examples.html#cb112-24"></a>  <span class="dt">tau =</span> <span class="fl">0.8</span>, <span class="co"># value from paper</span></span>
+<span id="cb112-25"><a href="examples.html#cb112-25"></a></span>
+<span id="cb112-26"><a href="examples.html#cb112-26"></a>  <span class="co"># treatment stopping rate</span></span>
+<span id="cb112-27"><a href="examples.html#cb112-27"></a>  <span class="dt">phi =</span> <span class="fl">0.015</span>, <span class="co"># value from paper</span></span>
+<span id="cb112-28"><a href="examples.html#cb112-28"></a></span>
+<span id="cb112-29"><a href="examples.html#cb112-29"></a>  <span class="co"># disease progression rate for treated individuals</span></span>
+<span id="cb112-30"><a href="examples.html#cb112-30"></a>  <span class="dt">sigma =</span> <span class="fl">0.1</span></span>
+<span id="cb112-31"><a href="examples.html#cb112-31"></a>)</span>
+<span id="cb112-32"><a href="examples.html#cb112-32"></a></span>
+<span id="cb112-33"><a href="examples.html#cb112-33"></a>number_of_stages =<span class="st"> </span><span class="dv">4</span></span>
+<span id="cb112-34"><a href="examples.html#cb112-34"></a>state =<span class="st"> </span><span class="kw">c</span>(</span>
+<span id="cb112-35"><a href="examples.html#cb112-35"></a>  <span class="dt">S =</span> <span class="dv">999</span>,</span>
+<span id="cb112-36"><a href="examples.html#cb112-36"></a>  <span class="kw">layered_zero_state</span>(<span class="st">&quot;I&quot;</span>, <span class="dv">1</span><span class="op">:</span>number_of_stages),</span>
+<span id="cb112-37"><a href="examples.html#cb112-37"></a>  <span class="kw">layered_zero_state</span>(<span class="st">&quot;A&quot;</span>, <span class="dv">1</span><span class="op">:</span>number_of_stages),</span>
+<span id="cb112-38"><a href="examples.html#cb112-38"></a>  <span class="dt">D_disease =</span> <span class="dv">0</span>,</span>
+<span id="cb112-39"><a href="examples.html#cb112-39"></a>  <span class="dt">D_background =</span> <span class="dv">0</span></span>
+<span id="cb112-40"><a href="examples.html#cb112-40"></a>  <span class="co">#birth_pool = 1000</span></span>
+<span id="cb112-41"><a href="examples.html#cb112-41"></a>)</span>
+<span id="cb112-42"><a href="examples.html#cb112-42"></a>state[<span class="st">&quot;I_1&quot;</span>] =<span class="st"> </span><span class="dv">1</span></span>
+<span id="cb112-43"><a href="examples.html#cb112-43"></a></span>
+<span id="cb112-44"><a href="examples.html#cb112-44"></a>alive_state_nms =<span class="st"> </span><span class="kw">grep</span>(<span class="st">&quot;^(S|I|A)&quot;</span>, <span class="kw">names</span>(state), <span class="dt">value =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb112-45"><a href="examples.html#cb112-45"></a>Ivec =<span class="st"> </span><span class="kw">vec</span>(<span class="st">&quot;I&quot;</span> <span class="op">%_%</span><span class="st"> </span><span class="dv">1</span><span class="op">:</span>number_of_stages)</span>
+<span id="cb112-46"><a href="examples.html#cb112-46"></a>Avec =<span class="st"> </span><span class="kw">vec</span>(<span class="st">&quot;A&quot;</span> <span class="op">%_%</span><span class="st"> </span><span class="dv">1</span><span class="op">:</span>number_of_stages)</span>
+<span id="cb112-47"><a href="examples.html#cb112-47"></a>epsilon =<span class="st"> </span><span class="kw">struc</span>(<span class="st">&quot;epsilon&quot;</span>)</span>
+<span id="cb112-48"><a href="examples.html#cb112-48"></a>I =<span class="st"> </span><span class="kw">as.character</span>(<span class="kw">sum</span>(Ivec) <span class="op">+</span><span class="st"> </span><span class="kw">sum</span>(Avec))</span>
+<span id="cb112-49"><a href="examples.html#cb112-49"></a>J =<span class="st"> </span><span class="kw">as.character</span>(<span class="kw">sum</span>(Ivec) <span class="op">+</span><span class="st"> </span><span class="kw">sum</span>(epsilon <span class="op">*</span><span class="st"> </span>Avec))</span>
+<span id="cb112-50"><a href="examples.html#cb112-50"></a></span>
+<span id="cb112-51"><a href="examples.html#cb112-51"></a>granich =<span class="st"> </span>(<span class="kw">flexmodel</span>(</span>
+<span id="cb112-52"><a href="examples.html#cb112-52"></a>  <span class="dt">params =</span> params,</span>
+<span id="cb112-53"><a href="examples.html#cb112-53"></a>  <span class="dt">state =</span> state,</span>
+<span id="cb112-54"><a href="examples.html#cb112-54"></a>  <span class="dt">start_date =</span> start_date,</span>
+<span id="cb112-55"><a href="examples.html#cb112-55"></a>  <span class="dt">end_date =</span> end_date,</span>
+<span id="cb112-56"><a href="examples.html#cb112-56"></a>  <span class="dt">do_hazard =</span> <span class="ot">TRUE</span></span>
+<span id="cb112-57"><a href="examples.html#cb112-57"></a>)</span>
+<span id="cb112-58"><a href="examples.html#cb112-58"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">add_state_param_sum</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;^(S|I|A)&quot;</span>)</span>
+<span id="cb112-59"><a href="examples.html#cb112-59"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">add_factr</span>(<span class="st">&quot;I&quot;</span>, I)</span>
+<span id="cb112-60"><a href="examples.html#cb112-60"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">add_factr</span>(<span class="st">&quot;J&quot;</span>, J)</span>
+<span id="cb112-61"><a href="examples.html#cb112-61"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">add_factr</span>(<span class="st">&quot;minus_alpha&quot;</span>, <span class="op">~</span><span class="st"> </span>(alpha) <span class="op">*</span><span class="st"> </span>(minus_<span class="dv">1</span>))</span>
+<span id="cb112-62"><a href="examples.html#cb112-62"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">add_factr</span>(<span class="st">&quot;P&quot;</span>, <span class="op">~</span><span class="st"> </span>(I) <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span><span class="op">/</span>N))</span>
+<span id="cb112-63"><a href="examples.html#cb112-63"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">add_pow</span>(<span class="st">&quot;het_exponent&quot;</span>, <span class="st">&quot;P&quot;</span>, <span class="st">&quot;n&quot;</span>, <span class="st">&quot;minus_alpha&quot;</span>)</span>
+<span id="cb112-64"><a href="examples.html#cb112-64"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">add_pow</span>(<span class="st">&quot;lambda&quot;</span>, <span class="st">&quot;e&quot;</span>, <span class="st">&quot;het_exponent&quot;</span>, <span class="st">&quot;lambda0&quot;</span>)</span>
+<span id="cb112-65"><a href="examples.html#cb112-65"></a></span>
+<span id="cb112-66"><a href="examples.html#cb112-66"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rep_rate</span>(</span>
+<span id="cb112-67"><a href="examples.html#cb112-67"></a>    <span class="dt">from =</span> alive_state_nms,</span>
+<span id="cb112-68"><a href="examples.html#cb112-68"></a>    <span class="dt">to   =</span> <span class="st">&quot;S&quot;</span>,</span>
+<span id="cb112-69"><a href="examples.html#cb112-69"></a>    <span class="op">~</span><span class="st"> </span>(beta)</span>
+<span id="cb112-70"><a href="examples.html#cb112-70"></a>  )</span>
+<span id="cb112-71"><a href="examples.html#cb112-71"></a></span>
+<span id="cb112-72"><a href="examples.html#cb112-72"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rep_rate</span>(</span>
+<span id="cb112-73"><a href="examples.html#cb112-73"></a>    <span class="dt">from =</span> alive_state_nms,</span>
+<span id="cb112-74"><a href="examples.html#cb112-74"></a>    <span class="dt">to =</span> <span class="st">&quot;D_background&quot;</span>,</span>
+<span id="cb112-75"><a href="examples.html#cb112-75"></a>    <span class="op">~</span><span class="st"> </span>(mu)</span>
+<span id="cb112-76"><a href="examples.html#cb112-76"></a>  )</span>
+<span id="cb112-77"><a href="examples.html#cb112-77"></a></span>
+<span id="cb112-78"><a href="examples.html#cb112-78"></a>  <span class="co"># transmission</span></span>
+<span id="cb112-79"><a href="examples.html#cb112-79"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">add_rate</span>(</span>
+<span id="cb112-80"><a href="examples.html#cb112-80"></a>    <span class="dt">from =</span> <span class="st">&quot;S&quot;</span>,</span>
+<span id="cb112-81"><a href="examples.html#cb112-81"></a>    <span class="dt">to =</span> <span class="st">&quot;I_1&quot;</span>,</span>
+<span id="cb112-82"><a href="examples.html#cb112-82"></a>    <span class="op">~</span><span class="st"> </span>(lambda) <span class="op">*</span><span class="st"> </span>(S) <span class="op">*</span><span class="st"> </span>(J) <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span><span class="op">/</span>N)</span>
+<span id="cb112-83"><a href="examples.html#cb112-83"></a>  )</span>
+<span id="cb112-84"><a href="examples.html#cb112-84"></a></span>
+<span id="cb112-85"><a href="examples.html#cb112-85"></a>  <span class="co"># treatment dynamics</span></span>
+<span id="cb112-86"><a href="examples.html#cb112-86"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rep_rate</span>(</span>
+<span id="cb112-87"><a href="examples.html#cb112-87"></a>    <span class="dt">from =</span> <span class="st">&quot;I&quot;</span> <span class="op">%_%</span><span class="st"> </span>(<span class="dv">1</span><span class="op">:</span>number_of_stages),</span>
+<span id="cb112-88"><a href="examples.html#cb112-88"></a>    <span class="dt">to   =</span> <span class="st">&quot;A&quot;</span> <span class="op">%_%</span><span class="st"> </span>(<span class="dv">1</span><span class="op">:</span>number_of_stages),</span>
+<span id="cb112-89"><a href="examples.html#cb112-89"></a>    <span class="op">~</span><span class="st"> </span>(tau)</span>
+<span id="cb112-90"><a href="examples.html#cb112-90"></a>  )</span>
+<span id="cb112-91"><a href="examples.html#cb112-91"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rep_rate</span>(</span>
+<span id="cb112-92"><a href="examples.html#cb112-92"></a>    <span class="dt">from =</span> <span class="st">&quot;A&quot;</span> <span class="op">%_%</span><span class="st"> </span>(<span class="dv">1</span><span class="op">:</span>number_of_stages),</span>
+<span id="cb112-93"><a href="examples.html#cb112-93"></a>    <span class="dt">to   =</span> <span class="st">&quot;I&quot;</span> <span class="op">%_%</span><span class="st"> </span>(<span class="dv">1</span><span class="op">:</span>number_of_stages),</span>
+<span id="cb112-94"><a href="examples.html#cb112-94"></a>    <span class="op">~</span><span class="st"> </span>(phi)</span>
+<span id="cb112-95"><a href="examples.html#cb112-95"></a>  )</span>
+<span id="cb112-96"><a href="examples.html#cb112-96"></a></span>
+<span id="cb112-97"><a href="examples.html#cb112-97"></a>  <span class="co"># disease progression</span></span>
+<span id="cb112-98"><a href="examples.html#cb112-98"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rep_rate</span>(</span>
+<span id="cb112-99"><a href="examples.html#cb112-99"></a>    <span class="dt">from =</span> <span class="st">&quot;I&quot;</span> <span class="op">%_%</span><span class="st"> </span>(<span class="dv">1</span><span class="op">:</span>(number_of_stages <span class="op">-</span><span class="st"> </span><span class="dv">1</span>)),</span>
+<span id="cb112-100"><a href="examples.html#cb112-100"></a>    <span class="dt">to   =</span> <span class="st">&quot;I&quot;</span> <span class="op">%_%</span><span class="st"> </span>(<span class="dv">2</span><span class="op">:</span>number_of_stages),</span>
+<span id="cb112-101"><a href="examples.html#cb112-101"></a>    <span class="op">~</span><span class="st"> </span>(rho)</span>
+<span id="cb112-102"><a href="examples.html#cb112-102"></a>  )</span>
+<span id="cb112-103"><a href="examples.html#cb112-103"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rep_rate</span>(</span>
+<span id="cb112-104"><a href="examples.html#cb112-104"></a>    <span class="dt">from =</span> <span class="st">&quot;A&quot;</span> <span class="op">%_%</span><span class="st"> </span>(<span class="dv">1</span><span class="op">:</span>(number_of_stages <span class="op">-</span><span class="st"> </span><span class="dv">1</span>)),</span>
+<span id="cb112-105"><a href="examples.html#cb112-105"></a>    <span class="dt">to   =</span> <span class="st">&quot;A&quot;</span> <span class="op">%_%</span><span class="st"> </span>(<span class="dv">2</span><span class="op">:</span>number_of_stages),</span>
+<span id="cb112-106"><a href="examples.html#cb112-106"></a>    <span class="op">~</span><span class="st"> </span>(sigma)</span>
+<span id="cb112-107"><a href="examples.html#cb112-107"></a>  )</span>
+<span id="cb112-108"><a href="examples.html#cb112-108"></a></span>
+<span id="cb112-109"><a href="examples.html#cb112-109"></a>  <span class="co"># disease death</span></span>
+<span id="cb112-110"><a href="examples.html#cb112-110"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">add_rate</span>(<span class="st">&quot;I&quot;</span> <span class="op">%_%</span><span class="st"> </span>number_of_stages, <span class="st">&quot;D_disease&quot;</span>, <span class="op">~</span><span class="st"> </span>(rho))</span>
+<span id="cb112-111"><a href="examples.html#cb112-111"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">add_rate</span>(<span class="st">&quot;A&quot;</span> <span class="op">%_%</span><span class="st"> </span>number_of_stages, <span class="st">&quot;D_disease&quot;</span>, <span class="op">~</span><span class="st"> </span>(sigma))</span>
+<span id="cb112-112"><a href="examples.html#cb112-112"></a></span>
+<span id="cb112-113"><a href="examples.html#cb112-113"></a>  <span class="co">#%&gt;% add_outflow(from = &quot;^[A-Z]&quot;) # don&#39;t flow out of the &#39;birth pool&#39;</span></span>
+<span id="cb112-114"><a href="examples.html#cb112-114"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">add_outflow</span>(</span>
+<span id="cb112-115"><a href="examples.html#cb112-115"></a>    <span class="dt">from =</span> <span class="st">&#39;.+&#39;</span>,</span>
+<span id="cb112-116"><a href="examples.html#cb112-116"></a>    <span class="dt">to =</span> <span class="st">&#39;^(I|A|D)_&#39;</span></span>
+<span id="cb112-117"><a href="examples.html#cb112-117"></a>  )</span>
+<span id="cb112-118"><a href="examples.html#cb112-118"></a></span>
+<span id="cb112-119"><a href="examples.html#cb112-119"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">add_sim_report_expr</span>(<span class="st">&quot;Itotal&quot;</span>, <span class="kw">sum</span>(Ivec))</span>
+<span id="cb112-120"><a href="examples.html#cb112-120"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">add_sim_report_expr</span>(<span class="st">&quot;Atotal&quot;</span>, <span class="kw">sum</span>(Avec))</span>
+<span id="cb112-121"><a href="examples.html#cb112-121"></a>)</span>
+<span id="cb112-122"><a href="examples.html#cb112-122"></a></span>
+<span id="cb112-123"><a href="examples.html#cb112-123"></a>(granich</span>
+<span id="cb112-124"><a href="examples.html#cb112-124"></a>  <span class="op">%&gt;%</span><span class="st"> </span>simulation_history</span>
+<span id="cb112-125"><a href="examples.html#cb112-125"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(Date, S, Itotal, Atotal, J, D_background, D_disease, lambda, N, P)</span>
+<span id="cb112-126"><a href="examples.html#cb112-126"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pivot_longer</span>(<span class="op">-</span>Date)</span>
+<span id="cb112-127"><a href="examples.html#cb112-127"></a>  <span class="op">%&gt;%</span><span class="st"> </span>ggplot</span>
+<span id="cb112-128"><a href="examples.html#cb112-128"></a>  <span class="op">+</span><span class="st"> </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>name, <span class="dt">ncol =</span> <span class="dv">3</span>, <span class="dt">scales =</span> <span class="st">&#39;free&#39;</span>)</span>
+<span id="cb112-129"><a href="examples.html#cb112-129"></a>  <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(Date, value))</span>
+<span id="cb112-130"><a href="examples.html#cb112-130"></a>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/granich-1.png" width="672" /></p>
 
 </div>
 </div>
