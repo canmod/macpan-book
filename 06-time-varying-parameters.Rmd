@@ -9,6 +9,21 @@ Any parameter in a `McMasterPandemic` model can be scheduled to vary in time. A 
   * `"abs"` -- The `Value` column is the new value for the parameter on `Date`
   * `"rel_orig"` -- The `Value` column is multiplied by the original value of the changing parameter at the beginning of the simulation, to generate a new value for the parameter on `Date`
   * `"rel_prev"` -- The `Value` column is multiplied by the previous value of the changing parameter, to generate a new value for the parameter on `Date`
+  * `"rel_orig_logit"` -- The logit transform of the `Value` column is added to the logit transform of the original value, and then the inverse logit transform is applied to this sum to generate a new value for the parameter on `Date`
+  * `"rel_prev_logit"` -- The logit transform of the `Value` column is added to the logit transform of the previous value of the changing parameter, and then the inverse logit transform is applied to this sum to generate a new value for the parameter on `Date`
+
+Let $\theta_t$ be the focal parameter at time $t$, let $\theta_0$ be the original value of $\theta$ at the beginning of the simulation, let $t = \tau$ be a time at which $\theta$ changes value, and let $\nu_\tau$ be the number in the `Value` column associated with the breakpoint at $\tau$. The following table describes the different types of time variation.
+
+| Time Variation Type  | Parameter Update Expression  |
+| :------------------- | :----------------------------|
+| `abs` | $\theta_\tau = \nu_\tau$ |
+| `rel_orig` | $\theta_\tau = \theta_0 \nu_\tau$ |
+| `rel_prev` | $\theta_\tau = \theta_{\tau-1} \nu_\tau$ |
+| `rel_orig_logit` | $\theta_\tau = \text{logit}^{-1}\left(\text{logit}(\theta_0) + \text{logit}(\nu_\tau)\right)$ |
+| `rel_prev_logit` | $\theta_\tau = \text{logit}^{-1}\left(\text{logit}(\theta_{\tau-1}) + \text{logit}(\nu_\tau)\right)$ |
+
+
+
 
 Once a time-variation data frame is produced it can get added to a model when it is created via the `params_timevar` argument of `flexmodel`, or by updating an existing `flexmodel` object using the `update_piece_wise` function.
 
