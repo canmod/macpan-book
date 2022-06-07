@@ -23,7 +23,7 @@
 <meta name="author" content="Steve Walker" />
 
 
-<meta name="date" content="2022-06-02" />
+<meta name="date" content="2022-06-07" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -252,21 +252,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1><span class="header-section-number">14</span> TMB Engine<a href="tmb-engine.html#tmb-engine" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>The initial engine for calibrating and forecasting in McMasterPandemic was R itself. In the <a href="index.html#fast-and-flexible-modelling-with-mcmasterpandemic">refactored</a> version of McMasterPandemic we use template model builder, or <a href="https://github.com/kaskr/adcomp">TMB</a>. It is possible to interact with TMB objects directly using the <code>McMasterPandemic::tmb_fun</code> function, which we illustrate in this section to do MCMC simulation.</p>
 <p>HACK: For some reason <code>tmbstan</code> is not working unless we compile the C++ code rather than use the package-compiled objects.</p>
-<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="tmb-engine.html#cb81-1"></a>cpp_dir =<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&#39;tmb&#39;</span>, <span class="st">&#39;0.2.0&#39;</span>, <span class="dt">package =</span> <span class="st">&quot;McMasterPandemic&quot;</span>)</span>
-<span id="cb81-2"><a href="tmb-engine.html#cb81-2"></a><span class="kw">set_spec_version</span>(<span class="st">&#39;0.2.0&#39;</span>, cpp_dir, <span class="dt">use_version_directories =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="tmb-engine.html#cb85-1"></a>cpp_dir =<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&#39;tmb&#39;</span>, <span class="st">&#39;0.2.0&#39;</span>, <span class="dt">package =</span> <span class="st">&quot;McMasterPandemic&quot;</span>)</span>
+<span id="cb85-2"><a href="tmb-engine.html#cb85-2"></a><span class="kw">set_spec_version</span>(<span class="st">&#39;0.2.0&#39;</span>, cpp_dir, <span class="dt">use_version_directories =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;0.2.0&quot;</code></pre>
 <p>We can get the TMB object by calling the <code>tmb_fun</code> function on a <code>flexmodel_to_calibrate</code> object.</p>
-<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="tmb-engine.html#cb83-1"></a>sir_obs_err_tmb =<span class="st"> </span><span class="kw">tmb_fun</span>(sir_obs_err_to_calibrate)</span></code></pre></div>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="tmb-engine.html#cb87-1"></a>sir_obs_err_tmb =<span class="st"> </span><span class="kw">tmb_fun</span>(sir_obs_err_to_calibrate)</span></code></pre></div>
 <p>We can pass this <code>tmb_fun</code> object to <code>tmbstan</code> (in the <a href="https://github.com/kaskr/tmbstan">tmbstan</a> package) to generate MCMC samples using <a href="https://mc-stan.org/users/interfaces/rstan">rstan</a>.</p>
-<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="tmb-engine.html#cb84-1"></a>sir_obs_err_stan =<span class="st"> </span><span class="kw">tmbstan</span>(</span>
-<span id="cb84-2"><a href="tmb-engine.html#cb84-2"></a>  sir_obs_err_tmb,</span>
-<span id="cb84-3"><a href="tmb-engine.html#cb84-3"></a>  <span class="dt">chains =</span> <span class="dv">1</span></span>
-<span id="cb84-4"><a href="tmb-engine.html#cb84-4"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="tmb-engine.html#cb88-1"></a>sir_obs_err_stan =<span class="st"> </span><span class="kw">tmbstan</span>(</span>
+<span id="cb88-2"><a href="tmb-engine.html#cb88-2"></a>  sir_obs_err_tmb,</span>
+<span id="cb88-3"><a href="tmb-engine.html#cb88-3"></a>  <span class="dt">chains =</span> <span class="dv">1</span></span>
+<span id="cb88-4"><a href="tmb-engine.html#cb88-4"></a>)</span></code></pre></div>
 <pre><code>## 
 ## SAMPLING FOR MODEL &#39;tmb_generic&#39; NOW (CHAIN 1).
 ## Chain 1: 
-## Chain 1: Gradient evaluation took 0.000338 seconds
-## Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 3.38 seconds.
+## Chain 1: Gradient evaluation took 0.000342 seconds
+## Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 3.42 seconds.
 ## Chain 1: Adjust your expectations accordingly!
 ## Chain 1: 
 ## Chain 1: 
@@ -283,31 +283,31 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 ## Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 ## Chain 1: 
-## Chain 1:  Elapsed Time: 2.54017 seconds (Warm-up)
-## Chain 1:                1.26832 seconds (Sampling)
-## Chain 1:                3.8085 seconds (Total)
+## Chain 1:  Elapsed Time: 1.3806 seconds (Warm-up)
+## Chain 1:                1.26004 seconds (Sampling)
+## Chain 1:                2.64064 seconds (Total)
 ## Chain 1:</code></pre>
-<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="tmb-engine.html#cb86-1"></a><span class="kw">names</span>(sir_obs_err_stan) =<span class="st"> </span><span class="kw">c</span>(</span>
-<span id="cb86-2"><a href="tmb-engine.html#cb86-2"></a>  <span class="kw">names</span>(<span class="kw">tmb_params_trans</span>(sir_obs_err_to_calibrate)), </span>
-<span id="cb86-3"><a href="tmb-engine.html#cb86-3"></a>  <span class="st">&quot;log_posterior&quot;</span></span>
-<span id="cb86-4"><a href="tmb-engine.html#cb86-4"></a>)</span>
-<span id="cb86-5"><a href="tmb-engine.html#cb86-5"></a><span class="kw">traceplot</span>(sir_obs_err_stan)</span></code></pre></div>
+<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="tmb-engine.html#cb90-1"></a><span class="kw">names</span>(sir_obs_err_stan) =<span class="st"> </span><span class="kw">c</span>(</span>
+<span id="cb90-2"><a href="tmb-engine.html#cb90-2"></a>  <span class="kw">names</span>(<span class="kw">tmb_params_trans</span>(sir_obs_err_to_calibrate)), </span>
+<span id="cb90-3"><a href="tmb-engine.html#cb90-3"></a>  <span class="st">&quot;log_posterior&quot;</span></span>
+<span id="cb90-4"><a href="tmb-engine.html#cb90-4"></a>)</span>
+<span id="cb90-5"><a href="tmb-engine.html#cb90-5"></a><span class="kw">traceplot</span>(sir_obs_err_stan, <span class="dt">ncol =</span> <span class="dv">1</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/mcmc-1.png" width="672" /></p>
-<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="tmb-engine.html#cb87-1"></a>sir_obs_err_stan</span></code></pre></div>
+<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="tmb-engine.html#cb91-1"></a>sir_obs_err_stan</span></code></pre></div>
 <pre><code>## Inference for Stan model: macpan.
 ## 1 chains, each with iter=2000; warmup=1000; thin=1; 
 ## post-warmup draws per chain=1000, total post-warmup draws=1000.
 ## 
 ##                  mean se_mean   sd    2.5%     25%     50%     75%   97.5%
 ## log_beta        -2.30    0.00 0.01   -2.32   -2.31   -2.30   -2.29   -2.28
-## log_nb_disp_I   10.00    0.04 0.97    8.21    9.33   10.00   10.60   11.98
-## log_posterior -802.62    0.05 0.98 -805.20 -802.99 -802.32 -801.92 -801.67
+## log_nb_disp_I   10.03    0.03 0.98    8.01    9.36   10.04   10.71   11.95
+## log_posterior -802.63    0.05 0.98 -805.50 -802.97 -802.33 -801.93 -801.67
 ##               n_eff Rhat
-## log_beta        692    1
-## log_nb_disp_I   604    1
-## log_posterior   392    1
+## log_beta        758    1
+## log_nb_disp_I  1100    1
+## log_posterior   365    1
 ## 
-## Samples were drawn using NUTS(diag_e) at Thu Jun  2 12:48:58 2022.
+## Samples were drawn using NUTS(diag_e) at Tue Jun  7 04:42:03 2022.
 ## For each parameter, n_eff is a crude measure of effective sample size,
 ## and Rhat is the potential scale reduction factor on split chains (at 
 ## convergence, Rhat=1).</code></pre>
