@@ -39,7 +39,7 @@ names(sir_obs_err_stan) = c(
   names(tmb_params_trans(sir_obs_err_to_calibrate)), 
   "log_posterior"
 )
-traceplot(sir_obs_err_stan)
+traceplot(sir_obs_err_stan, ncol = 1)
 sir_obs_err_stan
 ```
 
