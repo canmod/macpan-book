@@ -90,3 +90,40 @@ obs_err_fits = (obs_err_forecasts
 
 
 ## Time-Varying Ensemble Forecasts
+
+Forecasting often involves exploring what-if-scenarios. For example, what if the transmission rate jumped to high levels in the forecast period due to a policy option under consideration? Such scenario exploration can be done in McMasterPandemic by adding piece-wise time-variation of parameters in the forecasting period using the `add_piece_wise` function.
+
+```{r sir_tv_to_forecast}
+sir_tv_to_forcast = (sir_cal_tv
+  %>% extend_end_date(days_to_extend = 120)
+  %>% add_piece_wise(
+    data.frame(
+      Date = "2021-01-01",
+      Symbol = "beta",
+      Value = 0.5,
+      Type = "abs"
+    )
+  )
+)
+```
+
+An ensemble forecast can be produced with this scenario model. Here we do just that, while joining back the observed data so that we may plot both the fit and the forecast.
+```{r forecast_tv}
+(sir_tv_to_forcast
+  %>% simulate_ensemble(use_progress_bar = FALSE)
+  %>% filter(var != "S_to_I")
+  %>% left_join(
+    sir_cal_tv$observed$data,
+    c("Date" = "date", "var" = "var"),
+    suffix = c("_fitted", "")
+  )
+  %>% mutate(var = factor(var, topological_sort(sir_cal_tv)))
+  %>% ggplot
+  + facet_wrap(~var, ncol = 2)
+  + geom_line(aes(Date, value))
+  + geom_line(aes(Date, value_fitted), colour = 'red')
+  + geom_ribbon(aes(x = Date, ymax = upr, ymin = lwr), alpha = 0.5)
+)
+```
+
+Notice the mini-peak in infected individuals caused by the jump in transmission rate in the forecast period, accompanied by rapid susceptible depletion.

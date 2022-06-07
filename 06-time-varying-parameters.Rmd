@@ -43,13 +43,18 @@ random_timevar
 ```{r add_timevar}
 sir_with_timevar = (sir
   %>% update_piece_wise(random_timevar)
+  %>% update_error_dist(
+    S ~ poisson(),
+    I ~ poisson(),
+    R ~ poisson()
+  )
 )
 ```
 
 
 ```{r simulate_with_timevar}
 timevar_sims = (sir_with_timevar
-  %>% simulation_history(include_initial_date = FALSE)
+  %>% simulation_history(include_initial_date = FALSE, obs_error = TRUE)
   %>% tidyr::pivot_longer(-Date, names_to = "var")
   %>% rename(date = Date)
   %>% mutate(value = round(value))
@@ -79,15 +84,16 @@ calibrate_timevar = (random_timevar
 Then we update our model with the `sir_with_timevar` simulations to fit to, and specify how to optimize the parameters.
 ```{r cal_tv}
 sir_to_cal_tv = (sir_with_timevar
+  %>% reset_error_dist
   %>% update_observed(timevar_sims)
   %>% update_piece_wise(calibrate_timevar)
-  %>% add_opt_params(log_beta ~ log_flat(-1)
-    #, log_nb_disp_S ~ log_normal(0, 5)
-    #, log_nb_disp_I ~ log_normal(0, 5)
-    #, log_nb_disp_R ~ log_normal(0, 5)
+  %>% add_opt_params(log_beta ~ log_flat(-2)
+    , log_nb_disp_S ~ log_normal(5, 1)
+    , log_nb_disp_I ~ log_normal(5, 1)
+    , log_nb_disp_R ~ log_normal(5, 1)
   )
   %>% add_opt_tv_params(tv_type = "abs"
-    , log_beta ~ log_flat(-1)
+    , log_beta ~ log_flat(-4)
   )
 )
 ```
@@ -102,16 +108,27 @@ sir_to_cal_tv$do_sim_constraint = TRUE
 
 With this `sir_to_cal_tv` object we can now fit this model to the simulated data.
 
-```{r}
-sir_cal_tv = calibrate_flexmodel(sir_to_cal_tv, optimizer = 'nlminb')
+```{r fit_timevar}
+sir_cal_tv = calibrate_flexmodel(sir_to_cal_tv)
 ```
 
 The time-variation values before, during, and after optimization look as we would expect, given that we fitted to the same model that generated the data.
-```{r}
+```{r fit_timevar_params}
 c(
   before = sir_with_timevar$timevar$piece_wise$schedule$Value,
   during = sir_to_cal_tv$timevar$piece_wise$schedule$Value,
   after = sir_cal_tv$timevar$piece_wise$schedule$Value
+)
+```
+
+```{r fit_timevar_plot}
+(sir_cal_tv
+  %>% fitted
+  %>% mutate(var = factor(var, topological_sort(sir_cal_tv)))
+  %>% ggplot
+  + facet_wrap(~var)
+  + geom_line(aes(date, value))
+  + geom_line(aes(date, value_fitted), colour = 'red')
 )
 ```
 
