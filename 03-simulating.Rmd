@@ -4,7 +4,7 @@ All previous chapters were concerned with defining a compartmental model. In thi
 
 Once a model object is defined, it can be used to generate simulations using the `simulation_history` function.
 
-```{r eval=FALSE}
+```{r simulation_history, eval=FALSE}
 simulation_history(sir)
 ```
 
@@ -14,7 +14,7 @@ rmarkdown::paged_table(simulation_history(sir))
 
 The output contains a column for the simulation date, one column for each state variable (`S`, `I` and `R` in this case), and one column for every time-varying rate (`S_to_I`). The names of the time-varying rates are always of the form `{from_state}_to_{to_state}`. The reason why `S_to_I` is time-varying in this model is that it depends on a state variable, `I`, which is itself varying at every time-step. The `rate_summary` function can be used to remind us of this fact.
 
-```{r}
+```{r rate_summary}
 (sir
   %>% rate_summary(include_formula = TRUE) 
   %>% select(from, to, formula)

@@ -120,6 +120,6 @@ where,
 The per-capita rates, $M_{ij,t}$, can be any expression involving only sums and products of any of the following at time $t$:
 
   * State of any compartment
-  * Model parameter -- either time-varying or not
+  * Model parameter, which can be time-varying -- see the [Model of Piece-Wise Time-Variation] for details
   * Complements of any of the above (i.e. $1-x$)
   * Inverses of any of the above (i.e. $1/x$)

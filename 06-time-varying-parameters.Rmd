@@ -1,33 +1,6 @@
 # Time Varying Parameters
 
-Any parameter in a `McMasterPandemic` model can be scheduled to vary in time. A time-variation schedule is a data frame with one row for each date on which each parameter changes its value. This data frame has four columns:
-
-* `Date` -- Date on which a particular parameter changes its value
-* `Symbol` -- String giving the symbol representing the changing parameter
-* `Value` -- The numeric value used to change the value of the parameter, the effect of which depends on the value of the `Type` column
-* `Type` -- One of the following strings:
-  * `"abs"` -- The `Value` column is the new value for the parameter on `Date`
-  * `"rel_orig"` -- The `Value` column is multiplied by the original value of the changing parameter at the beginning of the simulation, to generate a new value for the parameter on `Date`
-  * `"rel_prev"` -- The `Value` column is multiplied by the previous value of the changing parameter, to generate a new value for the parameter on `Date`
-  * `"rel_orig_logit"` -- The logit transform of the `Value` column is added to the logit transform of the original value, and then the inverse logit transform is applied to this sum to generate a new value for the parameter on `Date`
-  * `"rel_prev_logit"` -- The logit transform of the `Value` column is added to the logit transform of the previous value of the changing parameter, and then the inverse logit transform is applied to this sum to generate a new value for the parameter on `Date`
-
-Let $\theta_t$ be the focal parameter at time $t$, let $\theta_0$ be the original value of $\theta$ at the beginning of the simulation, let $t = \tau$ be a time at which $\theta$ changes value, and let $\nu_\tau$ be the number in the `Value` column associated with the breakpoint at $\tau$. The following table describes the different types of time variation.
-
-| Time Variation Type  | Parameter Update Expression  |
-| :------------------- | :----------------------------|
-| `abs` | $\theta_\tau = \nu_\tau$ |
-| `rel_orig` | $\theta_\tau = \theta_0 \nu_\tau$ |
-| `rel_prev` | $\theta_\tau = \theta_{\tau-1} \nu_\tau$ |
-| `rel_orig_logit` | $\theta_\tau = \text{logit}^{-1}\left(\text{logit}(\theta_0) + \text{logit}(\nu_\tau)\right)$ |
-| `rel_prev_logit` | $\theta_\tau = \text{logit}^{-1}\left(\text{logit}(\theta_{\tau-1}) + \text{logit}(\nu_\tau)\right)$ |
-
-
-
-
-Once a time-variation data frame is produced it can get added to a model when it is created via the `params_timevar` argument of `flexmodel`, or by updating an existing `flexmodel` object using the `update_piece_wise` function.
-
-## Example of Time-Variation
+Any parameter in a `McMasterPandemic` model can be scheduled to vary in time.
 
 In this example we create a time-variation schedule that causes the transmission, `beta`, drop to very low levels on May 15.
 ```{r random_timevar}
@@ -65,9 +38,46 @@ timevar_sims = (sir_with_timevar
 )
 ```
 
-Notice the abrupt break-point on May 15.
+Notice the abrupt break-point on May 15 that causes the numbers of infected individuals to decrease.
 
 See [The SIRV model] and [Covid SEIR] for other examples of the use of time-varying parameters in simulation models.
+
+::: {.infobox .caution data-latex="{caution}"}
+There are a few places you can go from here:
+
+1. Keep reading to learn about the general [Model of Piece-Wise Time-Variation] that is used by McMasterPandemic
+2. Learn about [Calibrating Time-Variation Schedules]
+3. Learn how to forecast with time-variation schedules in order to explore [what-if-scenarios](#time-varying-ensemble-forecasts)
+4. Learn how to [specify time-variation multipliers on the logit-scale](#negative-rate-matrix-elements) for parameters that should be bound between zero and one
+5. TODO: Complex Time-Variation Schedules
+6. TODO: When log-linear models are developed there should be a pointer to their documentation here
+:::
+
+## Model of Piece-Wise Time-Variation
+
+A time-variation schedule is a data frame with one row for each date on which each parameter changes its value. This data frame has four columns that can be used to define the characteristics of each break-point.
+
+* `Date` -- Date on which a particular parameter changes its value
+* `Symbol` -- String giving the symbol representing the changing parameter
+* `Value` -- The numeric value used to change the value of the parameter, the effect of which depends on the value of the `Type` column
+* `Type` -- One of the following strings:
+  * `"abs"` -- The `Value` column is the new value for the parameter on `Date`
+  * `"rel_orig"` -- The `Value` column is multiplied by the original value of the changing parameter at the beginning of the simulation, to generate a new value for the parameter on `Date`
+  * `"rel_prev"` -- The `Value` column is multiplied by the previous value of the changing parameter, to generate a new value for the parameter on `Date`
+  * `"rel_orig_logit"` -- The `Value` column is added to the logit transform of the original value, and then the inverse logit transform is applied to this sum to generate a new value for the parameter on `Date`
+  * `"rel_prev_logit"` -- The `Value` column is added to the logit transform of the previous value of the changing parameter, and then the inverse logit transform is applied to this sum to generate a new value for the parameter on `Date`
+
+Let $\theta_t$ be the focal parameter at time $t$, let $\theta_0$ be the original value of $\theta$ at the beginning of the simulation, let $t = \tau$ be a time at which $\theta$ changes value, and let $\nu_\tau$ be the number in the `Value` column associated with the breakpoint at $\tau$. The following table describes the different types of time variation.
+
+| Time Variation Type  | Parameter Update Expression  |
+| :------------------- | :----------------------------|
+| `abs` | $\theta_\tau = \nu_\tau$ |
+| `rel_orig` | $\theta_\tau = \theta_0 \nu_\tau$ |
+| `rel_prev` | $\theta_\tau = \theta_{\tau-1} \nu_\tau$ |
+| `rel_orig_logit` | $\theta_\tau = \text{logit}^{-1}\left(\text{logit}(\theta_0) + \nu_\tau\right)$ |
+| `rel_prev_logit` | $\theta_\tau = \text{logit}^{-1}\left(\text{logit}(\theta_{\tau-1}) + \nu_\tau\right)$ |
+
+Once a time-variation data frame is produced it can get added to a model when it is created via the `params_timevar` argument of `flexmodel`, or by updating an existing `flexmodel` object using the `update_piece_wise` function.
 
 ## Calibrating Time-Variation Schedules
 
@@ -84,14 +94,9 @@ calibrate_timevar = (random_timevar
 Then we update our model with the `sir_with_timevar` simulations to fit to, and specify how to optimize the parameters.
 ```{r cal_tv}
 sir_to_cal_tv = (sir_with_timevar
-  %>% reset_error_dist
   %>% update_observed(timevar_sims)
   %>% update_piece_wise(calibrate_timevar)
-  %>% add_opt_params(log_beta ~ log_flat(-2)
-    , log_nb_disp_S ~ log_normal(5, 1)
-    , log_nb_disp_I ~ log_normal(5, 1)
-    , log_nb_disp_R ~ log_normal(5, 1)
-  )
+  %>% add_opt_params(log_beta ~ log_flat(-2))
   %>% add_opt_tv_params(tv_type = "abs"
     , log_beta ~ log_flat(-4)
   )
@@ -131,7 +136,3 @@ c(
   + geom_line(aes(date, value_fitted), colour = 'red')
 )
 ```
-
-## Scenario Exploration -- Forecasting with Time-Variation Schedules
-
-## Complex Time-Variation Schedules
