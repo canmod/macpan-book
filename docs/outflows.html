@@ -23,7 +23,7 @@
 <meta name="author" content="Steve Walker" />
 
 
-<meta name="date" content="2022-06-02" />
+<meta name="date" content="2022-06-07" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -256,25 +256,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">13.1</span> Accumulators<a href="outflows.html#accumulators" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>It is sometimes necessary to override this default inflow-outflow balance. One use-case that requires something other than the default is in the definition of an accumulator compartment, which allows one to track the cumulative number of individuals that have ever entered a particular compartment or set of compartments.</p>
 <p>For example, suppose that we want to keep track of the total number of individuals who have ever been infected in our SIR model. To do this we define an <code>X</code> accumulator compartment. This <code>X</code> box has the same inflow from <code>S</code> as does <code>I</code>, but we restrict outflow from <code>S</code> as individuals flow in to <code>X</code> – otherwise we would double-count the draining of <code>S</code>. We specify this custom outflow model with the <code>add_outflow</code> function.</p>
-<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="outflows.html#cb79-1"></a>sir_with_accumulator =<span class="st"> </span>(<span class="kw">flexmodel</span>(</span>
-<span id="cb79-2"><a href="outflows.html#cb79-2"></a>  <span class="dt">params =</span> <span class="kw">c</span>(<span class="dt">beta =</span> <span class="fl">0.1</span>, <span class="dt">gamma =</span> <span class="fl">0.01</span>, <span class="dt">N =</span> <span class="dv">100</span>),</span>
-<span id="cb79-3"><a href="outflows.html#cb79-3"></a>  <span class="dt">state =</span> <span class="kw">c</span>(<span class="dt">S =</span> <span class="dv">99</span>, <span class="dt">I =</span> <span class="dv">1</span>, <span class="dt">R =</span> <span class="dv">0</span>, <span class="dt">X =</span> <span class="dv">1</span>),</span>
-<span id="cb79-4"><a href="outflows.html#cb79-4"></a>  <span class="dt">start_date =</span> <span class="st">&quot;2020-03-11&quot;</span>,</span>
-<span id="cb79-5"><a href="outflows.html#cb79-5"></a>  <span class="dt">end_date =</span> <span class="st">&quot;2020-12-01&quot;</span></span>
-<span id="cb79-6"><a href="outflows.html#cb79-6"></a>)</span>
-<span id="cb79-7"><a href="outflows.html#cb79-7"></a> <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">add_rate</span>(<span class="st">&quot;S&quot;</span>, <span class="st">&quot;I&quot;</span>, <span class="op">~</span><span class="st"> </span>(I) <span class="op">*</span><span class="st"> </span>(beta) <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span><span class="op">/</span>N))</span>
-<span id="cb79-8"><a href="outflows.html#cb79-8"></a> <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">add_rate</span>(<span class="st">&quot;S&quot;</span>, <span class="st">&quot;X&quot;</span>, <span class="op">~</span><span class="st"> </span>(I) <span class="op">*</span><span class="st"> </span>(beta) <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span><span class="op">/</span>N))</span>
-<span id="cb79-9"><a href="outflows.html#cb79-9"></a> <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">add_rate</span>(<span class="st">&quot;I&quot;</span>, <span class="st">&quot;R&quot;</span>, <span class="op">~</span><span class="st"> </span>(gamma))</span>
-<span id="cb79-10"><a href="outflows.html#cb79-10"></a> <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">add_outflow</span>(<span class="dt">from =</span> <span class="st">&quot;S|I&quot;</span>, <span class="dt">to =</span> <span class="st">&quot;I|R&quot;</span>)</span>
-<span id="cb79-11"><a href="outflows.html#cb79-11"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="outflows.html#cb83-1"></a>sir_with_accumulator =<span class="st"> </span>(<span class="kw">flexmodel</span>(</span>
+<span id="cb83-2"><a href="outflows.html#cb83-2"></a>  <span class="dt">params =</span> <span class="kw">c</span>(<span class="dt">beta =</span> <span class="fl">0.1</span>, <span class="dt">gamma =</span> <span class="fl">0.01</span>, <span class="dt">N =</span> <span class="dv">100</span>),</span>
+<span id="cb83-3"><a href="outflows.html#cb83-3"></a>  <span class="dt">state =</span> <span class="kw">c</span>(<span class="dt">S =</span> <span class="dv">99</span>, <span class="dt">I =</span> <span class="dv">1</span>, <span class="dt">R =</span> <span class="dv">0</span>, <span class="dt">X =</span> <span class="dv">1</span>),</span>
+<span id="cb83-4"><a href="outflows.html#cb83-4"></a>  <span class="dt">start_date =</span> <span class="st">&quot;2020-03-11&quot;</span>,</span>
+<span id="cb83-5"><a href="outflows.html#cb83-5"></a>  <span class="dt">end_date =</span> <span class="st">&quot;2020-12-01&quot;</span></span>
+<span id="cb83-6"><a href="outflows.html#cb83-6"></a>)</span>
+<span id="cb83-7"><a href="outflows.html#cb83-7"></a> <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">add_rate</span>(<span class="st">&quot;S&quot;</span>, <span class="st">&quot;I&quot;</span>, <span class="op">~</span><span class="st"> </span>(I) <span class="op">*</span><span class="st"> </span>(beta) <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span><span class="op">/</span>N))</span>
+<span id="cb83-8"><a href="outflows.html#cb83-8"></a> <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">add_rate</span>(<span class="st">&quot;S&quot;</span>, <span class="st">&quot;X&quot;</span>, <span class="op">~</span><span class="st"> </span>(I) <span class="op">*</span><span class="st"> </span>(beta) <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span><span class="op">/</span>N))</span>
+<span id="cb83-9"><a href="outflows.html#cb83-9"></a> <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">add_rate</span>(<span class="st">&quot;I&quot;</span>, <span class="st">&quot;R&quot;</span>, <span class="op">~</span><span class="st"> </span>(gamma))</span>
+<span id="cb83-10"><a href="outflows.html#cb83-10"></a> <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">add_outflow</span>(<span class="dt">from =</span> <span class="st">&quot;S|I&quot;</span>, <span class="dt">to =</span> <span class="st">&quot;I|R&quot;</span>)</span>
+<span id="cb83-11"><a href="outflows.html#cb83-11"></a>)</span></code></pre></div>
 <p>The <code>add_outflow</code> function here takes two regular expressions, <code>from</code> and <code>to</code>. The first <code>from</code> regular expression matches states that individuals must flow out of, only if the flow is to states matched by the second <code>to</code> regular expression.</p>
-<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="outflows.html#cb80-1"></a>(sir_with_accumulator</span>
-<span id="cb80-2"><a href="outflows.html#cb80-2"></a> <span class="op">%&gt;%</span><span class="st"> </span>simulation_history</span>
-<span id="cb80-3"><a href="outflows.html#cb80-3"></a> <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="op">-</span>S_to_I, <span class="op">-</span>S_to_X)</span>
-<span id="cb80-4"><a href="outflows.html#cb80-4"></a> <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pivot_longer</span>(<span class="op">-</span>Date, <span class="dt">names_to =</span> <span class="st">&quot;State&quot;</span>, <span class="dt">values_to =</span> <span class="st">&quot;Population&quot;</span>)</span>
-<span id="cb80-5"><a href="outflows.html#cb80-5"></a> <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ggplot</span>()</span>
-<span id="cb80-6"><a href="outflows.html#cb80-6"></a> <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(Date, Population, <span class="dt">colour =</span> State))</span>
-<span id="cb80-7"><a href="outflows.html#cb80-7"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="outflows.html#cb84-1"></a>(sir_with_accumulator</span>
+<span id="cb84-2"><a href="outflows.html#cb84-2"></a> <span class="op">%&gt;%</span><span class="st"> </span>simulation_history</span>
+<span id="cb84-3"><a href="outflows.html#cb84-3"></a> <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="op">-</span>S_to_I, <span class="op">-</span>S_to_X)</span>
+<span id="cb84-4"><a href="outflows.html#cb84-4"></a> <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pivot_longer</span>(<span class="op">-</span>Date, <span class="dt">names_to =</span> <span class="st">&quot;State&quot;</span>, <span class="dt">values_to =</span> <span class="st">&quot;Population&quot;</span>)</span>
+<span id="cb84-5"><a href="outflows.html#cb84-5"></a> <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ggplot</span>()</span>
+<span id="cb84-6"><a href="outflows.html#cb84-6"></a> <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(Date, Population, <span class="dt">colour =</span> State))</span>
+<span id="cb84-7"><a href="outflows.html#cb84-7"></a>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/sim_accumulator-1.png" width="672" /></p>
 <p>Note how sometime in July almost everyone has been infected at some point in the epidemic.</p>
 
