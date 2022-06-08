@@ -23,7 +23,7 @@
 <meta name="author" content="Steve Walker" />
 
 
-<meta name="date" content="2022-06-07" />
+<meta name="date" content="2022-06-08" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -179,10 +179,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="6" data-path="convergence.html"><a href="convergence.html"><i class="fa fa-check"></i><b>6</b> Convergence</a></li>
 <li class="chapter" data-level="7" data-path="time-varying-parameters.html"><a href="time-varying-parameters.html"><i class="fa fa-check"></i><b>7</b> Time Varying Parameters</a><ul>
-<li class="chapter" data-level="7.1" data-path="time-varying-parameters.html"><a href="time-varying-parameters.html#example-of-time-variation"><i class="fa fa-check"></i><b>7.1</b> Example of Time-Variation</a></li>
+<li class="chapter" data-level="7.1" data-path="time-varying-parameters.html"><a href="time-varying-parameters.html#model-of-piece-wise-time-variation"><i class="fa fa-check"></i><b>7.1</b> Model of Piece-Wise Time-Variation</a></li>
 <li class="chapter" data-level="7.2" data-path="time-varying-parameters.html"><a href="time-varying-parameters.html#calibrating-time-variation-schedules"><i class="fa fa-check"></i><b>7.2</b> Calibrating Time-Variation Schedules</a></li>
-<li class="chapter" data-level="7.3" data-path="time-varying-parameters.html"><a href="time-varying-parameters.html#scenario-exploration-forecasting-with-time-variation-schedules"><i class="fa fa-check"></i><b>7.3</b> Scenario Exploration – Forecasting with Time-Variation Schedules</a></li>
-<li class="chapter" data-level="7.4" data-path="time-varying-parameters.html"><a href="time-varying-parameters.html#complex-time-variation-schedules"><i class="fa fa-check"></i><b>7.4</b> Complex Time-Variation Schedules</a></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="other-variables.html"><a href="other-variables.html"><i class="fa fa-check"></i><b>8</b> Other Variables</a><ul>
 <li class="chapter" data-level="8.1" data-path="other-variables.html"><a href="other-variables.html#intermediate-results"><i class="fa fa-check"></i><b>8.1</b> Intermediate Results</a><ul>
@@ -635,8 +633,8 @@ M_{(i)} = \sum_{j=1}^{n_i} \prod_{k=1}^{m_{ij}} y_{ijk}
 <span id="cb16-14"><a href="flow-between-states.html#cb16-14"></a><span class="st">  </span><span class="kw">visInteraction</span>(<span class="dt">zoomSpeed =</span> <span class="fl">0.1</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
 <span id="cb16-15"><a href="flow-between-states.html#cb16-15"></a><span class="st">  </span><span class="kw">visPhysics</span>(<span class="dt">stabilization =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
 <span id="cb16-16"><a href="flow-between-states.html#cb16-16"></a><span class="st">  </span><span class="kw">visHierarchicalLayout</span>(<span class="dt">direction =</span> <span class="st">&quot;LR&quot;</span>)</span></code></pre></div>
-<div id="htmlwidget-f571ff395a34dab90db9" style="width:672px;height:480px;" class="visNetwork html-widget"></div>
-<script type="application/json" data-for="htmlwidget-f571ff395a34dab90db9">{"x":{"nodes":{"id":["S","E","Ia","Ip","Im","Is","H","ICUs","ICUd","H2","D","R"],"label":["S","E","Ia","Ip","Im","Is","H","ICUs","ICUd","H2","D","R"],"title":["S","E","Ia","Ip","Im","Is","H","ICUs","ICUd","H2","D","R"],"physics":[false,false,false,false,false,false,false,false,false,false,false,false]},"edges":{"from":["E","E","Ia","Ip","Ip","Im","Is","Is","Is","Is","ICUs","ICUd","H2","H","S"],"to":["Ia","Ip","R","Im","Is","R","H","ICUs","ICUd","D","H2","D","R","R","E"],"arrows":["to","to","to","to","to","to","to","to","to","to","to","to","to","to","to"]},"nodesToDataframe":true,"edgesToDataframe":true,"options":{"width":"100%","height":"100%","nodes":{"shape":"dot"},"manipulation":{"enabled":false},"interaction":{"zoomSpeed":0.1},"physics":{"stabilization":true},"layout":{"hierarchical":{"enabled":true,"direction":"LR"}}},"groups":null,"width":null,"height":null,"idselection":{"enabled":false},"byselection":{"enabled":false},"main":null,"submain":null,"footer":null,"background":"rgba(0, 0, 0, 0)","tooltipStay":300,"tooltipStyle":"position: fixed;visibility:hidden;padding: 5px;white-space: nowrap;font-family: verdana;font-size:14px;font-color:#000000;background-color: #f5f4ed;-moz-border-radius: 3px;-webkit-border-radius: 3px;border-radius: 3px;border: 1px solid #808074;box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);"},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-fcc599680ff8204fafe8" style="width:672px;height:480px;" class="visNetwork html-widget"></div>
+<script type="application/json" data-for="htmlwidget-fcc599680ff8204fafe8">{"x":{"nodes":{"id":["S","E","Ia","Ip","Im","Is","H","ICUs","ICUd","H2","D","R"],"label":["S","E","Ia","Ip","Im","Is","H","ICUs","ICUd","H2","D","R"],"title":["S","E","Ia","Ip","Im","Is","H","ICUs","ICUd","H2","D","R"],"physics":[false,false,false,false,false,false,false,false,false,false,false,false]},"edges":{"from":["E","E","Ia","Ip","Ip","Im","Is","Is","Is","Is","ICUs","ICUd","H2","H","S"],"to":["Ia","Ip","R","Im","Is","R","H","ICUs","ICUd","D","H2","D","R","R","E"],"arrows":["to","to","to","to","to","to","to","to","to","to","to","to","to","to","to"]},"nodesToDataframe":true,"edgesToDataframe":true,"options":{"width":"100%","height":"100%","nodes":{"shape":"dot"},"manipulation":{"enabled":false},"interaction":{"zoomSpeed":0.1},"physics":{"stabilization":true},"layout":{"hierarchical":{"enabled":true,"direction":"LR"}}},"groups":null,"width":null,"height":null,"idselection":{"enabled":false},"byselection":{"enabled":false},"main":null,"submain":null,"footer":null,"background":"rgba(0, 0, 0, 0)","tooltipStay":300,"tooltipStyle":"position: fixed;visibility:hidden;padding: 5px;white-space: nowrap;font-family: verdana;font-size:14px;font-color:#000000;background-color: #f5f4ed;-moz-border-radius: 3px;-webkit-border-radius: 3px;border-radius: 3px;border: 1px solid #808074;box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);"},"evals":[],"jsHooks":[]}</script>
 
 </div>
 </div>

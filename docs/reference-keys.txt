@@ -27,10 +27,8 @@ loss-function-theory
 negative-binomial
 convergence
 time-varying-parameters
-example-of-time-variation
+model-of-piece-wise-time-variation
 calibrating-time-variation-schedules
-scenario-exploration-forecasting-with-time-variation-schedules
-complex-time-variation-schedules
 other-variables
 intermediate-results
 sums-of-state-variables-and-parameters

@@ -23,7 +23,7 @@
 <meta name="author" content="Steve Walker" />
 
 
-<meta name="date" content="2022-06-07" />
+<meta name="date" content="2022-06-08" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -179,10 +179,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="6" data-path="convergence.html"><a href="convergence.html"><i class="fa fa-check"></i><b>6</b> Convergence</a></li>
 <li class="chapter" data-level="7" data-path="time-varying-parameters.html"><a href="time-varying-parameters.html"><i class="fa fa-check"></i><b>7</b> Time Varying Parameters</a><ul>
-<li class="chapter" data-level="7.1" data-path="time-varying-parameters.html"><a href="time-varying-parameters.html#example-of-time-variation"><i class="fa fa-check"></i><b>7.1</b> Example of Time-Variation</a></li>
+<li class="chapter" data-level="7.1" data-path="time-varying-parameters.html"><a href="time-varying-parameters.html#model-of-piece-wise-time-variation"><i class="fa fa-check"></i><b>7.1</b> Model of Piece-Wise Time-Variation</a></li>
 <li class="chapter" data-level="7.2" data-path="time-varying-parameters.html"><a href="time-varying-parameters.html#calibrating-time-variation-schedules"><i class="fa fa-check"></i><b>7.2</b> Calibrating Time-Variation Schedules</a></li>
-<li class="chapter" data-level="7.3" data-path="time-varying-parameters.html"><a href="time-varying-parameters.html#scenario-exploration-forecasting-with-time-variation-schedules"><i class="fa fa-check"></i><b>7.3</b> Scenario Exploration – Forecasting with Time-Variation Schedules</a></li>
-<li class="chapter" data-level="7.4" data-path="time-varying-parameters.html"><a href="time-varying-parameters.html#complex-time-variation-schedules"><i class="fa fa-check"></i><b>7.4</b> Complex Time-Variation Schedules</a></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="other-variables.html"><a href="other-variables.html"><i class="fa fa-check"></i><b>8</b> Other Variables</a><ul>
 <li class="chapter" data-level="8.1" data-path="other-variables.html"><a href="other-variables.html#intermediate-results"><i class="fa fa-check"></i><b>8.1</b> Intermediate Results</a><ul>
@@ -262,7 +260,51 @@ x + \frac{\epsilon}{1-(x-\epsilon)/\epsilon + (x-\epsilon)^2/\epsilon^2}
 </div>
 <div id="negative-rate-matrix-elements" class="section level3 hasAnchor">
 <h3><span class="header-section-number">16.1.2</span> Negative rate matrix elements<a href="troubleshooting.html#negative-rate-matrix-elements" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>These can arise naturally due to time-varying parameters that appear in <code>1-x</code> terms in rate formulas. The best way to avoid this is to use the <code>abs</code> type of time-variation, so that logit transformations can be used directly on the changing parameters. This approach ensures that the parameter never leaves the interval between zero and one. In the future we should have a time-variation option that updates changing parameters on the logit scale, which would also solve this problem.</p>
+<p>These can arise naturally due to time-varying parameters that appear in <code>1-x</code> terms in rate formulas. The best way to avoid this is to use the <code>abs</code> type of time-variation, so that logit transformations can be used directly on the changing parameters. This approach ensures that the parameter never leaves the interval between zero and one. It is also possible to update changing parameters on the logit scale, which would also solve this problem. See the <a href="time-varying-parameters.html#model-of-piece-wise-time-variation">Model of Piece-Wise Time-Variation</a> for more details.</p>
+<p>To illustrate this use of the logit-scale time-variation model, we use a modified SIR model in which a certain proportion of infected individuals die at the end of the infection period. This proportion is increased at April 1 by three-times the previous value.</p>
+<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="troubleshooting.html#cb117-1"></a>sir_with_death =<span class="st"> </span>(</span>
+<span id="cb117-2"><a href="troubleshooting.html#cb117-2"></a>  <span class="kw">flexmodel</span>(</span>
+<span id="cb117-3"><a href="troubleshooting.html#cb117-3"></a>    <span class="dt">params =</span> <span class="kw">c</span>(</span>
+<span id="cb117-4"><a href="troubleshooting.html#cb117-4"></a>      <span class="dt">tau =</span> <span class="dv">16</span>,    <span class="co"># infected period</span></span>
+<span id="cb117-5"><a href="troubleshooting.html#cb117-5"></a>      <span class="dt">beta =</span> <span class="fl">0.15</span>, <span class="co"># transmssion rate</span></span>
+<span id="cb117-6"><a href="troubleshooting.html#cb117-6"></a>      <span class="dt">p =</span> <span class="fl">0.2</span>      <span class="co"># proportion who die at the end of the infected period</span></span>
+<span id="cb117-7"><a href="troubleshooting.html#cb117-7"></a>    ),</span>
+<span id="cb117-8"><a href="troubleshooting.html#cb117-8"></a>    <span class="dt">state =</span> <span class="kw">c</span>(<span class="dt">S =</span> <span class="dv">20000</span>, <span class="dt">I =</span> <span class="dv">100</span>, <span class="dt">R =</span> <span class="dv">0</span>, <span class="dt">D =</span> <span class="dv">0</span>),</span>
+<span id="cb117-9"><a href="troubleshooting.html#cb117-9"></a>    <span class="dt">start_date =</span> <span class="st">&quot;2000-01-01&quot;</span>,</span>
+<span id="cb117-10"><a href="troubleshooting.html#cb117-10"></a>    <span class="dt">end_date =</span> <span class="st">&quot;2000-05-01&quot;</span>,</span>
+<span id="cb117-11"><a href="troubleshooting.html#cb117-11"></a>    <span class="dt">do_hazard =</span> <span class="ot">TRUE</span></span>
+<span id="cb117-12"><a href="troubleshooting.html#cb117-12"></a>  )</span>
+<span id="cb117-13"><a href="troubleshooting.html#cb117-13"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">add_state_param_sum</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;^(S|I|R)$&quot;</span>)</span>
+<span id="cb117-14"><a href="troubleshooting.html#cb117-14"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">add_rate</span>(<span class="st">&quot;S&quot;</span>, <span class="st">&quot;I&quot;</span>, <span class="op">~</span><span class="st"> </span>(<span class="dv">1</span><span class="op">/</span>N) <span class="op">*</span><span class="st"> </span>(beta) <span class="op">*</span><span class="st"> </span>(I))</span>
+<span id="cb117-15"><a href="troubleshooting.html#cb117-15"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">add_rate</span>(<span class="st">&quot;I&quot;</span>, <span class="st">&quot;R&quot;</span>, <span class="op">~</span><span class="st"> </span>(<span class="dv">1</span><span class="op">/</span>tau) <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span><span class="op">-</span>p))</span>
+<span id="cb117-16"><a href="troubleshooting.html#cb117-16"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">add_rate</span>(<span class="st">&quot;I&quot;</span>, <span class="st">&quot;D&quot;</span>, <span class="op">~</span><span class="st"> </span>(<span class="dv">1</span><span class="op">/</span>tau) <span class="op">*</span><span class="st"> </span>(p))</span>
+<span id="cb117-17"><a href="troubleshooting.html#cb117-17"></a>)</span>
+<span id="cb117-18"><a href="troubleshooting.html#cb117-18"></a></span>
+<span id="cb117-19"><a href="troubleshooting.html#cb117-19"></a>plot_with_death_rates =<span class="st"> </span><span class="cf">function</span>(value, type) {</span>
+<span id="cb117-20"><a href="troubleshooting.html#cb117-20"></a>  (sir_with_death</span>
+<span id="cb117-21"><a href="troubleshooting.html#cb117-21"></a>    <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">update_piece_wise</span>(</span>
+<span id="cb117-22"><a href="troubleshooting.html#cb117-22"></a>      <span class="kw">data.frame</span>(</span>
+<span id="cb117-23"><a href="troubleshooting.html#cb117-23"></a>        <span class="dt">Date =</span> <span class="st">&quot;2000-04-01&quot;</span>,</span>
+<span id="cb117-24"><a href="troubleshooting.html#cb117-24"></a>        <span class="dt">Symbol =</span> <span class="st">&quot;p&quot;</span>,</span>
+<span id="cb117-25"><a href="troubleshooting.html#cb117-25"></a>        <span class="dt">Value =</span> value,</span>
+<span id="cb117-26"><a href="troubleshooting.html#cb117-26"></a>        <span class="dt">Type =</span> type</span>
+<span id="cb117-27"><a href="troubleshooting.html#cb117-27"></a>    ))</span>
+<span id="cb117-28"><a href="troubleshooting.html#cb117-28"></a>    <span class="op">%&gt;%</span><span class="st"> </span>simulation_history</span>
+<span id="cb117-29"><a href="troubleshooting.html#cb117-29"></a>    <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pivot_longer</span>(<span class="op">-</span>Date, <span class="dt">names_to =</span> <span class="st">&quot;rate&quot;</span>)</span>
+<span id="cb117-30"><a href="troubleshooting.html#cb117-30"></a>    <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(<span class="kw">grepl</span>(<span class="st">&quot;_to_&quot;</span>, rate))</span>
+<span id="cb117-31"><a href="troubleshooting.html#cb117-31"></a>    <span class="op">%&gt;%</span><span class="st"> </span>ggplot</span>
+<span id="cb117-32"><a href="troubleshooting.html#cb117-32"></a>    <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(Date, value, <span class="dt">colour =</span> rate))</span>
+<span id="cb117-33"><a href="troubleshooting.html#cb117-33"></a>  )</span>
+<span id="cb117-34"><a href="troubleshooting.html#cb117-34"></a>}</span>
+<span id="cb117-35"><a href="troubleshooting.html#cb117-35"></a><span class="kw">plot_with_death_rates</span>(<span class="dv">3</span>, <span class="st">&#39;rel_prev&#39;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/negative_rate_avoidance-1.png" width="672" /></p>
+<p>In this example the rate at which infected individuals die becomes higher on April 1. This increase necessarily corresponds to a drop in the rate at which infected individuals live, but the drop does not push the rate below zero in this case. But importantly there are no structural restrictions that keep the rates positive when the <code>'rel_prev'</code> method is used. We can illustrate this by increasing the multiplier from three to six.</p>
+<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="troubleshooting.html#cb118-1"></a><span class="kw">plot_with_death_rates</span>(<span class="dv">6</span>, <span class="st">&#39;rel_prev&#39;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/negative_rates-1.png" width="672" /></p>
+<p>Note that we have suppressed warnings about negative rates, which are clearly visible on the plot above. These negative rates can be completely avoided by specifying the increase on the logit scale with the <code>'rel_prev_logit'</code> type.</p>
+<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="troubleshooting.html#cb119-1"></a><span class="kw">plot_with_death_rates</span>(<span class="dv">6</span>, <span class="st">&#39;rel_prev_logit&#39;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/avoid_negative_rates-1.png" width="672" /></p>
+<p>This means that the log-odds of death after infection additively increases by six on April 1. The log odds could be made as high as one wants, and the rate at which infected individuals live would never drop below zero.</p>
 </div>
 <div id="optimizer-tries-very-large-dispersion-parameters" class="section level3 hasAnchor">
 <h3><span class="header-section-number">16.1.3</span> Optimizer tries very large dispersion parameters<a href="troubleshooting.html#optimizer-tries-very-large-dispersion-parameters" class="anchor-section" aria-label="Anchor link to header"></a></h3>

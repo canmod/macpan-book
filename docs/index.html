@@ -23,7 +23,7 @@
 <meta name="author" content="Steve Walker" />
 
 
-<meta name="date" content="2022-06-07" />
+<meta name="date" content="2022-06-08" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -179,10 +179,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="6" data-path="convergence.html"><a href="convergence.html"><i class="fa fa-check"></i><b>6</b> Convergence</a></li>
 <li class="chapter" data-level="7" data-path="time-varying-parameters.html"><a href="time-varying-parameters.html"><i class="fa fa-check"></i><b>7</b> Time Varying Parameters</a><ul>
-<li class="chapter" data-level="7.1" data-path="time-varying-parameters.html"><a href="time-varying-parameters.html#example-of-time-variation"><i class="fa fa-check"></i><b>7.1</b> Example of Time-Variation</a></li>
+<li class="chapter" data-level="7.1" data-path="time-varying-parameters.html"><a href="time-varying-parameters.html#model-of-piece-wise-time-variation"><i class="fa fa-check"></i><b>7.1</b> Model of Piece-Wise Time-Variation</a></li>
 <li class="chapter" data-level="7.2" data-path="time-varying-parameters.html"><a href="time-varying-parameters.html#calibrating-time-variation-schedules"><i class="fa fa-check"></i><b>7.2</b> Calibrating Time-Variation Schedules</a></li>
-<li class="chapter" data-level="7.3" data-path="time-varying-parameters.html"><a href="time-varying-parameters.html#scenario-exploration-forecasting-with-time-variation-schedules"><i class="fa fa-check"></i><b>7.3</b> Scenario Exploration – Forecasting with Time-Variation Schedules</a></li>
-<li class="chapter" data-level="7.4" data-path="time-varying-parameters.html"><a href="time-varying-parameters.html#complex-time-variation-schedules"><i class="fa fa-check"></i><b>7.4</b> Complex Time-Variation Schedules</a></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="other-variables.html"><a href="other-variables.html"><i class="fa fa-check"></i><b>8</b> Other Variables</a><ul>
 <li class="chapter" data-level="8.1" data-path="other-variables.html"><a href="other-variables.html#intermediate-results"><i class="fa fa-check"></i><b>8.1</b> Intermediate Results</a><ul>
@@ -251,7 +249,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="header">
 <h1 class="title">Generalized McMasterPandemic</h1>
 <p class="author"><em>Steve Walker</em></p>
-<p class="date"><em>2022-06-07</em></p>
+<p class="date"><em>2022-06-08</em></p>
 </div>
 <div id="fast-and-flexible-modelling-with-mcmasterpandemic" class="section level1 hasAnchor">
 <h1><span class="header-section-number">1</span> Fast and Flexible Modelling with McMasterPandemic<a href="index.html#fast-and-flexible-modelling-with-mcmasterpandemic" class="anchor-section" aria-label="Anchor link to header"></a></h1>
@@ -389,7 +387,7 @@ where,</p>
 <p>The per-capita rates, <span class="math inline">\(M_{ij,t}\)</span>, can be any expression involving only sums and products of any of the following at time <span class="math inline">\(t\)</span>:</p>
 <ul>
 <li>State of any compartment</li>
-<li>Model parameter – either time-varying or not</li>
+<li>Model parameter, which can be time-varying – see the <a href="time-varying-parameters.html#model-of-piece-wise-time-variation">Model of Piece-Wise Time-Variation</a> for details</li>
 <li>Complements of any of the above (i.e. <span class="math inline">\(1-x\)</span>)</li>
 <li>Inverses of any of the above (i.e. <span class="math inline">\(1/x\)</span>)</li>
 </ul>

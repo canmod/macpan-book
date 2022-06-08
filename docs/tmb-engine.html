@@ -23,7 +23,7 @@
 <meta name="author" content="Steve Walker" />
 
 
-<meta name="date" content="2022-06-07" />
+<meta name="date" content="2022-06-08" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -179,10 +179,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="6" data-path="convergence.html"><a href="convergence.html"><i class="fa fa-check"></i><b>6</b> Convergence</a></li>
 <li class="chapter" data-level="7" data-path="time-varying-parameters.html"><a href="time-varying-parameters.html"><i class="fa fa-check"></i><b>7</b> Time Varying Parameters</a><ul>
-<li class="chapter" data-level="7.1" data-path="time-varying-parameters.html"><a href="time-varying-parameters.html#example-of-time-variation"><i class="fa fa-check"></i><b>7.1</b> Example of Time-Variation</a></li>
+<li class="chapter" data-level="7.1" data-path="time-varying-parameters.html"><a href="time-varying-parameters.html#model-of-piece-wise-time-variation"><i class="fa fa-check"></i><b>7.1</b> Model of Piece-Wise Time-Variation</a></li>
 <li class="chapter" data-level="7.2" data-path="time-varying-parameters.html"><a href="time-varying-parameters.html#calibrating-time-variation-schedules"><i class="fa fa-check"></i><b>7.2</b> Calibrating Time-Variation Schedules</a></li>
-<li class="chapter" data-level="7.3" data-path="time-varying-parameters.html"><a href="time-varying-parameters.html#scenario-exploration-forecasting-with-time-variation-schedules"><i class="fa fa-check"></i><b>7.3</b> Scenario Exploration – Forecasting with Time-Variation Schedules</a></li>
-<li class="chapter" data-level="7.4" data-path="time-varying-parameters.html"><a href="time-varying-parameters.html#complex-time-variation-schedules"><i class="fa fa-check"></i><b>7.4</b> Complex Time-Variation Schedules</a></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="other-variables.html"><a href="other-variables.html"><i class="fa fa-check"></i><b>8</b> Other Variables</a><ul>
 <li class="chapter" data-level="8.1" data-path="other-variables.html"><a href="other-variables.html#intermediate-results"><i class="fa fa-check"></i><b>8.1</b> Intermediate Results</a><ul>
@@ -265,8 +263,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>## 
 ## SAMPLING FOR MODEL &#39;tmb_generic&#39; NOW (CHAIN 1).
 ## Chain 1: 
-## Chain 1: Gradient evaluation took 0.000342 seconds
-## Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 3.42 seconds.
+## Chain 1: Gradient evaluation took 0.000352 seconds
+## Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 3.52 seconds.
 ## Chain 1: Adjust your expectations accordingly!
 ## Chain 1: 
 ## Chain 1: 
@@ -283,9 +281,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
 ## Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
 ## Chain 1: 
-## Chain 1:  Elapsed Time: 1.3806 seconds (Warm-up)
-## Chain 1:                1.26004 seconds (Sampling)
-## Chain 1:                2.64064 seconds (Total)
+## Chain 1:  Elapsed Time: 2.37714 seconds (Warm-up)
+## Chain 1:                1.60974 seconds (Sampling)
+## Chain 1:                3.98688 seconds (Total)
 ## Chain 1:</code></pre>
 <div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="tmb-engine.html#cb90-1"></a><span class="kw">names</span>(sir_obs_err_stan) =<span class="st"> </span><span class="kw">c</span>(</span>
 <span id="cb90-2"><a href="tmb-engine.html#cb90-2"></a>  <span class="kw">names</span>(<span class="kw">tmb_params_trans</span>(sir_obs_err_to_calibrate)), </span>
@@ -300,14 +298,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 
 ##                  mean se_mean   sd    2.5%     25%     50%     75%   97.5%
 ## log_beta        -2.30    0.00 0.01   -2.32   -2.31   -2.30   -2.29   -2.28
-## log_nb_disp_I   10.03    0.03 0.98    8.01    9.36   10.04   10.71   11.95
-## log_posterior -802.63    0.05 0.98 -805.50 -802.97 -802.33 -801.93 -801.67
+## log_nb_disp_I    9.99    0.04 1.05    7.95    9.29    9.99   10.72   12.00
+## log_posterior -802.65    0.05 1.07 -805.32 -803.08 -802.34 -801.91 -801.66
 ##               n_eff Rhat
 ## log_beta        758    1
-## log_nb_disp_I  1100    1
-## log_posterior   365    1
+## log_nb_disp_I   740    1
+## log_posterior   531    1
 ## 
-## Samples were drawn using NUTS(diag_e) at Tue Jun  7 04:42:03 2022.
+## Samples were drawn using NUTS(diag_e) at Wed Jun  8 15:23:58 2022.
 ## For each parameter, n_eff is a crude measure of effective sample size,
 ## and Rhat is the potential scale reduction factor on split chains (at 
 ## convergence, Rhat=1).</code></pre>
