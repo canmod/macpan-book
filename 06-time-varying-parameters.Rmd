@@ -40,6 +40,14 @@ timevar_sims = (sir_with_timevar
 
 Notice the abrupt break-point on May 15 that causes the numbers of infected individuals to decrease.
 
+We can easily compare the parameters at the beginning of the simulation with parameters at the end of the simulation.
+
+```{r pars_final}
+pars_base_sim(sir_with_timevar)
+pars_base_final(sir_with_timevar)
+```
+
+
 See [The SIRV model] and [Covid SEIR] for other examples of the use of time-varying parameters in simulation models.
 
 ::: {.infobox .caution data-latex="{caution}"}
@@ -120,9 +128,9 @@ sir_cal_tv = calibrate_flexmodel(sir_to_cal_tv)
 The time-variation values before, during, and after optimization look as we would expect, given that we fitted to the same model that generated the data.
 ```{r fit_timevar_params}
 c(
-  before = sir_with_timevar$timevar$piece_wise$schedule$Value,
-  during = sir_to_cal_tv$timevar$piece_wise$schedule$Value,
-  after = sir_cal_tv$timevar$piece_wise$schedule$Value
+  before = pars_time_series(sir_with_timevar)$Value,
+  during = pars_time_series(sir_to_cal_tv)   $Value,
+  after  = pars_time_series(sir_cal_tv)      $Value
 )
 ```
 

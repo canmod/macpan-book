@@ -20,8 +20,8 @@ DiagrammeR::grViz("digraph {
 HACK: For some reason `tmbstan` is not working unless we compile the C++ code rather than use the package-compiled objects.
 
 ```{r system_file_cpp}
-cpp_dir = system.file('tmb', '0.2.0', package = "McMasterPandemic")
-set_spec_version('0.2.0', cpp_dir, use_version_directories = FALSE)
+cpp_dir = system.file('tmb', options()$MP_flex_spec_version, package = "McMasterPandemic")
+set_spec_version(options()$MP_flex_spec_version, cpp_dir, use_version_directories = FALSE)
 ```
 
 We can get the TMB object by calling the `tmb_fun` function on a `flexmodel_to_calibrate` object.

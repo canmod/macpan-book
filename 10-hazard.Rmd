@@ -1,1 +1,33 @@
 # Hazard Smoothing
+
+[The Euler-multinomial](https://rdrr.io/rforge/pomp/man/eulermultinom.html) distribution is a good place to get a little background on the hazard smoothing approach.
+
+$$
+p_j = \left(1-\exp\left(-\sum_i{r_i dt}\right)\right) \frac{r_j}{\sum_i r_i}.
+$$
+The first piece is the probability of leaving the box at an exponential rate, and the second piece is that fraction of flows going to a particular box.
+
+Define the sums of the rows of the rate matrix. 
+$$
+r_i = \sum_{j=1}^n M_{ij}
+$$ 
+Define the elements of a vector of exponentiated row sums 
+$$
+\rho_i = \exp(-r_i)
+$$
+
+Define the elements of a normalized state vector.
+$$
+\tilde{s}_i = \begin{cases}
+0 & r_i = 0 \\
+\frac{s_i}{r_i} & \text{otherwise}
+\end{cases}
+$$ 
+With these definitions we can define the modified flow matrix. 
+$$
+F_{ij} = \begin{cases}
+M_{ij}\tilde{s}_i(1-\rho_i) & i \ne j \\
+0 & \text{otherwise}
+\end{cases}
+$$ 
+This modified flow matrix can now be used in the same way as the unmodified flow matrix to produce state variable updates following spec version 0.0.2.

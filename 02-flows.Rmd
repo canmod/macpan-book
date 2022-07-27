@@ -43,6 +43,12 @@ Examples of invalid rate formulas include:
 * `((S) + (R)) * (beta)` -- general grouping parentheses and common factors are not allowed (but this can be addressed using `struc` objects or intermediate computations -- TODO: link to these)
 * `(E) * (beta)` -- the variable `E` is in neither the parameter nor state variable
 
+By specifying these rates, we now have a difference between the initial and final state vector.
+
+```{r state_init_final_diff}
+state_init(sir)
+state_final(sir)
+```
 
 ::: {.infobox .caution data-latex="{caution}"}
 The remainder of this chapter describes the theory behind these rates, and clarifies what they mean.

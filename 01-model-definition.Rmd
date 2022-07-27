@@ -34,7 +34,7 @@ The parameter vector contains the following kinds of information.
 In its simplest form these parameters can be specified as a standard named numeric vector. We used this approach above in our SIR example, and this parameter vector can be extracted from the model.
 
 ```{r sir_params}
-sir$params
+pars_base_sim(sir)
 ```
 
 McMasterPandemic also has a special `params_pansim` object class for representing parameters. These objects come with descriptions of the meaning of each parameter. An example of this `params_pansim` format can be explored with the following command.
@@ -47,10 +47,10 @@ See the McMasterPandemic [getting started vignette](https://mac-theobio.github.i
 
 ## Initial State Vector
 
-The state vector is used to declare the names of the state variables. In the SIR example above we did this via a named numeric vector, and these names become the names of the states.
+The state vector is used to declare the names of the state variables. In the SIR example above we did this via a named numeric vector, and these names become the names of the initial state vector.
 
 ```{r sir_state}
-sir$state
+state_init(sir)
 ```
 
 The numbers in this vector can be used as initial values in simulations, but often the initial values will depend on the parameters (see `do_make_state` TODO). In these cases where the initial state is computed as opposed to specified, the `state` argument to `flexmodel` can just be character vector giving the names of the state variables.

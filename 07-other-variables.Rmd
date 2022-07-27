@@ -62,6 +62,26 @@ where $y$ is the new intermediate result, and $y_0$, $x$, and $b$ are parameters
 
 [This HIV mode](#granich-hiv-model) provides an example of the usage of power laws.
 
+#### Phenomenological heterogeneity
+
+Without heterogeneity the force of infection might look like this.
+
+$$
+\text{rate(S to E)} = \beta \left(\frac{1}{N}\right)I
+$$
+
+Adding heterogeneity we might do this.
+
+$$
+\text{rate(S to E)} = \beta \left(\frac{1}{N}\right)^{1+\zeta}S^\zeta I
+$$
+
+When $\zeta = 0$ we recover the model without heterogeneity.  We can then multiply this rate by $S$ to get the flow.
+
+$$
+\text{flow(S to E)} = S \beta \left(\frac{1}{N}\right)^{1+\zeta}S^\zeta I = \beta \left(\frac{S}{N}\right)^{1+\zeta} I
+$$
+
 ## Additional Variables in the Simulation History
 
 The `simulation_history` function returns a data frame containing many of the variables in the model, with each row giving each time step in the simulation. This `simulation_history` function is introduced in the chapter on [Simulation]. This simulation history table is used for two purposes: (1) to return to the user as simulation output and (2) to compare with observed time series in in the process of [Calibration].

@@ -123,3 +123,31 @@ The per-capita rates, $M_{ij,t}$, can be any expression involving only sums and 
   * Model parameter, which can be time-varying -- see the [Model of Piece-Wise Time-Variation] for details
   * Complements of any of the above (i.e. $1-x$)
   * Inverses of any of the above (i.e. $1/x$)
+  
+
+## Vision and Direction
+
+Our philosophy is that modellers should spend more time thinking about modelling and less time coding, troubleshooting, and waiting for computations to finish. To realize this vision we work on features that help improve at least some of the following [user stories](https://en.wikipedia.org/wiki/User_story).
+
+1. Fast
+    * As a modeller
+    * I want faster forecasting and calibration
+    * So that I have the time to iteratively refine my models
+2. Rigorous
+    * As a scientist
+    * I want to use rigorous statistical techniques for fitting mechanistic models to data
+    * So that I can produce defensible descriptions of the processes that I am modelling
+3. Functionality-rich
+    * As a modeller
+    * I need to use software that provides an extensive set of modelling capabilities
+    * So that I can address specific and changing public health needs, which building on what I have done before
+4. Editable
+    * As a modeller
+    * I want to build complex models out of simpler -- easier to understand -- modular sub-models
+    * So that I can more easily modify the structure of my model as public health needs change
+5. Extensible
+    * As a developer
+    * I want to be able to quickly add a new modelling capability
+    * So that I can support public health modellers in as timely a manner as possible
+
+The stories at the start of this list have been more fully realized in the existing software, and those at the bottom are more aspirational.  This [roadmap](https://github.com/mac-theobio/McMasterPandemic/blob/master/TODO.md) describes our current thoughts on what we should do next to address these five stories in as complete a manner as possible.
