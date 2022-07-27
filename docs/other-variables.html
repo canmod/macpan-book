@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>8 Other Variables | Generalized McMasterPandemic</title>
   <meta name="description" content="McMasterPandemic is a modelling tool that was rapidly developed to provide timely insights into the Covid-19 Pandemic in Canada. We are currently refactoring this tool so that it is faster and more general. This guide describes how to use this refactored version of McMasterPandemic." />
-  <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
 
   <meta property="og:title" content="8 Other Variables | Generalized McMasterPandemic" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Steve Walker" />
 
 
-<meta name="date" content="2022-06-08" />
+<meta name="date" content="2022-07-27" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -153,6 +153,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#installation"><i class="fa fa-check"></i><b>1.2</b> Installation</a></li>
 <li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#dependencies"><i class="fa fa-check"></i><b>1.3</b> Dependencies</a></li>
 <li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#generalized-model-at-a-glance"><i class="fa fa-check"></i><b>1.4</b> Generalized Model at a Glance</a></li>
+<li class="chapter" data-level="1.5" data-path="index.html"><a href="index.html#vision-and-direction"><i class="fa fa-check"></i><b>1.5</b> Vision and Direction</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="model-initialization.html"><a href="model-initialization.html"><i class="fa fa-check"></i><b>2</b> Model Initialization</a><ul>
 <li class="chapter" data-level="2.1" data-path="model-initialization.html"><a href="model-initialization.html#initial-parameter-vector"><i class="fa fa-check"></i><b>2.1</b> Initial Parameter Vector</a></li>
@@ -256,16 +257,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="sums-of-state-variables-and-parameters" class="section level3 hasAnchor">
 <h3><span class="header-section-number">8.1.1</span> Sums of State Variables and Parameters<a href="other-variables.html#sums-of-state-variables-and-parameters" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>One may save any sum of state variables and/or parameters to the model. In our SIR model for example, we specified the total population size in the parameter vector as <code>N</code>. However, we could compute this population size using the <code>add_state_param_sum</code> function.</p>
-<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="other-variables.html#cb74-1"></a>sir_with_sums =<span class="st"> </span>(<span class="kw">flexmodel</span>(</span>
-<span id="cb74-2"><a href="other-variables.html#cb74-2"></a>    <span class="dt">params =</span> <span class="kw">c</span>(<span class="dt">beta =</span> <span class="fl">0.1</span>, <span class="dt">gamma =</span> <span class="fl">0.01</span>),</span>
-<span id="cb74-3"><a href="other-variables.html#cb74-3"></a>    <span class="dt">state =</span> <span class="kw">c</span>(<span class="dt">S =</span> <span class="dv">99</span>, <span class="dt">I =</span> <span class="dv">1</span>, <span class="dt">R =</span> <span class="dv">0</span>),</span>
-<span id="cb74-4"><a href="other-variables.html#cb74-4"></a>    <span class="dt">start_date =</span> <span class="st">&quot;2020-03-11&quot;</span>,</span>
-<span id="cb74-5"><a href="other-variables.html#cb74-5"></a>    <span class="dt">end_date =</span> <span class="st">&quot;2020-12-01&quot;</span></span>
-<span id="cb74-6"><a href="other-variables.html#cb74-6"></a>  )</span>
-<span id="cb74-7"><a href="other-variables.html#cb74-7"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">add_state_param_sum</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;S|I|R&quot;</span>)</span>
-<span id="cb74-8"><a href="other-variables.html#cb74-8"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">add_rate</span>(<span class="st">&quot;S&quot;</span>, <span class="st">&quot;I&quot;</span>, <span class="op">~</span><span class="st"> </span>(I) <span class="op">*</span><span class="st"> </span>(beta) <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span><span class="op">/</span>N))</span>
-<span id="cb74-9"><a href="other-variables.html#cb74-9"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">add_rate</span>(<span class="st">&quot;I&quot;</span>, <span class="st">&quot;R&quot;</span>, <span class="op">~</span><span class="st"> </span>(gamma))</span>
-<span id="cb74-10"><a href="other-variables.html#cb74-10"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="other-variables.html#cb82-1"></a>sir_with_sums =<span class="st"> </span>(<span class="kw">flexmodel</span>(</span>
+<span id="cb82-2"><a href="other-variables.html#cb82-2"></a>    <span class="dt">params =</span> <span class="kw">c</span>(<span class="dt">beta =</span> <span class="fl">0.1</span>, <span class="dt">gamma =</span> <span class="fl">0.01</span>),</span>
+<span id="cb82-3"><a href="other-variables.html#cb82-3"></a>    <span class="dt">state =</span> <span class="kw">c</span>(<span class="dt">S =</span> <span class="dv">99</span>, <span class="dt">I =</span> <span class="dv">1</span>, <span class="dt">R =</span> <span class="dv">0</span>),</span>
+<span id="cb82-4"><a href="other-variables.html#cb82-4"></a>    <span class="dt">start_date =</span> <span class="st">&quot;2020-03-11&quot;</span>,</span>
+<span id="cb82-5"><a href="other-variables.html#cb82-5"></a>    <span class="dt">end_date =</span> <span class="st">&quot;2020-12-01&quot;</span></span>
+<span id="cb82-6"><a href="other-variables.html#cb82-6"></a>  )</span>
+<span id="cb82-7"><a href="other-variables.html#cb82-7"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">add_state_param_sum</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;S|I|R&quot;</span>)</span>
+<span id="cb82-8"><a href="other-variables.html#cb82-8"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">add_rate</span>(<span class="st">&quot;S&quot;</span>, <span class="st">&quot;I&quot;</span>, <span class="op">~</span><span class="st"> </span>(I) <span class="op">*</span><span class="st"> </span>(beta) <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span><span class="op">/</span>N))</span>
+<span id="cb82-9"><a href="other-variables.html#cb82-9"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">add_rate</span>(<span class="st">&quot;I&quot;</span>, <span class="st">&quot;R&quot;</span>, <span class="op">~</span><span class="st"> </span>(gamma))</span>
+<span id="cb82-10"><a href="other-variables.html#cb82-10"></a>)</span></code></pre></div>
 <p>The first argument to the <code>add_state_param_sum</code> is just a name for the sum. Note that this name is used in the <code>add_rate</code> function that defines the flows from <code>S</code> to <code>I</code>. The second argument to the <code>add_state_param_sum</code> is a regular expression that is matched agains all parameter names and state variable names. Here we match any state variable with <code>"S|I|R"</code>, which tells McMasterPandemic to add up all state variables and save the result in the variable called <code>"N"</code>.</p>
 <p>See the <a href="examples.html#erlang-seir">Erlang SEIR</a> example that uses a sum to save the total number of infected individuals across all <code>I</code> compartments in an Erlang-chain. See the <a href="examples.html#bc-covid-omicron">BC Covid Omicron</a> example that uses a sum to save the total number of individuals infected with different COVID strains.</p>
 </div>
@@ -274,17 +275,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>First off, I’m sorry about the name <code>factr</code>. It is not a typo, I just don’t have the energy to change it to something better right now.</p>
 <p><code>factr</code>s are simply a saved expression that follows the same rules for rates of [Flows Between States]. These <code>factr</code>s are named and can subsequently be used in rate expressions.</p>
 <p>The SIR model is not really complex enough to justify using <code>factr</code>s, but if we wanted to we could store the proportion of individuals that are in the <code>I</code> box as a <code>factr</code> and then use that <code>factr</code> in the expression for the rate from <code>S</code> to <code>I</code>.</p>
-<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="other-variables.html#cb75-1"></a>sir_with_factrs =<span class="st"> </span>(<span class="kw">flexmodel</span>(</span>
-<span id="cb75-2"><a href="other-variables.html#cb75-2"></a>    <span class="dt">params =</span> <span class="kw">c</span>(<span class="dt">beta =</span> <span class="fl">0.1</span>, <span class="dt">gamma =</span> <span class="fl">0.01</span>),</span>
-<span id="cb75-3"><a href="other-variables.html#cb75-3"></a>    <span class="dt">state =</span> <span class="kw">c</span>(<span class="dt">S =</span> <span class="dv">99</span>, <span class="dt">I =</span> <span class="dv">1</span>, <span class="dt">R =</span> <span class="dv">0</span>),</span>
-<span id="cb75-4"><a href="other-variables.html#cb75-4"></a>    <span class="dt">start_date =</span> <span class="st">&quot;2020-03-11&quot;</span>,</span>
-<span id="cb75-5"><a href="other-variables.html#cb75-5"></a>    <span class="dt">end_date =</span> <span class="st">&quot;2020-12-01&quot;</span></span>
-<span id="cb75-6"><a href="other-variables.html#cb75-6"></a>  )</span>
-<span id="cb75-7"><a href="other-variables.html#cb75-7"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">add_state_param_sum</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;S|I|R&quot;</span>)</span>
-<span id="cb75-8"><a href="other-variables.html#cb75-8"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">add_factr</span>(<span class="st">&quot;Iprop&quot;</span>, <span class="op">~</span><span class="st"> </span>(I) <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span><span class="op">/</span>N))</span>
-<span id="cb75-9"><a href="other-variables.html#cb75-9"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">add_rate</span>(<span class="st">&quot;S&quot;</span>, <span class="st">&quot;I&quot;</span>, <span class="op">~</span><span class="st"> </span>(Iprop) <span class="op">*</span><span class="st"> </span>(beta))</span>
-<span id="cb75-10"><a href="other-variables.html#cb75-10"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">add_rate</span>(<span class="st">&quot;I&quot;</span>, <span class="st">&quot;R&quot;</span>, <span class="op">~</span><span class="st"> </span>(gamma))</span>
-<span id="cb75-11"><a href="other-variables.html#cb75-11"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="other-variables.html#cb83-1"></a>sir_with_factrs =<span class="st"> </span>(<span class="kw">flexmodel</span>(</span>
+<span id="cb83-2"><a href="other-variables.html#cb83-2"></a>    <span class="dt">params =</span> <span class="kw">c</span>(<span class="dt">beta =</span> <span class="fl">0.1</span>, <span class="dt">gamma =</span> <span class="fl">0.01</span>),</span>
+<span id="cb83-3"><a href="other-variables.html#cb83-3"></a>    <span class="dt">state =</span> <span class="kw">c</span>(<span class="dt">S =</span> <span class="dv">99</span>, <span class="dt">I =</span> <span class="dv">1</span>, <span class="dt">R =</span> <span class="dv">0</span>),</span>
+<span id="cb83-4"><a href="other-variables.html#cb83-4"></a>    <span class="dt">start_date =</span> <span class="st">&quot;2020-03-11&quot;</span>,</span>
+<span id="cb83-5"><a href="other-variables.html#cb83-5"></a>    <span class="dt">end_date =</span> <span class="st">&quot;2020-12-01&quot;</span></span>
+<span id="cb83-6"><a href="other-variables.html#cb83-6"></a>  )</span>
+<span id="cb83-7"><a href="other-variables.html#cb83-7"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">add_state_param_sum</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;S|I|R&quot;</span>)</span>
+<span id="cb83-8"><a href="other-variables.html#cb83-8"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">add_factr</span>(<span class="st">&quot;Iprop&quot;</span>, <span class="op">~</span><span class="st"> </span>(I) <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span><span class="op">/</span>N))</span>
+<span id="cb83-9"><a href="other-variables.html#cb83-9"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">add_rate</span>(<span class="st">&quot;S&quot;</span>, <span class="st">&quot;I&quot;</span>, <span class="op">~</span><span class="st"> </span>(Iprop) <span class="op">*</span><span class="st"> </span>(beta))</span>
+<span id="cb83-10"><a href="other-variables.html#cb83-10"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">add_rate</span>(<span class="st">&quot;I&quot;</span>, <span class="st">&quot;R&quot;</span>, <span class="op">~</span><span class="st"> </span>(gamma))</span>
+<span id="cb83-11"><a href="other-variables.html#cb83-11"></a>)</span></code></pre></div>
 <p>See also the <a href="examples.html#si">SI</a> model example for a use of <code>factr</code>s that computes the equilibrium populations in each compartment.</p>
 </div>
 <div id="power-laws" class="section level3 hasAnchor">
@@ -295,6 +296,21 @@ y = y_0x^b
 \]</span>
 where <span class="math inline">\(y\)</span> is the new intermediate result, and <span class="math inline">\(y_0\)</span>, <span class="math inline">\(x\)</span>, and <span class="math inline">\(b\)</span> are parameters, state variables, sums/factrs of state variables and parameters, or other powers that have previously been specified.</p>
 <p><a href="examples.html#granich-hiv-model">This HIV mode</a> provides an example of the usage of power laws.</p>
+<div id="phenomenological-heterogeneity" class="section level4 hasAnchor">
+<h4><span class="header-section-number">8.1.3.1</span> Phenomenological heterogeneity<a href="other-variables.html#phenomenological-heterogeneity" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Without heterogeneity the force of infection might look like this.</p>
+<p><span class="math display">\[
+\text{rate(S to E)} = \beta \left(\frac{1}{N}\right)I
+\]</span></p>
+<p>Adding heterogeneity we might do this.</p>
+<p><span class="math display">\[
+\text{rate(S to E)} = \beta \left(\frac{1}{N}\right)^{1+\zeta}S^\zeta I
+\]</span></p>
+<p>When <span class="math inline">\(\zeta = 0\)</span> we recover the model without heterogeneity. We can then multiply this rate by <span class="math inline">\(S\)</span> to get the flow.</p>
+<p><span class="math display">\[
+\text{flow(S to E)} = S \beta \left(\frac{1}{N}\right)^{1+\zeta}S^\zeta I = \beta \left(\frac{S}{N}\right)^{1+\zeta} I
+\]</span></p>
+</div>
 </div>
 </div>
 <div id="additional-variables-in-the-simulation-history" class="section level2 hasAnchor">

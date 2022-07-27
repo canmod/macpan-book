@@ -7,6 +7,7 @@ model-extensibility
 installation
 dependencies
 generalized-model-at-a-glance
+vision-and-direction
 model-initialization
 initial-parameter-vector
 initial-state-vector
@@ -34,6 +35,7 @@ intermediate-results
 sums-of-state-variables-and-parameters
 factrs
 power-laws
+phenomenological-heterogeneity
 additional-variables-in-the-simulation-history
 simulation-history-expressions
 lagged-differencing
