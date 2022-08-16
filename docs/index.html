@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Generalized McMasterPandemic</title>
   <meta name="description" content="McMasterPandemic is a modelling tool that was rapidly developed to provide timely insights into the Covid-19 Pandemic in Canada. We are currently refactoring this tool so that it is faster and more general. This guide describes how to use this refactored version of McMasterPandemic." />
-  <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Generalized McMasterPandemic" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Steve Walker" />
 
 
-<meta name="date" content="2022-06-08" />
+<meta name="date" content="2022-07-27" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -153,6 +153,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#installation"><i class="fa fa-check"></i><b>1.2</b> Installation</a></li>
 <li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#dependencies"><i class="fa fa-check"></i><b>1.3</b> Dependencies</a></li>
 <li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#generalized-model-at-a-glance"><i class="fa fa-check"></i><b>1.4</b> Generalized Model at a Glance</a></li>
+<li class="chapter" data-level="1.5" data-path="index.html"><a href="index.html#vision-and-direction"><i class="fa fa-check"></i><b>1.5</b> Vision and Direction</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="model-initialization.html"><a href="model-initialization.html"><i class="fa fa-check"></i><b>2</b> Model Initialization</a><ul>
 <li class="chapter" data-level="2.1" data-path="model-initialization.html"><a href="model-initialization.html#initial-parameter-vector"><i class="fa fa-check"></i><b>2.1</b> Initial Parameter Vector</a></li>
@@ -249,7 +250,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="header">
 <h1 class="title">Generalized McMasterPandemic</h1>
 <p class="author"><em>Steve Walker</em></p>
-<p class="date"><em>2022-06-08</em></p>
+<p class="date"><em>2022-07-27</em></p>
 </div>
 <div id="fast-and-flexible-modelling-with-mcmasterpandemic" class="section level1 hasAnchor">
 <h1><span class="header-section-number">1</span> Fast and Flexible Modelling with McMasterPandemic<a href="index.html#fast-and-flexible-modelling-with-mcmasterpandemic" class="anchor-section" aria-label="Anchor link to header"></a></h1>
@@ -322,9 +323,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">1.3</span> Dependencies<a href="index.html#dependencies" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>This guide makes use of the following session.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="index.html#cb3-1"></a><span class="kw">sessionInfo</span>()</span></code></pre></div>
-<pre><code>## R version 4.2.0 (2022-04-22)
+<pre><code>## R version 4.2.1 (2022-06-23)
 ## Platform: x86_64-apple-darwin17.0 (64-bit)
-## Running under: macOS Big Sur/Monterey 10.16
+## Running under: macOS Big Sur ... 10.16
 ## 
 ## Matrix products: default
 ## BLAS:   /Library/Frameworks/R.framework/Versions/4.2/Resources/lib/libRblas.0.dylib
@@ -338,39 +339,38 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## [8] base     
 ## 
 ## other attached packages:
-##  [1] tmbstan_1.0.4             rstan_2.21.5             
-##  [3] StanHeaders_2.21.0-7      bbmle_1.0.25             
-##  [5] visNetwork_2.1.0          lubridate_1.8.0          
-##  [7] tidyr_1.2.0               McMasterPandemic_0.0.20.1
-##  [9] dplyr_1.0.9               RcppEigen_0.3.3.9.2      
-## [11] TMB_1.9.0                 ggplot2_3.3.6            
+##  [1] tmbstan_1.0.4            rstan_2.21.5             StanHeaders_2.21.0-7    
+##  [4] bbmle_1.0.25             visNetwork_2.1.0         lubridate_1.8.0         
+##  [7] tidyr_1.2.0              McMasterPandemic_0.2.0.0 dplyr_1.0.9             
+## [10] RcppEigen_0.3.3.9.2      TMB_1.9.0                ggplot2_3.3.6           
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] sass_0.4.1          jsonlite_1.8.0      splines_4.2.0      
-##  [4] foreach_1.5.2       bslib_0.3.1         RcppParallel_5.1.5 
-##  [7] highr_0.9           yaml_2.3.5          numDeriv_2016.8-1.1
-## [10] diagram_1.6.5       pillar_1.7.0        lattice_0.20-45    
-## [13] glue_1.6.2          digest_0.6.29       colorspace_2.0-3   
-## [16] htmltools_0.5.2     Matrix_1.4-1        pkgconfig_2.0.3    
-## [19] bookdown_0.26       purrr_0.3.4         mvtnorm_1.1-3      
-## [22] scales_1.2.0        processx_3.5.3      tzdb_0.3.0         
-## [25] tibble_3.1.7        generics_0.1.2      ellipsis_0.3.2     
-## [28] withr_2.5.0         cli_3.3.0           magrittr_2.0.3     
-## [31] crayon_1.5.1        evaluate_0.15       ps_1.7.0           
-## [34] fansi_1.0.3         MASS_7.3-56         forcats_0.5.1      
-## [37] pkgbuild_1.3.1      loo_2.5.1           tools_4.2.0        
-## [40] prettyunits_1.1.1   hms_1.1.1           matrixStats_0.62.0 
-## [43] lifecycle_1.0.1     stringr_1.4.0       munsell_0.5.0      
-## [46] callr_3.7.0         compiler_4.2.0      jquerylib_0.1.4    
-## [49] rlang_1.0.2         grid_4.2.0          iterators_1.0.14   
-## [52] rstudioapi_0.13     htmlwidgets_1.5.4   rmarkdown_2.14     
-## [55] gtable_0.3.0        codetools_0.2-18    inline_0.3.19      
-## [58] R6_2.5.1            gridExtra_2.3       knitr_1.39         
-## [61] bdsmatrix_1.3-6     fastmap_1.1.0       utf8_1.2.2         
-## [64] fastmatrix_0.4-1    semver_0.2.0        shape_1.4.6        
-## [67] readr_2.1.2         stringi_1.7.6       parallel_4.2.0     
-## [70] Rcpp_1.0.8.3        vctrs_0.4.1         tidyselect_1.1.2   
-## [73] xfun_0.31</code></pre>
+##  [1] sass_0.4.2          jsonlite_1.8.0      splines_4.2.1      
+##  [4] foreach_1.5.2       bslib_0.4.0         RcppParallel_5.1.5 
+##  [7] brio_1.1.3          highr_0.9           yaml_2.3.5         
+## [10] numDeriv_2016.8-1.1 diagram_1.6.5       pillar_1.8.0       
+## [13] lattice_0.20-45     glue_1.6.2          digest_0.6.29      
+## [16] colorspace_2.0-3    htmltools_0.5.3     Matrix_1.4-1       
+## [19] pkgconfig_2.0.3     bookdown_0.27       purrr_0.3.4        
+## [22] mvtnorm_1.1-3       scales_1.2.0        processx_3.7.0     
+## [25] tzdb_0.3.0          tibble_3.1.8        generics_0.1.3     
+## [28] ellipsis_0.3.2      cachem_1.0.6        withr_2.5.0        
+## [31] cli_3.3.0           magrittr_2.0.3      crayon_1.5.1       
+## [34] evaluate_0.15       ps_1.7.1            fansi_1.0.3        
+## [37] MASS_7.3-57         forcats_0.5.1       pkgbuild_1.3.1     
+## [40] loo_2.5.1           prettyunits_1.1.1   tools_4.2.1        
+## [43] hms_1.1.1           matrixStats_0.62.0  lifecycle_1.0.1    
+## [46] stringr_1.4.0       munsell_0.5.0       callr_3.7.1        
+## [49] compiler_4.2.1      jquerylib_0.1.4     rlang_1.0.4        
+## [52] grid_4.2.1          iterators_1.0.14    rstudioapi_0.13    
+## [55] htmlwidgets_1.5.4   rmarkdown_2.14      testthat_3.1.4     
+## [58] gtable_0.3.0        codetools_0.2-18    inline_0.3.19      
+## [61] R6_2.5.1            gridExtra_2.3       knitr_1.39         
+## [64] bdsmatrix_1.3-6     fastmap_1.1.0       utf8_1.2.2         
+## [67] fastmatrix_0.4-12   semver_0.2.0        shape_1.4.6        
+## [70] readr_2.1.2         stringi_1.7.8       parallel_4.2.1     
+## [73] Rcpp_1.0.9          vctrs_0.4.1         tidyselect_1.1.2   
+## [76] xfun_0.31</code></pre>
 </div>
 <div id="generalized-model-at-a-glance" class="section level2 hasAnchor">
 <h2><span class="header-section-number">1.4</span> Generalized Model at a Glance<a href="index.html#generalized-model-at-a-glance" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -391,6 +391,43 @@ where,</p>
 <li>Complements of any of the above (i.e. <span class="math inline">\(1-x\)</span>)</li>
 <li>Inverses of any of the above (i.e. <span class="math inline">\(1/x\)</span>)</li>
 </ul>
+</div>
+<div id="vision-and-direction" class="section level2 hasAnchor">
+<h2><span class="header-section-number">1.5</span> Vision and Direction<a href="index.html#vision-and-direction" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Our philosophy is that modellers should spend more time thinking about modelling and less time coding, troubleshooting, and waiting for computations to finish. To realize this vision we work on features that help improve at least some of the following <a href="https://en.wikipedia.org/wiki/User_story">user stories</a>.</p>
+<ol style="list-style-type: decimal">
+<li>Fast
+<ul>
+<li>As a modeller</li>
+<li>I want faster forecasting and calibration</li>
+<li>So that I have the time to iteratively refine my models</li>
+</ul></li>
+<li>Rigorous
+<ul>
+<li>As a scientist</li>
+<li>I want to use rigorous statistical techniques for fitting mechanistic models to data</li>
+<li>So that I can produce defensible descriptions of the processes that I am modelling</li>
+</ul></li>
+<li>Functionality-rich
+<ul>
+<li>As a modeller</li>
+<li>I need to use software that provides an extensive set of modelling capabilities</li>
+<li>So that I can address specific and changing public health needs, which building on what I have done before</li>
+</ul></li>
+<li>Editable
+<ul>
+<li>As a modeller</li>
+<li>I want to build complex models out of simpler – easier to understand – modular sub-models</li>
+<li>So that I can more easily modify the structure of my model as public health needs change</li>
+</ul></li>
+<li>Extensible
+<ul>
+<li>As a developer</li>
+<li>I want to be able to quickly add a new modelling capability</li>
+<li>So that I can support public health modellers in as timely a manner as possible</li>
+</ul></li>
+</ol>
+<p>The stories at the start of this list have been more fully realized in the existing software, and those at the bottom are more aspirational. This <a href="https://github.com/mac-theobio/McMasterPandemic/blob/master/TODO.md">roadmap</a> describes our current thoughts on what we should do next to address these five stories in as complete a manner as possible.</p>
 
 </div>
 </div>

@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>6 Convergence | Generalized McMasterPandemic</title>
   <meta name="description" content="McMasterPandemic is a modelling tool that was rapidly developed to provide timely insights into the Covid-19 Pandemic in Canada. We are currently refactoring this tool so that it is faster and more general. This guide describes how to use this refactored version of McMasterPandemic." />
-  <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
 
   <meta property="og:title" content="6 Convergence | Generalized McMasterPandemic" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Steve Walker" />
 
 
-<meta name="date" content="2022-06-08" />
+<meta name="date" content="2022-07-27" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -153,6 +153,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#installation"><i class="fa fa-check"></i><b>1.2</b> Installation</a></li>
 <li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#dependencies"><i class="fa fa-check"></i><b>1.3</b> Dependencies</a></li>
 <li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#generalized-model-at-a-glance"><i class="fa fa-check"></i><b>1.4</b> Generalized Model at a Glance</a></li>
+<li class="chapter" data-level="1.5" data-path="index.html"><a href="index.html#vision-and-direction"><i class="fa fa-check"></i><b>1.5</b> Vision and Direction</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="model-initialization.html"><a href="model-initialization.html"><i class="fa fa-check"></i><b>2</b> Model Initialization</a><ul>
 <li class="chapter" data-level="2.1" data-path="model-initialization.html"><a href="model-initialization.html#initial-parameter-vector"><i class="fa fa-check"></i><b>2.1</b> Initial Parameter Vector</a></li>
@@ -249,49 +250,49 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="convergence" class="section level1 hasAnchor">
 <h1><span class="header-section-number">6</span> Convergence<a href="convergence.html#convergence" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>In the last chapter we showed how to fit a simple SIR model to data, and things went relatively smoothly. Now we modify the fitting problem just slightly to illustrate how things can get more challenging pretty quickly. In particular we simulate all three state variables and give them different levels of observation error by specifying different values for the negative binomial dispersion parameter.</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="convergence.html#cb42-1"></a><span class="kw">set.seed</span>(1L)</span>
-<span id="cb42-2"><a href="convergence.html#cb42-2"></a>more_noisy_data =<span class="st"> </span>(sir_with_obs_err</span>
-<span id="cb42-3"><a href="convergence.html#cb42-3"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">update_params</span>(<span class="kw">c</span>(</span>
-<span id="cb42-4"><a href="convergence.html#cb42-4"></a>    <span class="dt">nb_disp_S =</span> <span class="fl">0.1</span>,</span>
-<span id="cb42-5"><a href="convergence.html#cb42-5"></a>    <span class="dt">nb_disp_I =</span> <span class="fl">1e4</span>,</span>
-<span id="cb42-6"><a href="convergence.html#cb42-6"></a>    <span class="dt">nb_disp_R =</span> <span class="dv">1</span></span>
-<span id="cb42-7"><a href="convergence.html#cb42-7"></a>  ))</span>
-<span id="cb42-8"><a href="convergence.html#cb42-8"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">simulation_history</span>(<span class="dt">include_initial_date =</span> <span class="ot">FALSE</span>, <span class="dt">obs_error =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb42-9"><a href="convergence.html#cb42-9"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="op">-</span>S_to_I)</span>
-<span id="cb42-10"><a href="convergence.html#cb42-10"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pivot_longer</span>(<span class="op">-</span>Date, <span class="dt">names_to =</span> <span class="st">&quot;var&quot;</span>, <span class="dt">values_to =</span> <span class="st">&quot;value&quot;</span>)</span>
-<span id="cb42-11"><a href="convergence.html#cb42-11"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">var =</span> <span class="kw">factor</span>(var, <span class="kw">topological_sort</span>(sir)))</span>
-<span id="cb42-12"><a href="convergence.html#cb42-12"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rename</span>(<span class="dt">date =</span> Date)</span>
-<span id="cb42-13"><a href="convergence.html#cb42-13"></a>)</span>
-<span id="cb42-14"><a href="convergence.html#cb42-14"></a>(<span class="kw">ggplot</span>(more_noisy_data)</span>
-<span id="cb42-15"><a href="convergence.html#cb42-15"></a>  <span class="op">+</span><span class="st"> </span><span class="kw">facet_wrap</span>(<span class="op">~</span>var, <span class="dt">scales =</span> <span class="st">&#39;free&#39;</span>)</span>
-<span id="cb42-16"><a href="convergence.html#cb42-16"></a>  <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(date, value))</span>
-<span id="cb42-17"><a href="convergence.html#cb42-17"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="convergence.html#cb46-1"></a><span class="kw">set.seed</span>(1L)</span>
+<span id="cb46-2"><a href="convergence.html#cb46-2"></a>more_noisy_data =<span class="st"> </span>(sir_with_obs_err</span>
+<span id="cb46-3"><a href="convergence.html#cb46-3"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">update_params</span>(<span class="kw">c</span>(</span>
+<span id="cb46-4"><a href="convergence.html#cb46-4"></a>    <span class="dt">nb_disp_S =</span> <span class="fl">0.1</span>,</span>
+<span id="cb46-5"><a href="convergence.html#cb46-5"></a>    <span class="dt">nb_disp_I =</span> <span class="fl">1e4</span>,</span>
+<span id="cb46-6"><a href="convergence.html#cb46-6"></a>    <span class="dt">nb_disp_R =</span> <span class="dv">1</span></span>
+<span id="cb46-7"><a href="convergence.html#cb46-7"></a>  ))</span>
+<span id="cb46-8"><a href="convergence.html#cb46-8"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">simulation_history</span>(<span class="dt">include_initial_date =</span> <span class="ot">FALSE</span>, <span class="dt">obs_error =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb46-9"><a href="convergence.html#cb46-9"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="op">-</span>S_to_I)</span>
+<span id="cb46-10"><a href="convergence.html#cb46-10"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pivot_longer</span>(<span class="op">-</span>Date, <span class="dt">names_to =</span> <span class="st">&quot;var&quot;</span>, <span class="dt">values_to =</span> <span class="st">&quot;value&quot;</span>)</span>
+<span id="cb46-11"><a href="convergence.html#cb46-11"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">var =</span> <span class="kw">factor</span>(var, <span class="kw">topological_sort</span>(sir)))</span>
+<span id="cb46-12"><a href="convergence.html#cb46-12"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rename</span>(<span class="dt">date =</span> Date)</span>
+<span id="cb46-13"><a href="convergence.html#cb46-13"></a>)</span>
+<span id="cb46-14"><a href="convergence.html#cb46-14"></a>(<span class="kw">ggplot</span>(more_noisy_data)</span>
+<span id="cb46-15"><a href="convergence.html#cb46-15"></a>  <span class="op">+</span><span class="st"> </span><span class="kw">facet_wrap</span>(<span class="op">~</span>var, <span class="dt">scales =</span> <span class="st">&#39;free&#39;</span>)</span>
+<span id="cb46-16"><a href="convergence.html#cb46-16"></a>  <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(date, value))</span>
+<span id="cb46-17"><a href="convergence.html#cb46-17"></a>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/harder_sir_opt_problem-1.png" width="672" /></p>
 <p>With these new simulated data we update the <code>flexmodel</code> object that we were previously using for calibration with the more challenging noisy data. Note also that we declare more dispersion parameters to be optimized, because the data now include all three compartments.</p>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="convergence.html#cb43-1"></a>sir_harder_to_calibrate =<span class="st"> </span>(sir_to_calibrate</span>
-<span id="cb43-2"><a href="convergence.html#cb43-2"></a>  <span class="op">%&gt;%</span><span class="st"> </span>reset_error_dist</span>
-<span id="cb43-3"><a href="convergence.html#cb43-3"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">update_observed</span>(more_noisy_data)</span>
-<span id="cb43-4"><a href="convergence.html#cb43-4"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">update_opt_params</span>(</span>
-<span id="cb43-5"><a href="convergence.html#cb43-5"></a>    log_beta <span class="op">~</span><span class="st"> </span><span class="kw">log_flat</span>(<span class="dv">0</span>),</span>
-<span id="cb43-6"><a href="convergence.html#cb43-6"></a>    log_nb_disp_S <span class="op">~</span><span class="st"> </span><span class="kw">log_flat</span>(<span class="dv">0</span>),</span>
-<span id="cb43-7"><a href="convergence.html#cb43-7"></a>    log_nb_disp_I <span class="op">~</span><span class="st"> </span><span class="kw">log_flat</span>(<span class="dv">0</span>),</span>
-<span id="cb43-8"><a href="convergence.html#cb43-8"></a>    log_nb_disp_R <span class="op">~</span><span class="st"> </span><span class="kw">log_flat</span>(<span class="dv">0</span>)</span>
-<span id="cb43-9"><a href="convergence.html#cb43-9"></a>  )</span>
-<span id="cb43-10"><a href="convergence.html#cb43-10"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="convergence.html#cb47-1"></a>sir_harder_to_calibrate =<span class="st"> </span>(sir_to_calibrate</span>
+<span id="cb47-2"><a href="convergence.html#cb47-2"></a>  <span class="op">%&gt;%</span><span class="st"> </span>reset_error_dist</span>
+<span id="cb47-3"><a href="convergence.html#cb47-3"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">update_observed</span>(more_noisy_data)</span>
+<span id="cb47-4"><a href="convergence.html#cb47-4"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">update_opt_params</span>(</span>
+<span id="cb47-5"><a href="convergence.html#cb47-5"></a>    log_beta <span class="op">~</span><span class="st"> </span><span class="kw">log_flat</span>(<span class="dv">0</span>),</span>
+<span id="cb47-6"><a href="convergence.html#cb47-6"></a>    log_nb_disp_S <span class="op">~</span><span class="st"> </span><span class="kw">log_flat</span>(<span class="dv">0</span>),</span>
+<span id="cb47-7"><a href="convergence.html#cb47-7"></a>    log_nb_disp_I <span class="op">~</span><span class="st"> </span><span class="kw">log_flat</span>(<span class="dv">0</span>),</span>
+<span id="cb47-8"><a href="convergence.html#cb47-8"></a>    log_nb_disp_R <span class="op">~</span><span class="st"> </span><span class="kw">log_flat</span>(<span class="dv">0</span>)</span>
+<span id="cb47-9"><a href="convergence.html#cb47-9"></a>  )</span>
+<span id="cb47-10"><a href="convergence.html#cb47-10"></a>)</span></code></pre></div>
 <p>Fitting this model using the defaults results in the following errors from the optimizer.</p>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="convergence.html#cb44-1"></a>sir_hard_attempt_<span class="dv">1</span> =<span class="st"> </span><span class="kw">calibrate_flexmodel</span>(sir_harder_to_calibrate)</span></code></pre></div>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="convergence.html#cb48-1"></a>sir_hard_attempt_<span class="dv">1</span> =<span class="st"> </span><span class="kw">calibrate_flexmodel</span>(sir_harder_to_calibrate)</span></code></pre></div>
 <pre><code>## Error in optim(par = c(log_beta = 0, log_nb_disp_S = 0, log_nb_disp_I = 0,  : 
 ##   initial value in &#39;vmmin&#39; is not finite</code></pre>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="convergence.html#cb46-1"></a><span class="kw">convergence_info</span>(sir_hard_attempt_<span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="convergence.html#cb50-1"></a><span class="kw">convergence_info</span>(sir_hard_attempt_<span class="dv">1</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;Error in optim(par = c(log_beta = 0, log_nb_disp_S = 0, log_nb_disp_I = 0,  : \n  initial value in &#39;vmmin&#39; is not finite\n&quot;
 ## attr(,&quot;class&quot;)
 ## [1] &quot;try-error&quot;
 ## attr(,&quot;condition&quot;)
 ## &lt;simpleError in optim(par = c(log_beta = 0, log_nb_disp_S = 0, log_nb_disp_I = 0, log_nb_disp_R = 0), fn = function (p) {    if (browse_obj)         browser()    l &lt;- relist2(p, template)    names(p) &lt;- nstart[order(oo)]    l[nfix] &lt;- fixed    if (vecpar) {        l &lt;- namedrop(l[nfull])        l &lt;- unlist(l)        args &lt;- list(l)        args &lt;- c(list(l), args.in.data)    }    else {        args &lt;- c(l, args.in.data)    }    if (namedrop_args)         args &lt;- namedrop(args)    do.call(&quot;minuslogl&quot;, args)}, method = &quot;BFGS&quot;, hessian = FALSE, gr = function (p) {    if (browse_obj)         browser()    l &lt;- relist2(p, template)    names(p) &lt;- nstart[order(oo)]    l[nfix] &lt;- fixed    if (vecpar) {        l &lt;- namedrop(l[nfull])        l &lt;- unlist(l)        args &lt;- list(l)        args &lt;- c(list(l), args.in.data)    }    else {        args &lt;- c(l, args.in.data)    }    v &lt;- do.call(&quot;gr&quot;, args)    if (is.null(names(v))) {        if (length(v) == length(l) &amp;&amp; !is.null(tt &lt;- names(l))) {            vnames &lt;- tt        }        else if (length(v) == length(p) &amp;&amp; !is.null(tt &lt;- names(p))) {            vnames &lt;- tt        }        else if (!is.null(tt &lt;- parnames(minuslogl))) {            vnames &lt;- tt        }        else vnames &lt;- names(formals(minuslogl))        if (length(vnames) != length(v))             stop(&quot;name/length mismatch in gradient function&quot;)        names(v) &lt;- vnames    }    return(v[!names(v) %in% nfix])}, control = list(), lower = -Inf, upper = Inf): initial value in &#39;vmmin&#39; is not finite&gt;</code></pre>
-<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="convergence.html#cb48-1"></a>sir_hard_attempt_<span class="dv">2</span> =<span class="st"> </span><span class="kw">calibrate_flexmodel</span>(</span>
-<span id="cb48-2"><a href="convergence.html#cb48-2"></a>  sir_harder_to_calibrate,</span>
-<span id="cb48-3"><a href="convergence.html#cb48-3"></a>  <span class="dt">optimizer =</span> <span class="st">&#39;nlminb&#39;</span></span>
-<span id="cb48-4"><a href="convergence.html#cb48-4"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="convergence.html#cb52-1"></a>sir_hard_attempt_<span class="dv">2</span> =<span class="st"> </span><span class="kw">calibrate_flexmodel</span>(</span>
+<span id="cb52-2"><a href="convergence.html#cb52-2"></a>  sir_harder_to_calibrate,</span>
+<span id="cb52-3"><a href="convergence.html#cb52-3"></a>  <span class="dt">optimizer =</span> <span class="st">&#39;nlminb&#39;</span></span>
+<span id="cb52-4"><a href="convergence.html#cb52-4"></a>)</span></code></pre></div>
 <pre><code>## Warning in nlminb(start = start, objective = objectivefunction, hessian =
 ## NULL, : NA/NaN function evaluation
 
@@ -314,7 +315,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## NULL, : NA/NaN function evaluation</code></pre>
 <pre><code>## Warning in bbmle::mle2(obj_fun$fn, start_par, gr = obj_fun$gr, parnames =
 ## names(start_par), : couldn&#39;t invert Hessian</code></pre>
-<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="convergence.html#cb51-1"></a><span class="kw">convergence_info</span>(sir_hard_attempt_<span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="convergence.html#cb55-1"></a><span class="kw">convergence_info</span>(sir_hard_attempt_<span class="dv">2</span>)</span></code></pre></div>
 <pre><code>## $par
 ##      log_beta log_nb_disp_S log_nb_disp_I log_nb_disp_R 
 ##             0             0             0             0 
@@ -347,16 +348,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 
 ## $eratio
 ## [1] NA</code></pre>
-<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="convergence.html#cb53-1"></a>sir_hard_attempt_<span class="dv">3</span> =<span class="st"> </span>(sir_harder_to_calibrate</span>
-<span id="cb53-2"><a href="convergence.html#cb53-2"></a> <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">update_opt_params</span>(</span>
-<span id="cb53-3"><a href="convergence.html#cb53-3"></a>    log_beta <span class="op">~</span><span class="st"> </span><span class="kw">log_flat</span>(<span class="op">-</span><span class="dv">1</span>),</span>
-<span id="cb53-4"><a href="convergence.html#cb53-4"></a>    log_nb_disp_S <span class="op">~</span><span class="st"> </span><span class="kw">log_flat</span>(<span class="dv">0</span>),</span>
-<span id="cb53-5"><a href="convergence.html#cb53-5"></a>    log_nb_disp_I <span class="op">~</span><span class="st"> </span><span class="kw">log_flat</span>(<span class="dv">0</span>),</span>
-<span id="cb53-6"><a href="convergence.html#cb53-6"></a>    log_nb_disp_R <span class="op">~</span><span class="st"> </span><span class="kw">log_flat</span>(<span class="dv">0</span>)</span>
-<span id="cb53-7"><a href="convergence.html#cb53-7"></a>  )</span>
-<span id="cb53-8"><a href="convergence.html#cb53-8"></a>  <span class="op">%&gt;%</span><span class="st"> </span>calibrate_flexmodel</span>
-<span id="cb53-9"><a href="convergence.html#cb53-9"></a>)</span>
-<span id="cb53-10"><a href="convergence.html#cb53-10"></a><span class="kw">convergence_info</span>(sir_hard_attempt_<span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="convergence.html#cb57-1"></a>sir_hard_attempt_<span class="dv">3</span> =<span class="st"> </span>(sir_harder_to_calibrate</span>
+<span id="cb57-2"><a href="convergence.html#cb57-2"></a> <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">update_opt_params</span>(</span>
+<span id="cb57-3"><a href="convergence.html#cb57-3"></a>    log_beta <span class="op">~</span><span class="st"> </span><span class="kw">log_flat</span>(<span class="op">-</span><span class="dv">1</span>),</span>
+<span id="cb57-4"><a href="convergence.html#cb57-4"></a>    log_nb_disp_S <span class="op">~</span><span class="st"> </span><span class="kw">log_flat</span>(<span class="dv">0</span>),</span>
+<span id="cb57-5"><a href="convergence.html#cb57-5"></a>    log_nb_disp_I <span class="op">~</span><span class="st"> </span><span class="kw">log_flat</span>(<span class="dv">0</span>),</span>
+<span id="cb57-6"><a href="convergence.html#cb57-6"></a>    log_nb_disp_R <span class="op">~</span><span class="st"> </span><span class="kw">log_flat</span>(<span class="dv">0</span>)</span>
+<span id="cb57-7"><a href="convergence.html#cb57-7"></a>  )</span>
+<span id="cb57-8"><a href="convergence.html#cb57-8"></a>  <span class="op">%&gt;%</span><span class="st"> </span>calibrate_flexmodel</span>
+<span id="cb57-9"><a href="convergence.html#cb57-9"></a>)</span>
+<span id="cb57-10"><a href="convergence.html#cb57-10"></a><span class="kw">convergence_info</span>(sir_hard_attempt_<span class="dv">3</span>)</span></code></pre></div>
 <pre><code>## $par
 ##      log_beta log_nb_disp_S log_nb_disp_I log_nb_disp_R 
 ##    -2.3075737    -2.1004227     9.0642536    -0.1010736 
@@ -386,11 +387,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 
 ## $eratio
 ## [1] 3.389777e-07</code></pre>
-<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="convergence.html#cb55-1"></a>sir_hard_attempt_<span class="dv">4</span> =<span class="st"> </span><span class="kw">profile</span>(<span class="kw">opt_obj</span>(sir_hard_attempt_<span class="dv">3</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="convergence.html#cb59-1"></a>sir_hard_attempt_<span class="dv">4</span> =<span class="st"> </span><span class="kw">profile</span>(<span class="kw">opt_obj</span>(sir_hard_attempt_<span class="dv">3</span>))</span></code></pre></div>
 <pre><code>## Profiling has found a better solution,so original fit had not converged:</code></pre>
 <pre><code>## (new deviance=3633, old deviance=4589, diff=-956.8)</code></pre>
 <pre><code>## Returning better fit ...</code></pre>
-<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="convergence.html#cb59-1"></a>sir_hard_attempt_<span class="dv">4</span><span class="op">@</span>details</span></code></pre></div>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="convergence.html#cb63-1"></a>sir_hard_attempt_<span class="dv">4</span><span class="op">@</span>details</span></code></pre></div>
 <pre><code>## $par
 ##      log_beta log_nb_disp_S log_nb_disp_R 
 ##    -2.2471694    -2.1075732    -0.1006872 
@@ -416,7 +417,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 
 ## $maxgrad
 ## [1] 574.4543</code></pre>
-<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="convergence.html#cb61-1"></a><span class="kw">plot</span>(<span class="kw">slice</span>(sir_hard_attempt_<span class="dv">4</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="convergence.html#cb65-1"></a><span class="kw">plot</span>(<span class="kw">slice</span>(sir_hard_attempt_<span class="dv">4</span>))</span></code></pre></div>
 <pre><code>## log_beta 
 ## log_nb_disp_S 
 ## log_nb_disp_I.log_nb_disp_I 
