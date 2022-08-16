@@ -18,7 +18,7 @@ sir_model = (
     state = state,
     start_date = "2000-01-01",
     end_date = "2000-05-01",
-    do_hazard = TRUE
+    do_hazard = FALSE
   )
   %>% add_rate("S", "I", ~ (1/N) * (beta) * (I))
   %>% add_rate("I", "R", ~ (gamma))
@@ -67,6 +67,49 @@ nn
     %>% ggplot
      +  geom_line(aes(x = Date, y = `force of infection`))
   )
+```
+
+One may use this functionality to compute basic epidemiological parameters such as $R_0$, $r$, and $\bar{G}$. We do this by modifying the model slightly, simulating, and summarizing the output.
+
+```{r R0_r_Gbar}
+sir_model_for_R0 = sir_model
+
+# start from a single infected individual
+state_default(sir_model_for_R0) = c(S = 0, I = 1)
+pars_base_sim(sir_model_for_R0) = c(N = 1)
+
+sir_epi_pars = (sir_model_for_R0
+  
+  # run simulation to convergence
+  %>% extend_end_date(300)
+  %>% simulation_history
+  
+  %>% summarise(
+    
+    # reproductive number
+    R0 = sum(S_to_I),
+    
+    # mean generation interval
+    Gbar = sum(seq_along(S_to_I) * S_to_I / R0),
+    
+    # intrinsic rate of increase
+    r = uniroot(make_lotka_euler(S_to_I), c(0, 100))$root
+  )
+)
+
+# R0 by standard SIR model theory
+with(as.list(pars_base_sim(sir_model)), beta/gamma)
+
+# R0 and other stats by kernel theory
+sir_epi_pars
+
+(sir_model
+  %>% simulation_history
+  %>% select(Date, S_to_I, S)
+  %>% mutate(Rt = sir_epi_pars$R0 * (S / pars_base_sim(sir_model)[["N"]]))
+  %>% ggplot
+  + geom_line(aes(Date, Rt))
+)
 ```
 
 ## SI
