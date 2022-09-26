@@ -69,9 +69,17 @@ nn
   )
 ```
 
-One may use this functionality to compute basic epidemiological parameters such as $R_0$, $r$, and $\bar{G}$. We do this by modifying the model slightly, simulating, and summarizing the output.
+One may use this functionality to compute basic epidemiological parameters such as $R_0$, $r$, and $\bar{G}$. We do this by modifying the model slightly, simulating, and summarizing the output.  TODO: actually compute these parameters.
 
-```{r R0_r_Gbar}
+```{r epi_pars, echo=TRUE, eval=FALSE}
+epi_pars(sir_model
+  , exposed_state_nm = "I"
+  , foi_nm = "S_to_I"
+  , N = 1
+)
+```
+
+```{r R0_r_Gbar, eval = FALSE, echo = FALSE}
 sir_model_for_R0 = sir_model
 
 # start from a single infected individual
@@ -354,6 +362,8 @@ sirv_model = (
 
 
 ## Variolation model
+
+The [variolation model](https://royalsocietypublishing.org/doi/10.1098/rsif.2021.0781) is ... TODO: add description.
 
 ```{r variolation}
 state = c(
