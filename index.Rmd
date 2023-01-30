@@ -141,11 +141,19 @@ Our philosophy is that modellers should spend more time thinking about modelling
     * As a modeller
     * I need to use software that provides an extensive set of modelling capabilities
     * So that I can address specific and changing public health needs, which building on what I have done before
-4. Editable
+4. Numerically-stable
+    * As a modeller
+    * I need software that ideally hides the details of scientific computing from me (e.g. I don't need to worry about things like convergence) and at least provides informative and actionable messages about numerical issues
+    * So that I can focus on the biology and public-health implications
+5. Editable
     * As a modeller
     * I want to build complex models out of simpler -- easier to understand -- modular sub-models
     * So that I can more easily modify the structure of my model as public health needs change
-5. Extensible
+6. Versionable
+    * As a modeller
+    * I want to save my model definitions in format that is both human-readable and computer-consumable
+    * So that I can easily see the differences between two model versions and easily review the details of models used for past forecasts
+7. Extensible
     * As a developer
     * I want to be able to quickly add a new modelling capability
     * So that I can support public health modellers in as timely a manner as possible
