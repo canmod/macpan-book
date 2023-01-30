@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>16 Troubleshooting | Using McMasterPandemic</title>
   <meta name="description" content="McMasterPandemic is a modelling tool that was rapidly developed to provide timely insights into the Covid-19 Pandemic in Canada. We are currently refactoring this tool so that it is faster and more general. This guide describes how to use this refactored version of McMasterPandemic." />
-  <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.32 and GitBook 2.6.7" />
 
   <meta property="og:title" content="16 Troubleshooting | Using McMasterPandemic" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Steve Walker" />
 
 
-<meta name="date" content="2022-09-26" />
+<meta name="date" content="2023-01-30" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -55,10 +55,10 @@
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 <link href="libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
 <script src="libs/pagedtable-1.1/js/pagedtable.js"></script>
-<script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+<script src="libs/htmlwidgets-1.6.1/htmlwidgets.js"></script>
 <link href="libs/vis-9.1.0/vis-network.min.css" rel="stylesheet" />
 <script src="libs/vis-9.1.0/vis-network.min.js"></script>
-<script src="libs/visNetwork-binding-2.1.0/visNetwork.js"></script>
+<script src="libs/visNetwork-binding-2.1.2/visNetwork.js"></script>
 
 
 <style type="text/css">
@@ -263,47 +263,47 @@ x + \frac{\epsilon}{1-(x-\epsilon)/\epsilon + (x-\epsilon)^2/\epsilon^2}
 <h3><span class="header-section-number">16.1.2</span> Negative rate matrix elements<a href="troubleshooting.html#negative-rate-matrix-elements" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>These can arise naturally due to time-varying parameters that appear in <code>1-x</code> terms in rate formulas. The best way to avoid this is to use the <code>abs</code> type of time-variation, so that logit transformations can be used directly on the changing parameters. This approach ensures that the parameter never leaves the interval between zero and one. It is also possible to update changing parameters on the logit scale, which would also solve this problem. See the <a href="time-varying-parameters.html#model-of-piece-wise-time-variation">Model of Piece-Wise Time-Variation</a> for more details.</p>
 <p>To illustrate this use of the logit-scale time-variation model, we use a modified SIR model in which a certain proportion of infected individuals die at the end of the infection period. This proportion is increased at April 1 by three-times the previous value.</p>
-<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="troubleshooting.html#cb126-1"></a>sir_with_death =<span class="st"> </span>(</span>
-<span id="cb126-2"><a href="troubleshooting.html#cb126-2"></a>  <span class="kw">flexmodel</span>(</span>
-<span id="cb126-3"><a href="troubleshooting.html#cb126-3"></a>    <span class="dt">params =</span> <span class="kw">c</span>(</span>
-<span id="cb126-4"><a href="troubleshooting.html#cb126-4"></a>      <span class="dt">tau =</span> <span class="dv">16</span>,    <span class="co"># infected period</span></span>
-<span id="cb126-5"><a href="troubleshooting.html#cb126-5"></a>      <span class="dt">beta =</span> <span class="fl">0.15</span>, <span class="co"># transmssion rate</span></span>
-<span id="cb126-6"><a href="troubleshooting.html#cb126-6"></a>      <span class="dt">p =</span> <span class="fl">0.2</span>      <span class="co"># proportion who die at the end of the infected period</span></span>
-<span id="cb126-7"><a href="troubleshooting.html#cb126-7"></a>    ),</span>
-<span id="cb126-8"><a href="troubleshooting.html#cb126-8"></a>    <span class="dt">state =</span> <span class="kw">c</span>(<span class="dt">S =</span> <span class="dv">20000</span>, <span class="dt">I =</span> <span class="dv">100</span>, <span class="dt">R =</span> <span class="dv">0</span>, <span class="dt">D =</span> <span class="dv">0</span>),</span>
-<span id="cb126-9"><a href="troubleshooting.html#cb126-9"></a>    <span class="dt">start_date =</span> <span class="st">&quot;2000-01-01&quot;</span>,</span>
-<span id="cb126-10"><a href="troubleshooting.html#cb126-10"></a>    <span class="dt">end_date =</span> <span class="st">&quot;2000-05-01&quot;</span>,</span>
-<span id="cb126-11"><a href="troubleshooting.html#cb126-11"></a>    <span class="dt">do_hazard =</span> <span class="ot">TRUE</span></span>
-<span id="cb126-12"><a href="troubleshooting.html#cb126-12"></a>  )</span>
-<span id="cb126-13"><a href="troubleshooting.html#cb126-13"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">add_state_param_sum</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;^(S|I|R)$&quot;</span>)</span>
-<span id="cb126-14"><a href="troubleshooting.html#cb126-14"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">add_rate</span>(<span class="st">&quot;S&quot;</span>, <span class="st">&quot;I&quot;</span>, <span class="op">~</span><span class="st"> </span>(<span class="dv">1</span><span class="op">/</span>N) <span class="op">*</span><span class="st"> </span>(beta) <span class="op">*</span><span class="st"> </span>(I))</span>
-<span id="cb126-15"><a href="troubleshooting.html#cb126-15"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">add_rate</span>(<span class="st">&quot;I&quot;</span>, <span class="st">&quot;R&quot;</span>, <span class="op">~</span><span class="st"> </span>(<span class="dv">1</span><span class="op">/</span>tau) <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span><span class="op">-</span>p))</span>
-<span id="cb126-16"><a href="troubleshooting.html#cb126-16"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">add_rate</span>(<span class="st">&quot;I&quot;</span>, <span class="st">&quot;D&quot;</span>, <span class="op">~</span><span class="st"> </span>(<span class="dv">1</span><span class="op">/</span>tau) <span class="op">*</span><span class="st"> </span>(p))</span>
-<span id="cb126-17"><a href="troubleshooting.html#cb126-17"></a>)</span>
-<span id="cb126-18"><a href="troubleshooting.html#cb126-18"></a></span>
-<span id="cb126-19"><a href="troubleshooting.html#cb126-19"></a>plot_with_death_rates =<span class="st"> </span><span class="cf">function</span>(value, type) {</span>
-<span id="cb126-20"><a href="troubleshooting.html#cb126-20"></a>  (sir_with_death</span>
-<span id="cb126-21"><a href="troubleshooting.html#cb126-21"></a>    <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">update_piece_wise</span>(</span>
-<span id="cb126-22"><a href="troubleshooting.html#cb126-22"></a>      <span class="kw">data.frame</span>(</span>
-<span id="cb126-23"><a href="troubleshooting.html#cb126-23"></a>        <span class="dt">Date =</span> <span class="st">&quot;2000-04-01&quot;</span>,</span>
-<span id="cb126-24"><a href="troubleshooting.html#cb126-24"></a>        <span class="dt">Symbol =</span> <span class="st">&quot;p&quot;</span>,</span>
-<span id="cb126-25"><a href="troubleshooting.html#cb126-25"></a>        <span class="dt">Value =</span> value,</span>
-<span id="cb126-26"><a href="troubleshooting.html#cb126-26"></a>        <span class="dt">Type =</span> type</span>
-<span id="cb126-27"><a href="troubleshooting.html#cb126-27"></a>    ))</span>
-<span id="cb126-28"><a href="troubleshooting.html#cb126-28"></a>    <span class="op">%&gt;%</span><span class="st"> </span>simulation_history</span>
-<span id="cb126-29"><a href="troubleshooting.html#cb126-29"></a>    <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pivot_longer</span>(<span class="op">-</span>Date, <span class="dt">names_to =</span> <span class="st">&quot;rate&quot;</span>)</span>
-<span id="cb126-30"><a href="troubleshooting.html#cb126-30"></a>    <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(<span class="kw">grepl</span>(<span class="st">&quot;_to_&quot;</span>, rate))</span>
-<span id="cb126-31"><a href="troubleshooting.html#cb126-31"></a>    <span class="op">%&gt;%</span><span class="st"> </span>ggplot</span>
-<span id="cb126-32"><a href="troubleshooting.html#cb126-32"></a>    <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(Date, value, <span class="dt">colour =</span> rate))</span>
-<span id="cb126-33"><a href="troubleshooting.html#cb126-33"></a>  )</span>
-<span id="cb126-34"><a href="troubleshooting.html#cb126-34"></a>}</span>
-<span id="cb126-35"><a href="troubleshooting.html#cb126-35"></a><span class="kw">plot_with_death_rates</span>(<span class="dv">3</span>, <span class="st">&#39;rel_prev&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="troubleshooting.html#cb128-1"></a>sir_with_death =<span class="st"> </span>(</span>
+<span id="cb128-2"><a href="troubleshooting.html#cb128-2"></a>  <span class="kw">flexmodel</span>(</span>
+<span id="cb128-3"><a href="troubleshooting.html#cb128-3"></a>    <span class="dt">params =</span> <span class="kw">c</span>(</span>
+<span id="cb128-4"><a href="troubleshooting.html#cb128-4"></a>      <span class="dt">tau =</span> <span class="dv">16</span>,    <span class="co"># infected period</span></span>
+<span id="cb128-5"><a href="troubleshooting.html#cb128-5"></a>      <span class="dt">beta =</span> <span class="fl">0.15</span>, <span class="co"># transmssion rate</span></span>
+<span id="cb128-6"><a href="troubleshooting.html#cb128-6"></a>      <span class="dt">p =</span> <span class="fl">0.2</span>      <span class="co"># proportion who die at the end of the infected period</span></span>
+<span id="cb128-7"><a href="troubleshooting.html#cb128-7"></a>    ),</span>
+<span id="cb128-8"><a href="troubleshooting.html#cb128-8"></a>    <span class="dt">state =</span> <span class="kw">c</span>(<span class="dt">S =</span> <span class="dv">20000</span>, <span class="dt">I =</span> <span class="dv">100</span>, <span class="dt">R =</span> <span class="dv">0</span>, <span class="dt">D =</span> <span class="dv">0</span>),</span>
+<span id="cb128-9"><a href="troubleshooting.html#cb128-9"></a>    <span class="dt">start_date =</span> <span class="st">&quot;2000-01-01&quot;</span>,</span>
+<span id="cb128-10"><a href="troubleshooting.html#cb128-10"></a>    <span class="dt">end_date =</span> <span class="st">&quot;2000-05-01&quot;</span>,</span>
+<span id="cb128-11"><a href="troubleshooting.html#cb128-11"></a>    <span class="dt">do_hazard =</span> <span class="ot">TRUE</span></span>
+<span id="cb128-12"><a href="troubleshooting.html#cb128-12"></a>  )</span>
+<span id="cb128-13"><a href="troubleshooting.html#cb128-13"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">add_state_param_sum</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;^(S|I|R)$&quot;</span>)</span>
+<span id="cb128-14"><a href="troubleshooting.html#cb128-14"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">add_rate</span>(<span class="st">&quot;S&quot;</span>, <span class="st">&quot;I&quot;</span>, <span class="op">~</span><span class="st"> </span>(<span class="dv">1</span><span class="op">/</span>N) <span class="op">*</span><span class="st"> </span>(beta) <span class="op">*</span><span class="st"> </span>(I))</span>
+<span id="cb128-15"><a href="troubleshooting.html#cb128-15"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">add_rate</span>(<span class="st">&quot;I&quot;</span>, <span class="st">&quot;R&quot;</span>, <span class="op">~</span><span class="st"> </span>(<span class="dv">1</span><span class="op">/</span>tau) <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span><span class="op">-</span>p))</span>
+<span id="cb128-16"><a href="troubleshooting.html#cb128-16"></a>  <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">add_rate</span>(<span class="st">&quot;I&quot;</span>, <span class="st">&quot;D&quot;</span>, <span class="op">~</span><span class="st"> </span>(<span class="dv">1</span><span class="op">/</span>tau) <span class="op">*</span><span class="st"> </span>(p))</span>
+<span id="cb128-17"><a href="troubleshooting.html#cb128-17"></a>)</span>
+<span id="cb128-18"><a href="troubleshooting.html#cb128-18"></a></span>
+<span id="cb128-19"><a href="troubleshooting.html#cb128-19"></a>plot_with_death_rates =<span class="st"> </span><span class="cf">function</span>(value, type) {</span>
+<span id="cb128-20"><a href="troubleshooting.html#cb128-20"></a>  (sir_with_death</span>
+<span id="cb128-21"><a href="troubleshooting.html#cb128-21"></a>    <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">update_piece_wise</span>(</span>
+<span id="cb128-22"><a href="troubleshooting.html#cb128-22"></a>      <span class="kw">data.frame</span>(</span>
+<span id="cb128-23"><a href="troubleshooting.html#cb128-23"></a>        <span class="dt">Date =</span> <span class="st">&quot;2000-04-01&quot;</span>,</span>
+<span id="cb128-24"><a href="troubleshooting.html#cb128-24"></a>        <span class="dt">Symbol =</span> <span class="st">&quot;p&quot;</span>,</span>
+<span id="cb128-25"><a href="troubleshooting.html#cb128-25"></a>        <span class="dt">Value =</span> value,</span>
+<span id="cb128-26"><a href="troubleshooting.html#cb128-26"></a>        <span class="dt">Type =</span> type</span>
+<span id="cb128-27"><a href="troubleshooting.html#cb128-27"></a>    ))</span>
+<span id="cb128-28"><a href="troubleshooting.html#cb128-28"></a>    <span class="op">%&gt;%</span><span class="st"> </span>simulation_history</span>
+<span id="cb128-29"><a href="troubleshooting.html#cb128-29"></a>    <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pivot_longer</span>(<span class="op">-</span>Date, <span class="dt">names_to =</span> <span class="st">&quot;rate&quot;</span>)</span>
+<span id="cb128-30"><a href="troubleshooting.html#cb128-30"></a>    <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(<span class="kw">grepl</span>(<span class="st">&quot;_to_&quot;</span>, rate))</span>
+<span id="cb128-31"><a href="troubleshooting.html#cb128-31"></a>    <span class="op">%&gt;%</span><span class="st"> </span>ggplot</span>
+<span id="cb128-32"><a href="troubleshooting.html#cb128-32"></a>    <span class="op">+</span><span class="st"> </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(Date, value, <span class="dt">colour =</span> rate))</span>
+<span id="cb128-33"><a href="troubleshooting.html#cb128-33"></a>  )</span>
+<span id="cb128-34"><a href="troubleshooting.html#cb128-34"></a>}</span>
+<span id="cb128-35"><a href="troubleshooting.html#cb128-35"></a><span class="kw">plot_with_death_rates</span>(<span class="dv">3</span>, <span class="st">&#39;rel_prev&#39;</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/negative_rate_avoidance-1.png" width="672" /></p>
 <p>In this example the rate at which infected individuals die becomes higher on April 1. This increase necessarily corresponds to a drop in the rate at which infected individuals live, but the drop does not push the rate below zero in this case. But importantly there are no structural restrictions that keep the rates positive when the <code>'rel_prev'</code> method is used. We can illustrate this by increasing the multiplier from three to six.</p>
-<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb127-1"><a href="troubleshooting.html#cb127-1"></a><span class="kw">plot_with_death_rates</span>(<span class="dv">6</span>, <span class="st">&#39;rel_prev&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="troubleshooting.html#cb129-1"></a><span class="kw">plot_with_death_rates</span>(<span class="dv">6</span>, <span class="st">&#39;rel_prev&#39;</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/negative_rates-1.png" width="672" /></p>
 <p>Note that we have suppressed warnings about negative rates, which are clearly visible on the plot above. These negative rates can be completely avoided by specifying the increase on the logit scale with the <code>'rel_prev_logit'</code> type.</p>
-<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="troubleshooting.html#cb128-1"></a><span class="kw">plot_with_death_rates</span>(<span class="dv">6</span>, <span class="st">&#39;rel_prev_logit&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb130-1"><a href="troubleshooting.html#cb130-1"></a><span class="kw">plot_with_death_rates</span>(<span class="dv">6</span>, <span class="st">&#39;rel_prev_logit&#39;</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/avoid_negative_rates-1.png" width="672" /></p>
 <p>This means that the log-odds of death after infection additively increases by six on April 1. The log odds could be made as high as one wants, and the rate at which infected individuals live would never drop below zero.</p>
 </div>

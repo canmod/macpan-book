@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>3 Flow Between States | Using McMasterPandemic</title>
   <meta name="description" content="McMasterPandemic is a modelling tool that was rapidly developed to provide timely insights into the Covid-19 Pandemic in Canada. We are currently refactoring this tool so that it is faster and more general. This guide describes how to use this refactored version of McMasterPandemic." />
-  <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.32 and GitBook 2.6.7" />
 
   <meta property="og:title" content="3 Flow Between States | Using McMasterPandemic" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Steve Walker" />
 
 
-<meta name="date" content="2022-09-26" />
+<meta name="date" content="2023-01-30" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -55,10 +55,10 @@
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 <link href="libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
 <script src="libs/pagedtable-1.1/js/pagedtable.js"></script>
-<script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+<script src="libs/htmlwidgets-1.6.1/htmlwidgets.js"></script>
 <link href="libs/vis-9.1.0/vis-network.min.css" rel="stylesheet" />
 <script src="libs/vis-9.1.0/vis-network.min.js"></script>
-<script src="libs/visNetwork-binding-2.1.0/visNetwork.js"></script>
+<script src="libs/visNetwork-binding-2.1.2/visNetwork.js"></script>
 
 
 <style type="text/css">
@@ -251,10 +251,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1><span class="header-section-number">3</span> Flow Between States<a href="flow-between-states.html#flow-between-states" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>Here we describe the definition of the basic model of flows among states. Later chapters describe extensions to this basic model, both implemented (TODO) and unimplemented (TODO).</p>
 <p>The per-capita rate of flow between any two states can be defined using the <code>add_rate</code> function.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="flow-between-states.html#cb11-1"></a>sir =<span class="st"> </span>(sir</span>
-<span id="cb11-2"><a href="flow-between-states.html#cb11-2"></a> <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">add_rate</span>(<span class="st">&quot;S&quot;</span>, <span class="st">&quot;I&quot;</span>, <span class="op">~</span><span class="st"> </span>(I) <span class="op">*</span><span class="st"> </span>(beta) <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span><span class="op">/</span>N))</span>
-<span id="cb11-3"><a href="flow-between-states.html#cb11-3"></a> <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">add_rate</span>(<span class="st">&quot;I&quot;</span>, <span class="st">&quot;R&quot;</span>, <span class="op">~</span><span class="st"> </span>(gamma))</span>
-<span id="cb11-4"><a href="flow-between-states.html#cb11-4"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="flow-between-states.html#cb13-1"></a>sir =<span class="st"> </span>(sir</span>
+<span id="cb13-2"><a href="flow-between-states.html#cb13-2"></a> <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">add_rate</span>(<span class="st">&quot;S&quot;</span>, <span class="st">&quot;I&quot;</span>, <span class="op">~</span><span class="st"> </span>(I) <span class="op">*</span><span class="st"> </span>(beta) <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span><span class="op">/</span>N))</span>
+<span id="cb13-3"><a href="flow-between-states.html#cb13-3"></a> <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">add_rate</span>(<span class="st">&quot;I&quot;</span>, <span class="st">&quot;R&quot;</span>, <span class="op">~</span><span class="st"> </span>(gamma))</span>
+<span id="cb13-4"><a href="flow-between-states.html#cb13-4"></a>)</span></code></pre></div>
 <p>The first <code>add_rate</code> function says that on each simulated day, individuals flow from the <code>S</code> box to the <code>I</code> box at a rate equal to the product of <code>I</code>, <code>beta</code>, and <code>1/N</code>. This rate is a per-capita rate, and so the flow of individuals from <code>S</code> to <code>I</code> is <code>S</code> times the rate. Similarly, the second <code>add_rate</code> function says that <code>I</code> times <code>gamma</code> individuals flow from <code>I</code> to <code>R</code> every simulated day.</p>
 <p>Here are the rules of these rate formulas (although these can be relaxed to some degree using techniques covered in later chapters).</p>
 <ul>
@@ -277,10 +277,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><code>(E) * (beta)</code> – the variable <code>E</code> is in neither the parameter nor state variable</li>
 </ul>
 <p>By specifying these rates, we now have a difference between the initial and final state vector.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="flow-between-states.html#cb12-1"></a><span class="kw">state_init</span>(sir)</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="flow-between-states.html#cb14-1"></a><span class="kw">state_init</span>(sir)</span></code></pre></div>
 <pre><code>##  S  I  R 
 ## 99  1  0</code></pre>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="flow-between-states.html#cb14-1"></a><span class="kw">state_final</span>(sir)</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="flow-between-states.html#cb16-1"></a><span class="kw">state_final</span>(sir)</span></code></pre></div>
 <pre><code>##           S           I           R 
 ##  0.01240091 12.18596876 87.80163033</code></pre>
 <div class="infobox caution">
@@ -423,13 +423,13 @@ M_{(i)} = \sum_{j=1}^{n_i} \prod_{k=1}^{m_{ij}} y_{ijk}
 </div>
 <div id="connections-with-classic-mcmasterpandemic" class="section level2 hasAnchor">
 <h2><span class="header-section-number">3.5</span> Connections with Classic McMasterPandemic<a href="flow-between-states.html#connections-with-classic-mcmasterpandemic" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="flow-between-states.html#cb16-1"></a>params &lt;-<span class="st"> </span><span class="kw">read_params</span>(<span class="st">&quot;ICU1.csv&quot;</span>)</span>
-<span id="cb16-2"><a href="flow-between-states.html#cb16-2"></a>classic_macpan =<span class="st"> </span><span class="kw">make_base_model</span>(</span>
-<span id="cb16-3"><a href="flow-between-states.html#cb16-3"></a>  <span class="dt">params =</span> params,  <span class="dt">state =</span> <span class="ot">NULL</span>,</span>
-<span id="cb16-4"><a href="flow-between-states.html#cb16-4"></a>  <span class="dt">start_date =</span> <span class="st">&quot;2021-09-10&quot;</span>,</span>
-<span id="cb16-5"><a href="flow-between-states.html#cb16-5"></a>  <span class="dt">end_date =</span> <span class="st">&quot;2021-10-10&quot;</span></span>
-<span id="cb16-6"><a href="flow-between-states.html#cb16-6"></a>)</span>
-<span id="cb16-7"><a href="flow-between-states.html#cb16-7"></a>knitr<span class="op">::</span><span class="kw">kable</span>(<span class="kw">rate_summary</span>(classic_macpan, <span class="dt">include_parse_info =</span> <span class="ot">FALSE</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="flow-between-states.html#cb18-1"></a>params &lt;-<span class="st"> </span><span class="kw">read_params</span>(<span class="st">&quot;ICU1.csv&quot;</span>)</span>
+<span id="cb18-2"><a href="flow-between-states.html#cb18-2"></a>classic_macpan =<span class="st"> </span><span class="kw">make_base_model</span>(</span>
+<span id="cb18-3"><a href="flow-between-states.html#cb18-3"></a>  <span class="dt">params =</span> params,  <span class="dt">state =</span> <span class="ot">NULL</span>,</span>
+<span id="cb18-4"><a href="flow-between-states.html#cb18-4"></a>  <span class="dt">start_date =</span> <span class="st">&quot;2021-09-10&quot;</span>,</span>
+<span id="cb18-5"><a href="flow-between-states.html#cb18-5"></a>  <span class="dt">end_date =</span> <span class="st">&quot;2021-10-10&quot;</span></span>
+<span id="cb18-6"><a href="flow-between-states.html#cb18-6"></a>)</span>
+<span id="cb18-7"><a href="flow-between-states.html#cb18-7"></a>knitr<span class="op">::</span><span class="kw">kable</span>(<span class="kw">rate_summary</span>(classic_macpan, <span class="dt">include_parse_info =</span> <span class="ot">FALSE</span>))</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -525,15 +525,15 @@ M_{(i)} = \sum_{j=1}^{n_i} \prod_{k=1}^{m_{ij}} y_{ijk}
 <div id="topological-sort" class="section level2 hasAnchor">
 <h2><span class="header-section-number">3.6</span> Topological Sort<a href="flow-between-states.html#topological-sort" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The ordering of compartments with which individuals flow can be determined using the <code>topological_sort</code> function, provided that the graph is a DAG (i.e. there are no loops such as waning immunity). So for example the topologically sorted ordering of the classic McMasterPandemic model is given by the following.</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="flow-between-states.html#cb17-1"></a><span class="kw">topological_sort</span>(classic_macpan)</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="flow-between-states.html#cb19-1"></a><span class="kw">topological_sort</span>(classic_macpan)</span></code></pre></div>
 <pre><code>##  [1] &quot;S&quot;    &quot;V&quot;    &quot;E&quot;    &quot;Ia&quot;   &quot;Ip&quot;   &quot;Im&quot;   &quot;Is&quot;   &quot;H&quot;    &quot;ICUs&quot; &quot;ICUd&quot;
 ## [11] &quot;X&quot;    &quot;H2&quot;   &quot;D&quot;    &quot;R&quot;</code></pre>
 <p>This can be used to order categorical variables for sorting tables and arranging plot facets.</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="flow-between-states.html#cb19-1"></a>knitr<span class="op">::</span><span class="kw">kable</span>(classic_macpan</span>
-<span id="cb19-2"><a href="flow-between-states.html#cb19-2"></a> <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rate_summary</span>(<span class="dt">include_parse_info =</span> <span class="ot">FALSE</span>)</span>
-<span id="cb19-3"><a href="flow-between-states.html#cb19-3"></a> <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">from =</span> <span class="kw">factor</span>(from, <span class="kw">topological_sort</span>(classic_macpan)))</span>
-<span id="cb19-4"><a href="flow-between-states.html#cb19-4"></a> <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(from)</span>
-<span id="cb19-5"><a href="flow-between-states.html#cb19-5"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="flow-between-states.html#cb21-1"></a>knitr<span class="op">::</span><span class="kw">kable</span>(classic_macpan</span>
+<span id="cb21-2"><a href="flow-between-states.html#cb21-2"></a> <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rate_summary</span>(<span class="dt">include_parse_info =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb21-3"><a href="flow-between-states.html#cb21-3"></a> <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">from =</span> <span class="kw">factor</span>(from, <span class="kw">topological_sort</span>(classic_macpan)))</span>
+<span id="cb21-4"><a href="flow-between-states.html#cb21-4"></a> <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(from)</span>
+<span id="cb21-5"><a href="flow-between-states.html#cb21-5"></a>)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -625,24 +625,24 @@ M_{(i)} = \sum_{j=1}^{n_i} \prod_{k=1}^{m_{ij}} y_{ijk}
 </tr>
 </tbody>
 </table>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="flow-between-states.html#cb20-1"></a>model =<span class="st"> </span>classic_macpan</span>
-<span id="cb20-2"><a href="flow-between-states.html#cb20-2"></a>state_nms =<span class="st"> </span>base<span class="op">::</span><span class="kw">setdiff</span>(<span class="kw">topological_sort</span>(model), <span class="kw">c</span>(<span class="st">&quot;X&quot;</span>, <span class="st">&quot;V&quot;</span>))</span>
-<span id="cb20-3"><a href="flow-between-states.html#cb20-3"></a>nodes =<span class="st"> </span><span class="kw">data.frame</span>(</span>
-<span id="cb20-4"><a href="flow-between-states.html#cb20-4"></a>  <span class="dt">id =</span> state_nms,</span>
-<span id="cb20-5"><a href="flow-between-states.html#cb20-5"></a>  <span class="dt">label =</span> state_nms,</span>
-<span id="cb20-6"><a href="flow-between-states.html#cb20-6"></a>  <span class="dt">title =</span> state_nms,</span>
-<span id="cb20-7"><a href="flow-between-states.html#cb20-7"></a>  <span class="dt">physics =</span> <span class="ot">FALSE</span>)</span>
-<span id="cb20-8"><a href="flow-between-states.html#cb20-8"></a><span class="kw">visNetwork</span>(</span>
-<span id="cb20-9"><a href="flow-between-states.html#cb20-9"></a>  nodes,</span>
-<span id="cb20-10"><a href="flow-between-states.html#cb20-10"></a>  <span class="kw">select</span>(<span class="kw">rate_summary</span>(model), from, to) <span class="op">%&gt;%</span></span>
-<span id="cb20-11"><a href="flow-between-states.html#cb20-11"></a><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">arrows =</span> <span class="st">&quot;to&quot;</span>)) <span class="op">%&gt;%</span></span>
-<span id="cb20-12"><a href="flow-between-states.html#cb20-12"></a><span class="st">  </span><span class="co">#visLegend() %&gt;%</span></span>
-<span id="cb20-13"><a href="flow-between-states.html#cb20-13"></a><span class="st">  </span><span class="co">#visLayout() %&gt;% </span></span>
-<span id="cb20-14"><a href="flow-between-states.html#cb20-14"></a><span class="st">  </span><span class="kw">visInteraction</span>(<span class="dt">zoomSpeed =</span> <span class="fl">0.1</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb20-15"><a href="flow-between-states.html#cb20-15"></a><span class="st">  </span><span class="kw">visPhysics</span>(<span class="dt">stabilization =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb20-16"><a href="flow-between-states.html#cb20-16"></a><span class="st">  </span><span class="kw">visHierarchicalLayout</span>(<span class="dt">direction =</span> <span class="st">&quot;LR&quot;</span>)</span></code></pre></div>
-<div id="htmlwidget-23e1b84b08e9d1abee6b" style="width:672px;height:480px;" class="visNetwork html-widget"></div>
-<script type="application/json" data-for="htmlwidget-23e1b84b08e9d1abee6b">{"x":{"nodes":{"id":["S","E","Ia","Ip","Im","Is","H","ICUs","ICUd","H2","D","R"],"label":["S","E","Ia","Ip","Im","Is","H","ICUs","ICUd","H2","D","R"],"title":["S","E","Ia","Ip","Im","Is","H","ICUs","ICUd","H2","D","R"],"physics":[false,false,false,false,false,false,false,false,false,false,false,false]},"edges":{"from":["E","E","Ia","Ip","Ip","Im","Is","Is","Is","Is","ICUs","ICUd","H2","H","S"],"to":["Ia","Ip","R","Im","Is","R","H","ICUs","ICUd","D","H2","D","R","R","E"],"arrows":["to","to","to","to","to","to","to","to","to","to","to","to","to","to","to"]},"nodesToDataframe":true,"edgesToDataframe":true,"options":{"width":"100%","height":"100%","nodes":{"shape":"dot"},"manipulation":{"enabled":false},"interaction":{"zoomSpeed":0.1},"physics":{"stabilization":true},"layout":{"hierarchical":{"enabled":true,"direction":"LR"}}},"groups":null,"width":null,"height":null,"idselection":{"enabled":false},"byselection":{"enabled":false},"main":null,"submain":null,"footer":null,"background":"rgba(0, 0, 0, 0)","tooltipStay":300,"tooltipStyle":"position: fixed;visibility:hidden;padding: 5px;white-space: nowrap;font-family: verdana;font-size:14px;font-color:#000000;background-color: #f5f4ed;-moz-border-radius: 3px;-webkit-border-radius: 3px;border-radius: 3px;border: 1px solid #808074;box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);"},"evals":[],"jsHooks":[]}</script>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="flow-between-states.html#cb22-1"></a>model =<span class="st"> </span>classic_macpan</span>
+<span id="cb22-2"><a href="flow-between-states.html#cb22-2"></a>state_nms =<span class="st"> </span>base<span class="op">::</span><span class="kw">setdiff</span>(<span class="kw">topological_sort</span>(model), <span class="kw">c</span>(<span class="st">&quot;X&quot;</span>, <span class="st">&quot;V&quot;</span>))</span>
+<span id="cb22-3"><a href="flow-between-states.html#cb22-3"></a>nodes =<span class="st"> </span><span class="kw">data.frame</span>(</span>
+<span id="cb22-4"><a href="flow-between-states.html#cb22-4"></a>  <span class="dt">id =</span> state_nms,</span>
+<span id="cb22-5"><a href="flow-between-states.html#cb22-5"></a>  <span class="dt">label =</span> state_nms,</span>
+<span id="cb22-6"><a href="flow-between-states.html#cb22-6"></a>  <span class="dt">title =</span> state_nms,</span>
+<span id="cb22-7"><a href="flow-between-states.html#cb22-7"></a>  <span class="dt">physics =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb22-8"><a href="flow-between-states.html#cb22-8"></a><span class="kw">visNetwork</span>(</span>
+<span id="cb22-9"><a href="flow-between-states.html#cb22-9"></a>  nodes,</span>
+<span id="cb22-10"><a href="flow-between-states.html#cb22-10"></a>  <span class="kw">select</span>(<span class="kw">rate_summary</span>(model), from, to) <span class="op">%&gt;%</span></span>
+<span id="cb22-11"><a href="flow-between-states.html#cb22-11"></a><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">arrows =</span> <span class="st">&quot;to&quot;</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb22-12"><a href="flow-between-states.html#cb22-12"></a><span class="st">  </span><span class="co">#visLegend() %&gt;%</span></span>
+<span id="cb22-13"><a href="flow-between-states.html#cb22-13"></a><span class="st">  </span><span class="co">#visLayout() %&gt;% </span></span>
+<span id="cb22-14"><a href="flow-between-states.html#cb22-14"></a><span class="st">  </span><span class="kw">visInteraction</span>(<span class="dt">zoomSpeed =</span> <span class="fl">0.1</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb22-15"><a href="flow-between-states.html#cb22-15"></a><span class="st">  </span><span class="kw">visPhysics</span>(<span class="dt">stabilization =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb22-16"><a href="flow-between-states.html#cb22-16"></a><span class="st">  </span><span class="kw">visHierarchicalLayout</span>(<span class="dt">direction =</span> <span class="st">&quot;LR&quot;</span>)</span></code></pre></div>
+<div class="visNetwork html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-955dced3875e2e7ebfee" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-955dced3875e2e7ebfee">{"x":{"nodes":{"id":["S","E","Ia","Ip","Im","Is","H","ICUs","ICUd","H2","D","R"],"label":["S","E","Ia","Ip","Im","Is","H","ICUs","ICUd","H2","D","R"],"title":["S","E","Ia","Ip","Im","Is","H","ICUs","ICUd","H2","D","R"],"physics":[false,false,false,false,false,false,false,false,false,false,false,false]},"edges":{"from":["E","E","Ia","Ip","Ip","Im","Is","Is","Is","Is","ICUs","ICUd","H2","H","S"],"to":["Ia","Ip","R","Im","Is","R","H","ICUs","ICUd","D","H2","D","R","R","E"],"arrows":["to","to","to","to","to","to","to","to","to","to","to","to","to","to","to"]},"nodesToDataframe":true,"edgesToDataframe":true,"options":{"width":"100%","height":"100%","nodes":{"shape":"dot"},"manipulation":{"enabled":false},"interaction":{"zoomSpeed":0.1},"physics":{"stabilization":true},"layout":{"hierarchical":{"enabled":true,"direction":"LR"}}},"groups":null,"width":null,"height":null,"idselection":{"enabled":false},"byselection":{"enabled":false},"main":null,"submain":null,"footer":null,"background":"rgba(0, 0, 0, 0)","tooltipStay":300,"tooltipStyle":"position: fixed;visibility:hidden;padding: 5px;white-space: nowrap;font-family: verdana;font-size:14px;font-color:#000000;background-color: #f5f4ed;-moz-border-radius: 3px;-webkit-border-radius: 3px;border-radius: 3px;border: 1px solid #808074;box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);"},"evals":[],"jsHooks":[]}</script>
 
 </div>
 </div>
